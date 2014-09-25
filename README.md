@@ -1,7 +1,5 @@
 █   █ █▀█ █▀█ █▀█ █ █▀█ █▀▀
-
  █▀█  █▀█ █▀▄ █ █ █ █ █ █ █
- 
  ▀ ▀  ▀ ▀ ▀ ▀ ▀ ▀ ▀ ▀ ▀ ▀▀▀
  
 THE FOLLOWING DOCUMENTS ARE VIOLATED WITH MANY PROFANITIES AS WELL AS OTHER SUCH VULGAR FORMALITIES.

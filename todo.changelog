@@ -1,0 +1,72 @@
+/* -- TODO -- */
+1. +More upgrades+
+2. +Tick Loop+
+3. *Higher maximum money*
+4. *Get time playing working*
+
+/* -- CHANGELOG */
+r9.14.09.24
++Made Automation Requirements work+
++Comments+
++Warning/ReadMe File+
+*Made Requirements Slightly more readable*
+*Fixed some issues with regex* /* I THINK -SOME- IS THE WRONG WORD HERE. TRY FUCKING RETARDED */
+
+r8.14.09.24
+*Quality of Life* /* Okay, I must admit JavaScript anonymous functions are pretty fucking useful... BUT FUCK THAT VARIABLE MANAGEMENT */
+
+r7.14.09.24
++Save Manager Upgrade+
++Ability to save whenever+
++Ability to turn Auto-Save Off+
+!Degrade the save manager upgrade to put in a save manager upgrade!
+/* FUN FACT: Current total for all upgrades is at 3020. That's at least 1585 clicks. */
+
+r6.14.09.24
++Automation Display+
++Basic Automation+
+*Save every 100 clicks instead of every click*
+!Automation Display Upgrade!
+!Implement Automations to Save!
+!Implement Automation collection! /* setInterval doesn't seem to work >_< */
+/* FUN FACT: Current total to get your first automation is 1546. I've gotten it in 898 clicks at the least. */
+
+r5.14.09.23
++New Upgrade+
+!Fix Saving from old to new versions!
+
+r4.14.09.23
++New Upgrades+
+*Quality of Life*
+
+r3.14.09.23
++Added comments, reader discretion advised+
++Stats Updating+
++Quality of life code+
+*Moved upgradeID requirement to index 6 instead of index 3*
+*Made upgradeID requirement upgrade section accept a string value rather than a numerical value*
+/* This is to improve readability as well as being able to move upgrades in the list without worrying about upgrades that require it */
+
+r2.14.09.23
++Saving+
+*Fixed issues with loops* /* LITERALLY FUCK JAVASCRIPT. STUPID VARIABLE MANAGEMENT */
+
+r1.14.09.23
++Pre-game Interaction+
++Loading Bar+
++Main Header UI+
++Basic Upgrades+
++Basic Stats UI+
++Upgrade Requirements+
+*Modified upgrade storage*
+*Upgrade display (order of availability)*
+!Stats Upgrades!
+!-Stats Updating!
+!More upgrades!
+!-Saving!
+!Higher money cap!
+!Time playing!
+!More stats!
+!-Automation Upgrades!
+!News Ticker!
+!Implement loading bar use!

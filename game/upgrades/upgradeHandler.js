@@ -75,7 +75,7 @@ function addUpgrade(upgradeNumber) {
 				cost.className = "cost"; // sets appropriate identifiers
 				
 				name.innerHTML = upgradeID[AUL][1];
-				cost.innerHTML = upgradeID[AUL][2]; // sets information
+				cost.innerHTML = convertNumber(upgradeID[AUL][2]); // sets information
 				
 				upgrade.appendChild(name); // adds name
 				if (isUpgradeBought("upgradeCostDisplay")) // if costDisplay is bought

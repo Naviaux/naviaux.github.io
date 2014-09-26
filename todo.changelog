@@ -1,10 +1,53 @@
 /* -- TODO -- */
 1. +More upgrades+
-2. +Tick Loop+
-3. *Higher maximum money*
-4. *Get time playing working*
+2. *Higher maximum money*
+3. *Get time playing working*
 
 /* -- CHANGELOG */
+r16.14.09.26
++Thirteen Clicking Upgrades+
+*Converted most counters to the short number format*
+
+r15.14.09.26
++Advanced Automation w/ 5 Upgrades+
++Expert Automation w/ 5 Upgrades+
++Two New Upgrades for previously implemented Automations+
++Automation Stats+
+*Increased width of Upgrade Box to support longer upgrade names*
+!Fix income display bug after updating automation box!
+
+r14.14.09.26
++Intermediate Automation w/ 3 Upgrades+
++Intermediate Upgrade for Automations+
+*Automation Upgrade Requirement Rework*
+*Fixed a loading bug with automations*
+*Fixed a bug where upgrade stats where being shown before the upgrade was bought if you had upgraded the upgrade box*
+?IE Support? /* Kinda confused... It wasn't working the other day, now it's working fine... */
+
+r13.14.09.26
++Automation Upgrade+
++Novice Automation w/ 2 Upgrades+
++Novice Basic Automation Upgrade+
+*Quality of life*
+!Move money conversion to a separate function to use everywhere!
+-IE Support- /* It acts like a kid; it wants things exactly how it wants which may or may not work in other browsers. May pick it up again in the future. */
+
+r12.14.09.26
++More Upgrades+
+*Quality of life*
+*Fixed an issue with Internet Explorer 11* /* Untested with prior versions */
+
+r11.14.09.26
++Save Manager Upgrade+
++Automation Display Upgrade+
+*Fixed layout bugs in Firefox and Chrome* /* Unknown if fully fixed */
+
+r10.14.09.26
++Made Automations Generate Money+
++Tick Loop+
++Automations are now saved+
+*Game saves every 5 minutes instead of 100 updates*
+
 r9.14.09.24
 +Made Automation Requirements work+
 +Comments+
@@ -26,9 +69,9 @@ r6.14.09.24
 +Automation Display+
 +Basic Automation+
 *Save every 100 clicks instead of every click*
-!Automation Display Upgrade!
-!Implement Automations to Save!
-!Implement Automation collection! /* setInterval doesn't seem to work >_< */
+!-Automation Display Upgrade!
+!-Implement Automations to Save!
+!-Implement Automation collection! /* setInterval doesn't seem to work >_< */
 /* FUN FACT: Current total to get your first automation is 1546. I've gotten it in 898 clicks at the least. */
 
 r5.14.09.23

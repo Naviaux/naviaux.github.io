@@ -1,5 +1,6 @@
 /* -- OVERRIDES -- */
 html, body {
+	height: 100%;
 	margin: 0px;
 	background-color: #fff;
 }
@@ -55,7 +56,7 @@ background-image: url("./assets/images/buttons/arrow_normal.png"); width: 22px; 
 #header {
 	position: relative;
 	top: 4%;
-	width: 30%;
+	width: 400px;
 	margin: auto;
 	padding: 5px;
 	
@@ -85,7 +86,8 @@ background-image: url("./assets/images/buttons/arrow_normal.png"); width: 22px; 
 	border: 1px solid rgba(0, 0, 0, 0.3);
 }
 #header #clicker:hover {
-	border: 1px solid rgba(0, 0, 0, 1);
+	border: 1px solid rgb(0, 0, 0);
+	background-color: rgb(220, 220, 255);
 }
 #header #counter {
 	position: relative;
@@ -98,12 +100,11 @@ background-image: url("./assets/images/buttons/arrow_normal.png"); width: 22px; 
 /*-- SAVE INFORMATION -- */
 #save-manager {
 	position: relative;
-	left: 67%;
+	left: 66%;
 	top: 10%;
-	width: 22%;
-	padding: 10px;
+	width: 150px;
 	
-	border: 3px double black;
+	border: 1px solid black;
 }
 #save-manager #save-title {
 	margin: 0;
@@ -153,7 +154,7 @@ background-image: url("./assets/images/buttons/arrow_normal.png"); width: 22px; 
 	margin-left: 20px;
 	padding: 0;
 }
-#stats-window #stats-upgrades-bought {
+#stats-upgrades-bought, #stats-automation-income {
 	display: none;
 }
 /* -- AUTOMATION INFORMATION -- */

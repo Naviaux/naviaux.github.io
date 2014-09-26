@@ -18,3 +18,4 @@ var timePlaying = 0; // STOP READING THESE BLOODY COMMENTS AND START PLAYING
 var loadingGAME = false; // IDEK WHAT I CAN DO WITH THIS
 var savetimer = 0; // THIS IS BASICALLY A TICK LOOP, BUT NOT.
 var autoSaving = true; // YEA. THATS RIGHT. YOU CAN TURN THIS SHIT OFF.
+var cps = 0;

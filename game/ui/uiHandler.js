@@ -41,8 +41,8 @@ function fixUpgradeRequirements() { // Make it so it works in the checkRequireme
 			}
 			upgradeID[FURL][6] = upgradeID[FURL][6].replace(matching, newReq); // replaces strings with numbers basically
 		}
-		if (HALPME = upgradeID[FURL][6].match("A[0-9]+=[a-zA-Z0-9\-]+;")) { // checks if there is an automation requirement
-			var matching = upgradeID[FURL][6].match("A[0-9]+=[a-zA-Z0-9\-]+;")[0]; // DID I MENTION I HATE REGEX? A[\d]+=[\w\-]+;
+		if (HALPME = upgradeID[FURL][6].match("A([0-9]+=[a-zA-Z0-9\-]+,?)+;")) { // checks if there is an automation requirement
+			var matching = upgradeID[FURL][6].match("A([0-9]+=[a-zA-Z0-9\-]+,?)+;")[0]; // DID I MENTION I HATE REGEX? A([\d]+=[\w\-]+,+)+;
 			var automationReqList = matching.replace("A","").replace(";","").split(","); // MORE CHAINING
 			var newReq = "A"; // More requirement recreation, this time with automations
 			for (ARLL = 0; ARLL < automationReqList.length; ARLL++) {

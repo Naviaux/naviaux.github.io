@@ -1,0 +1,110 @@
+/* SAVE MANAGER */
+#save-manager-up {
+	position: absolute;
+	top: 29%;
+	left: 66%;
+	width: 22%;
+	padding: 10px;
+	
+	border: 3px double black;
+}
+#save-manager-up #save-title {
+	margin: 0;
+}
+/* UPGRADES */
+#upgrade-container-up {
+	position: absolute;
+	top: 4%;
+	left: 7%;
+	width: 25%;
+	padding: 10px;
+	margin: 0;
+	min-height: 30px;
+	
+	border: 3px double black;
+}
+#upgrade-container-up #utitle {
+	height: 1em;
+	margin: 0;
+	margin-bottom: 5px;
+}
+#upgrade-container-up #upgrade-list {
+	list-style: none;
+	margin: 0;
+	padding-left: 20px;
+}
+#upgrade-container-up #upgrade-list li {
+	position: relative;
+	top: -2px;
+}
+#upgrade-container-up #upgrade-list li:hover {
+	color: blue;
+}
+#upgrade-container-up #upgrade-list p {
+	display: inline;
+	margin: 0;
+}
+#upgrade-container-up #upgrade-list .cost {
+	float: right;
+}
+/* STATS */
+#stats-window-up {
+	position: absolute;
+	top: 4%;
+	left: 66%;
+	width: 22%;
+	padding: 10px;
+	min-height: 30px;
+
+	border: 3px double black;
+}
+#stats-window-up #stitle {
+	height: 1em;
+	margin: 0;
+	margin-bottom: 5px;
+}
+#stats-window-up p {
+	position: relative;
+	margin: 0;
+	margin-left: 1em;
+	padding: 0;
+}
+/* AUTOMATIONS */
+#automation-display-up {
+	position: relative;
+	top: 33px;
+	width: 400px;
+	margin: auto;
+	padding: 5px;
+	
+	border: 3px double black;
+}
+#automation-display-up #atitle {
+	height: 1em;
+	margin: 0;
+	margin-bottom: 5px;
+	text-align: center;
+}
+#automation-display-up p {
+	display: inline;
+	margin: 0px;
+}
+#automation-display-up .auto-display {
+	border: 1px solid black;
+	padding: 3px;
+	text-align: center;
+}
+#automation-display-up .auto-display:hover {
+	background-color: rgb(240, 240, 255);
+}
+#automation-display-up .auto-name {
+	display: block;
+	position: relative;
+	left: -15px;
+}
+#automation-display-up .auto-cost {
+	float: right;
+}
+#automation-display-up .auto-income {
+	float: left;
+}

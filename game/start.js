@@ -31,11 +31,10 @@ function begin() { // weird chat ai thing
 			sprite.src = images + "sprites/chat/chat_00" + ++currentAnimationFrame + ".png";
 			if (currentAnimationFrame == 5) { // if the current frame is 5
 				document.body.appendChild(specialAward) // fakeawards.jpg
-			} else {
-				specialAward.remove(); // NOO... meh
 			}
 			if (currentAnimationFrame == 6) { // if frame is 6
-				arrow.remove(); // remove the arrow to change frames
+				$("#special-reward").remove(); // NOO... meh
+				$("talking").remove(); // remove the arrow to change frames
 				var startButton = document.createElement("input");
 				startButton.id = "start-button";
 				startButton.type = "button";
@@ -94,7 +93,7 @@ function buyLoading(alreadyPlaying) { // 'start' the game
 				upgradeID[startLoop][3](); // run it's function
 			}
 		}
-		updateCounter();
 	}
 	loadingGAME = false; // MAKE SURE YOU STOP LOADING. FFS. THIS MAKES SHIT FREE
+	tickGame();
 }

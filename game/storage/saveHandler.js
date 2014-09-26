@@ -4,16 +4,25 @@ function saveGame() { // saves the game
 	if (autoSaving) statsFile += "t"; else statsFile += "f";
 	
 	var upgradeFile = "upgrades="; // COOKIE NUMERO DOUS
-	for (saveGameLoop = 0; saveGameLoop < upgradeID.length; saveGameLoop++) { // loops through upgrades
-		if (upgradeID[saveGameLoop][5])
+	for (saveUpgradeCookieLoop = 0; saveUpgradeCookieLoop < upgradeID.length; saveUpgradeCookieLoop++) { // loops through upgrades
+		if (upgradeID[saveUpgradeCookieLoop][5])
 			upgradeFile += "t";
 		else // this stuff shortens the upgrade cookie... by a metric fuckton
 			upgradeFile += "f";
-		if (saveGameLoop < upgradeID.length - 1)
+		if (saveUpgradeCookieLoop < upgradeID.length - 1)
 			upgradeFile += ","; // adds a comma if the current thing is adding is less than the total number of upgrades - 1
 	}
+	
+	var automationFile = "automations="; // COOKIE NUMERO TROIS
+	for (saveAutomationsCookieLoop = 0; saveAutomationsCookieLoop < automations.length; saveAutomationsCookieLoop++) {
+		automationFile += automations[saveAutomationsCookieLoop][5];
+		if (saveAutomationsCookieLoop < automations.length - 1)
+			automationFile += ",";
+	}
+	
 	document.cookie = statsFile; // ADDS COOKIE NUMERO UNO
 	document.cookie = upgradeFile; // ADDS COOKIE NUMERO DOUS
+	document.cookie = automationFile;
 	// I just realized... THIS SHOULDN'T WORK... But it does >_>
 }
 function loadGame() {
@@ -26,13 +35,20 @@ function loadGame() {
 		totalClickMoney = parseInt(statFile[2]); totalMoney = parseInt(statFile[3]); // sets stat info and parses to an int so it doesn't fuck itself
 		if (statFile[4] == "t") autoSaving = true; else autoSaving = false;
 		var upgradeFile = seperateCookies[1].split("=")[1].split(","); // extracts information from COOKIE NUMERO DOUS
-		for (loadGameLoop = 0; loadGameLoop < upgradeID.length; loadGameLoop++) { // loops through the info
-			if (upgradeFile[loadGameLoop] == "t") { // if t
-				upgradeID[loadGameLoop][4] = true;
-				upgradeID[loadGameLoop][5] = true; // set bought and added to true
+		for (loadUpgradesLoop = 0; loadUpgradesLoop < upgradeID.length; loadUpgradesLoop++) { // loops through the info
+			if (upgradeFile[loadUpgradesLoop] == "t") { // if t
+				upgradeID[loadUpgradesLoop][4] = true;
+				upgradeID[loadUpgradesLoop][5] = true; // set bought and added to true
 			} else { // OTHERWISE (f)
-				upgradeID[loadGameLoop][4] = false;
-				upgradeID[loadGameLoop][5] = false; // set bought and added to false
+				upgradeID[loadUpgradesLoop][4] = false;
+				upgradeID[loadUpgradesLoop][5] = false; // set bought and added to false
+			}
+		}
+		var automationFile = seperateCookies[2].split("=")[1].split(",");
+		for (loadAutomationsLoop = 0; loadAutomationsLoop < automations.length; loadAutomationsLoop++) {
+			for (buyAutomations = 0; buyAutomations < parseInt(automationFile[loadAutomationsLoop]); buyAutomations++) {
+				loadingGAME = true;
+				enoughMoneyAUTO(automations[loadAutomationsLoop][0]);
 			}
 		}
 		return true; // The game had a save and was loaded

@@ -1,33 +1,19 @@
 function clickerPress() { // adds money and other stats when you click the button
 	clicks++;
 	money += clickMoney;
+	money += getTotalAutomationIncome() * cps;
 	totalClickMoney += clickMoney;
+	totalClickMoney += getTotalAutomationIncome() * cps;
 	totalMoney += clickMoney;
-	updateCounter(); // updates the counter in the header
 }
 
 function updateCounter() {
 	if (isUpgradeBought("moneyDisplay")) { // if this upgrade is bought
 		var counter = document.getElementById("counter"); // get the element
-		var sMoney = money.toLocaleString(); // set it to the locale string (1,000,000,000,000,000...)
-		var amount = new Array("K", "M", "B", "T", "q", "Q", "s"); // special amount ids
-		counter.innerHTML = sMoney; // regardless of length, set counter to the locale
-		if (sMoney.length > 5 && Math.floor((sMoney.length - 5) / 4) < amount.length) { // check length is above 5 and that math is less than amount length
-			var number = sMoney.indexOf(","); // math signifies how many , there are... there must be an easier way of counting...
-			counter.innerHTML = sMoney.substring(0, number) + "." + sMoney.substring(number + 1, number+2) + amount[Math.floor((sMoney.length - 5) / 4)]; // weird displaying info
-		} else if (Math.floor((sMoney.length - 5) / 4) > amount.length) { // same weird math thing... maybe a % operator would do the trick
-			counter.innerHTML = ">999.9" + amount[amount.length - 1]; // WHY DO YOU HAVE THIS MUCH MONEY
+		if (counter != null) {
+			counter.innerHTML = convertNumber (money);
 		}
 	}
-	updateStats(); // updates the stats
-	if (autoSaving)
-		savetimer++;
-	if (savetimer == 100) {
-		saveGame(); // 'auto' save function
-		savetimer = 0;
-	}
-	checkUpgrades(); // looks for new upgrades to be added
-	updateUpgradeNames(); // update upgrade names... this is a strange thing to call every time... whatever...
 }
 function updateStats() {
 	if (isUpgradeBought("statsWindow")) { // if upgrade is bought
@@ -36,15 +22,47 @@ function updateStats() {
 		var statsClickMoney = $("#stats-click-money")[0];
 		var statsTotalClick = $("#stats-total-click")[0];
 		var statsUpgradesBought = $("#stats-upgrades-bought")[0];
+		var statsAutomationIncome = $("#stats-automation-income")[0];
 		var statsTotalMoney = $("#stats-total-money")[0]; // get elements
 		
-		statsMoney.innerHTML = "Money: " + money;
-		statsClicks.innerHTML = "Clicks: " + clicks;
-		statsClickMoney.innerHTML = "Money/Click: " + clickMoney;
-		statsTotalClick.innerHTML = "Total Click Money: " + totalClickMoney; // update elements
+		statsMoney.innerHTML = "Money: " + convertNumber(money);
+		statsClicks.innerHTML = "Clicks: " + convertNumber(clicks);
+		statsClickMoney.innerHTML = "Money/Click: " + convertNumber(clickMoney + (getTotalAutomationIncome() * cps));
+		statsTotalClick.innerHTML = "Total Click Money: " + convertNumber(totalClickMoney); // update elements
 		if (isUpgradeBought("statsUpgrade")) { // if upgrade is bought, display more stuff
 			statsUpgradesBought.innerHTML = "Upgrades Bought: " + totalUpgradesBought + "/" + totalUpgrades;
 		}
-		statsTotalMoney.innerHTML = "Total Money: " + totalMoney; // set elements to their stats
+		if (isUpgradeBought("statsAutomations")) {
+			statsAutomationIncome.innerHTML = "Total Automation Income: " + convertNumber(getTotalAutomationIncome());
+		}
+		statsTotalMoney.innerHTML = "Total Money: " + convertNumber(totalMoney); // set elements to their stats
 	}
+}
+
+function automationIncome() {
+	for (AIL = 0; AIL < automations.length; AIL++) {
+		if (automations[AIL][5] > 0)
+			money += (automations[AIL][4] * automations[AIL][5]) / 100;
+			totalMoney += (automations[AIL][4] * automations[AIL][5]) / 100;
+	}
+}
+
+function tickGame() {
+
+	if (!loadingGAME) {
+		checkUpgrades(); // looks for new upgrades to be added
+		updateCounter();
+		updateStats();
+		updateUpgradeNames(); // update upgrade names... this is a strange thing to call every time... whatever...
+		automationIncome(); // gets income from automations
+	}
+	
+	if (autoSaving)
+		savetimer++;
+	if (savetimer == 30000) {
+		saveGame(); // 'auto' save function
+		savetimer = 0;
+	}
+	setTimeout(tickGame, 10);
+	
 }

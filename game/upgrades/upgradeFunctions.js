@@ -43,15 +43,7 @@ function displayMoney() { // Makes the counter actually display money
 function upgradeBox() { // Makes the upgrade box look a bit nicer
 	var thisUpgrade = getUpgradeID("upgradeBox");
 	if (enoughMoney(thisUpgrade)) { // player u haz teh moolaz?
-		var upgradeBox = $("#upgrade-container")[0]; // gets the upgradebox
-		
-		upgradeBox.style.position = "absolute";
-		upgradeBox.style.top = "4%";
-		upgradeBox.style.left = "7%";
-		upgradeBox.style.width = "22%";
-		upgradeBox.style.minHeight = "30px";
-		upgradeBox.style.padding = "10px";
-		upgradeBox.style.border = "3px double black"; // then modifies it a bunch
+		var upgradeBox = $("#upgrade-container")[0].id = "upgrade-container-up"; // changes the upgradebox id
 	}
 }
 function costDisplay() { // Makes upgrades have a cost you can display
@@ -69,10 +61,12 @@ function costDisplay() { // Makes upgrades have a cost you can display
 		}
 	}
 }
-function upgradeMouse() { // Makes clicking more effective
-	var thisUpgrade = getUpgradeID("upgradeClicks1");
-	if (enoughMoney(thisUpgrade)) // I just want the money... THATS ALL I WANT
-		clickMoney += 1; // This will probably be changed to something more ridiculous...
+function upgradeMouse(ID, amount) { // Makes clicking more effective
+	return function () { // anonymous function, allows me to upgrade any amount
+		var thisUpgrade = getUpgradeID(ID);
+		if (enoughMoney(thisUpgrade)) // I just want the money... THATS ALL I WANT
+			clickMoney += amount; // This will probably be changed to something more ridiculous...
+	}
 }
 function simpleStatWindow() { // OO~H. SHINY.
 	var thisUpgrade = getUpgradeID("statsWindow");
@@ -96,11 +90,11 @@ function simpleStatWindow() { // OO~H. SHINY.
 		statsTotalClick.id = "stats-total-click";
 		statsTotalMoney.id = "stats-total-money"; // sets stats ids... WHY ARE THESE SO FUCKING LONG
 		
-		statsMoney.innerHTML = "Money: " + money;
-		statsClicks.innerHTML = "Clicks: " + clicks;
-		statsClickMoney.innerHTML = "Money/Click: " + clickMoney;
-		statsTotalClick.innerHTML = "Total Click Money: " + totalClickMoney;
-		statsTotalMoney.innerHTML = "Total Money: " + totalMoney; // Sets the information to the stat elements
+		statsMoney.innerHTML = "Money: " + convertNumber(money);
+		statsClicks.innerHTML = "Clicks: " + convertNumber(clicks);
+		statsClickMoney.innerHTML = "Money/Click: " + convertNumber(clickMoney);
+		statsTotalClick.innerHTML = "Total Click Money: " + convertNumber(totalClickMoney);
+		statsTotalMoney.innerHTML = "Total Money: " + convertNumber(totalMoney); // Sets the information to the stat elements
 		
 		
 		/* UPGRADE STATS */ // Yes, because I couldn't think of a better way to do this
@@ -109,6 +103,15 @@ function simpleStatWindow() { // OO~H. SHINY.
 		statsUpgradesBought.innerHTML = "Upgrades Bought: " + totalUpgradesBought + "/" + totalUpgrades;
 		// Create and do stuff with the upgrade stats stuff...
 		
+		/* AUTOMATION STATS */
+		var statsAutomationIncome = document.createElement("p");
+		statsAutomationIncome.id = "stats-automation-income";
+		var totalIncome = 0;
+		for (TAIL = 0; TAIL < automations.length; TAIL++)
+			if (automations[TAIL][5] > 0)
+				totalIncome += (automations[TAIL][4] * automations[TAIL][5]);
+		statsAutomationIncome.innerHTML = "Total Automation Income: " + convertNumber(totalIncome);
+		
 		/* ADD THINGS */
 		statWindow.appendChild(sTitle);
 		statWindow.appendChild(statsMoney);
@@ -116,6 +119,7 @@ function simpleStatWindow() { // OO~H. SHINY.
 		statWindow.appendChild(statsClickMoney);
 		statWindow.appendChild(statsTotalClick);
 		statWindow.appendChild(statsUpgradesBought);
+		statWindow.appendChild(statsAutomationIncome);
 		statWindow.appendChild(statsTotalMoney); // adds the things to the container
 		document.body.appendChild(statWindow); // adds the container to the document
 		
@@ -129,18 +133,17 @@ function statsUpgrade() { // OH BOY. NOW YOUR SHOWING OFF YOUR UPGRADES.
 		updateStats(); // updates the stats to show it
 	}
 }
+function statsAutomations() { // OH BOY. NOW YOUR SHOWING OFF YOUR UPGRADES.
+	var thisUpgrade = getUpgradeID("statsAutomations");
+	if (enoughMoney(thisUpgrade)) { // Slow down there buddy, there's a toll
+		$("#stats-automation-income")[0].style.display = "block"; // unhides the stat
+		updateStats(); // updates the stats to show it
+	}
+}
 function upgradeStatWindow() { // YAY. SHOWING YOUR STATS OFF IN BETTER STYLE... Better style? Does that even make sense?
 	var thisUpgrade = getUpgradeID("upgradeStatsWindow");
 	if (enoughMoney(thisUpgrade)) { // You shall not pass! Without payment, then you can pass.
-		var statWindow = $("#stats-window")[0]; // get the stat window
-		statWindow.style.border = "3px double black";
-		statWindow.style.position = "absolute";
-		statWindow.style.top = "4%";
-		statWindow.style.left = "67%";
-		statWindow.style.width = "22%";
-		statWindow.style.margin = "0";
-		statWindow.style.minHeight = "30px";
-		statWindow.style.padding = "10px"; // then modify it a metric fuckton
+		var statWindow = $("#stats-window")[0].id = "stats-window-up"; // change id of stat window
 	}
 }
 function tickerFixer() {
@@ -174,36 +177,42 @@ function simpleAutomationBox() {
 		document.body.appendChild(automationDisplay); // Gives them to their mothers
 	}
 }
-function unlockBasicAutomation() {
-	var thisUpgrade = getUpgradeID("basicAutomation");
-	if (enoughMoney(thisUpgrade)) { // All right. I don't want money any more. I want rupees.
-		var automationDisplay = $("#automation-display")[0]; // gets the container
-		var basicAutomationDisplayii = document.createElement("div");
-		var basicAutomationNameii = document.createElement("p");
-		var basicAutomationCounterii = document.createElement("p");
-		var basicAutomationCostii = document.createElement("p");
-		var basicAutomationIncomeii = document.createElement("p"); // creates elements... Might move this setup to a function...
-		
-		var automationInfo = getAutomationDetails("automation-basic"); // gets information about the automation
-		
-		basicAutomationDisplayii.id = automationInfo[0]; basicAutomationDisplayii.className = "auto-display";
-		basicAutomationNameii.id = automationInfo[0]; basicAutomationNameii.className = "auto-name";
-		basicAutomationCounterii.id = automationInfo[0]; basicAutomationCounterii.className = "auto-counter";
-		basicAutomationCostii.id = automationInfo[0]; basicAutomationCostii.className = "auto-cost";
-		basicAutomationIncomeii.id = automationInfo[0]; basicAutomationIncomeii.className = "auto-income";
-		// sets identifiers for looking prettyish
-		
-		basicAutomationNameii.innerHTML = automationInfo[1] + " (+" + automationInfo[4] + ")";
-		basicAutomationCounterii.innerHTML = automationInfo[5] + " owned";
-		basicAutomationCostii.innerHTML = Math.floor(automationInfo[2]);
-		basicAutomationIncomeii.innerHTML = (automationInfo[4] * automationInfo[5]) + "/s"; // sets appropriate information
-		
-		basicAutomationDisplayii.onclick = buyAutomation(automationInfo[0]);
-		basicAutomationDisplayii.appendChild(basicAutomationNameii);
-		basicAutomationDisplayii.appendChild(basicAutomationCostii);
-		basicAutomationDisplayii.appendChild(basicAutomationCounterii);
-		basicAutomationDisplayii.appendChild(basicAutomationIncomeii);
-		automationDisplay.appendChild(basicAutomationDisplayii); // throws everything in to their mother
+function unlockAutomation(ID, automationID) {
+	return function() { // anonymous function, I can reuse it for every automation now
+	var thisUpgrade = getUpgradeID(ID);
+		if (enoughMoney(thisUpgrade)) { // All right. I don't want money any more. I want rupees.
+			var automationDisplay;
+			if (!isUpgradeBought("upgradeAutomationUI"))
+				automationDisplay = $("#automation-display")[0]; // gets the container
+			else
+				automationDisplay = $("#automation-display-up")[0];
+			var basicAutomationDisplayii = document.createElement("div");
+			var basicAutomationNameii = document.createElement("p");
+			var basicAutomationCounterii = document.createElement("p");
+			var basicAutomationCostii = document.createElement("p");
+			var basicAutomationIncomeii = document.createElement("p"); // creates elements... Might move this setup to a function...
+			
+			var automationInfo = getAutomationDetails(automationID); // gets information about the automation
+			
+			basicAutomationDisplayii.id = automationInfo[0]; basicAutomationDisplayii.className = "auto-display";
+			basicAutomationNameii.id = automationInfo[0]; basicAutomationNameii.className = "auto-name";
+			basicAutomationCounterii.id = automationInfo[0]; basicAutomationCounterii.className = "auto-counter";
+			basicAutomationCostii.id = automationInfo[0]; basicAutomationCostii.className = "auto-cost";
+			basicAutomationIncomeii.id = automationInfo[0]; basicAutomationIncomeii.className = "auto-income";
+			// sets identifiers for looking prettyish
+			
+			basicAutomationNameii.innerHTML = automationInfo[1] + " (+" + automationInfo[4] + ")";
+			basicAutomationCounterii.innerHTML = convertNumber(automationInfo[5]) + " owned";
+			basicAutomationCostii.innerHTML = convertNumber(automationInfo[2]);
+			basicAutomationIncomeii.innerHTML = convertNumber((automationInfo[4] * automationInfo[5])) + "/s"; // sets appropriate information
+			
+			basicAutomationDisplayii.onclick = buyAutomation(automationInfo[0]);
+			basicAutomationDisplayii.appendChild(basicAutomationNameii);
+			basicAutomationDisplayii.appendChild(basicAutomationCostii);
+			basicAutomationDisplayii.appendChild(basicAutomationCounterii);
+			basicAutomationDisplayii.appendChild(basicAutomationIncomeii);
+			automationDisplay.appendChild(basicAutomationDisplayii); // throws everything in to their mother
+		}
 	}
 }
 function saveManagerUI() {
@@ -239,12 +248,40 @@ function saveManagerUI() {
 		document.body.appendChild(saveManagerUI); // add shenanigans to their parents
 	}
 }
-function upgradeBasicAutomation() {
-	var thisUpgrade = getUpgradeID("basicAutomationU1");
-	if (enoughMoney(thisUpgrade)) { // Damn, THIS UPGRADE ISN'T HELPING ME. Or is it?
-		var aID = getAutomationID("automation-basic");
-		automations[aID][4]++;
-		updateAutomationIncome("automation-basic");
+function upgradeAutomation(ID, automationID, amount) {
+	return function() { // anonymous function, I can use it for any automation and any amount
+		var thisUpgrade = getUpgradeID(ID);
+		if (enoughMoney(thisUpgrade)) { // Damn, THIS UPGRADE ISN'T HELPING ME. Or is it?
+			var aID = getAutomationID(automationID);
+			automations[aID][4] += amount;
+			updateAutomationIncome(automationID); // increases how much an automation earns
+		}
+	}
+}
+function saveManagerUIUp() {
+	var thisUpgrade = getUpgradeID("upgradeSaveUI");
+	if (enoughMoney(thisUpgrade)) { // Didn't I mention I wanted rupees? I think you might want to start providing...
+		$("#save-manager")[0].id = "save-manager-up"; // changes save manager id
+	}
+}
+function automationUIUp() {
+	var thisUpgrade = getUpgradeID("upgradeAutomationUI");
+	if (enoughMoney(thisUpgrade)) { // Making Money Look Better... Where are my rupees?
+		$("#automation-display")[0].id = "automation-display-up"; // sets the automation display id
+	}
+}
+function automationUpgrades() {
+	var thisUpgrade = getUpgradeID("automationUpgrades");
+	if (enoughMoney(thisUpgrade)) { // FREE MONEY... I want rupees though...
+		// Only unlocks other upgrades`
+	}
+}
+function upgradeClickCPS(ID, amount) {
+	return function() {
+		var thisUpgrade = getUpgradeID(ID);
+		if (enoughMoney(thisUpgrade)) {
+			cps += amount;
+		}
 	}
 }
 

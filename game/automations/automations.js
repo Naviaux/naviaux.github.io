@@ -1,6 +1,10 @@
 var automations = new Array(
 			// [0]Identifier, [1]Name, [2]Cost, [3]Cost Multipler, [4]Income, [5]Count
-	new Array("automation-basic", "Basic Automation", 1.0, 1.443, 1, 0) // BUY IT, USE IT, BREAK IT, F- Okay I'll stop... For now
+	new Array("automation-basic", "Basic Automation", 1.0, 1.2, 1, 0), // BUY IT, USE IT, BREAK IT, F- Okay I'll stop... For now
+	new Array("automation-novice", "Novice Automation", 10, 1.4, 5, 0),
+	new Array("automation-intermediate", "Intermediate Automation", 50, 1.5, 10, 0),
+	new Array("automation-advanced", "Advanced Automation", 100, 1.7, 25, 0),
+	new Array("automation-expert", "Expert Automation", 200, 1.78, 50, 0)
 );
 function getAutomationID(ID) {
 	for (GAIDL = 0; GAIDL < automations.length; GAIDL++) { // loops through automations
@@ -21,11 +25,14 @@ function getAutomationDetails(ID) { // Gets the details of an automation
 function enoughMoneyAUTO(ID) { // Oh for FUCKSAKES
 	var numeral = getAutomationID(ID); /* NYAHAHAHAHAHA */
 	var details = getAutomationDetails(ID); // I swear, I will murder you.
-	if (money >= Math.ceil(details[2])) { // Does the player have enough money
-		money -= Math.ceil(details[2]); // Subtract the current cost
+	if (loadingGAME || money >= Math.ceil(details[2])) { // Does the player have enough money
+		if (!loadingGAME)
+			money -= Math.ceil(details[2]); // Subtract the current cost
+		automations[numeral][2]++;
 		automations[numeral][2] *= details[3]; // increase the cost
 		automations[numeral][5]++; // Add a number to the counter
-		updateCounter(); // TO AVOID CONFUSION
+		if (!loadingGAME)
+			updateCounter(); // TO AVOID CONFUSION
 		return true; // YES, I BOUGHT THAT AUTOMATION
 	} /* DO EET FAGGOT, I DWARE YOU */
 	return false; // NOT ENOUGH MONEY? NO ROBOTS FOR YOU
@@ -36,8 +43,8 @@ function buyAutomation(ID) { // THIS IS WHAT HAPPENS WHEN YOU BUY ONE
 		if (enoughMoneyAUTO(aInfo[0])) { // IS FABULOUS
 			$("#" + aInfo[0] + " .auto-name")[0].innerHTML = aInfo[1] + " (+" + aInfo[4] + ")"; // I DONT EVEN THINK
 			$("#" + aInfo[0] + " .auto-counter")[0].innerHTML = aInfo[5] + " owned"; // YOU UNDERSTAND HOW HELPFUL THIS IS
-			$("#" + aInfo[0] + " .auto-cost")[0].innerHTML = Math.ceil(aInfo[2]); // BECAUSE... BECAUSE- BECAU- -passes out-
-			$("#" + aInfo[0] + " .auto-income")[0].innerHTML = (aInfo[4] * aInfo[5]) + "/s"; // sets appropriate information
+			$("#" + aInfo[0] + " .auto-cost")[0].innerHTML = convertNumber(aInfo[2]); // BECAUSE... BECAUSE- BECAU- -passes out-
+			$("#" + aInfo[0] + " .auto-income")[0].innerHTML = convertNumber((aInfo[4] * aInfo[5])) + "/s"; // sets appropriate information
 		} /* MAKE ME */
 	}; // Goddammit, SOMEONE HELP ME.
 } /* I'll help you */
@@ -45,6 +52,13 @@ function updateAutomationIncome(ID) { // updates the automation display with cor
 	var aInfo = getAutomationDetails(ID); // I hate you so much
 	$("#" + aInfo[0] + " .auto-name")[0].innerHTML = aInfo[1] + " (+" + aInfo[4] + ")"; /* THATS WHAT I WAS MEANT TO DO */
 	$("#" + aInfo[0] + " .auto-counter")[0].innerHTML = aInfo[5] + " owned"; // ...
-	$("#" + aInfo[0] + " .auto-cost")[0].innerHTML = Math.ceil(aInfo[2]); /* AHAHAHA, WHAT'S WRONG? */
-	$("#" + aInfo[0] + " .auto-income")[0].innerHTML = (aInfo[4] * aInfo[5]) + "/s"; // sets appropriate information
+	$("#" + aInfo[0] + " .auto-cost")[0].innerHTML = convertNumber(aInfo[2]); /* AHAHAHA, WHAT'S WRONG? */
+	$("#" + aInfo[0] + " .auto-income")[0].innerHTML = convertNumber((aInfo[4] * aInfo[5])) + "/s"; // sets appropriate information
 }// -shoots-
+function getTotalAutomationIncome() {
+	var totalIncome = 0;
+	for (TAIL = 0; TAIL < automations.length; TAIL++)
+		if (automations[TAIL][5] > 0)
+			totalIncome += (automations[TAIL][4] * automations[TAIL][5]);
+	return totalIncome;
+}

@@ -4,6 +4,33 @@
 3. *Get time playing working*
 
 /* -- CHANGELOG */
+r20.14.09.28
++Implemented CPS (14 Upgrades)+ /* Current upgrade total: 172 */
++Bounce CPS(1 Upgrade)+
+*Widened upgrade box to compensate for long names* /* I need to stop making upgrade names so long... */
+*Adjusted some upgrades to balance*
+!Learn how to balance!
+!Comments!
+
+r19.14.09.27
++Domain System (41 Upgrades Added)+
++Seven Automations Added w/ 5 Upgrades Each+
++MPC Upgrades (5 Upgrades)+
+*More counters to short numeral form*
+
+r18.14.09.27
++Title Upgrades+
+*Fixed a bug with total money wasn't calculating properly*
+
+r17.14.09.27
++You can now update the game without resetting+
++You can now reset the game, no bonuses provided+ /* F12 > deleteSavedGame() */
++You can restore a deleted save+ /* F12 > restoreDeletedSave() */ /* This will only work if you haven't saved since you deleted */
+*Saves no longer use cookies*
+*Corrected save timing* /* It was saving every 50 minutes, instead of every 5 */
+*Minor balanced automation costs*
+*Fixed a bug where some upgrades had the wrong requirements*
+
 r16.14.09.26
 +Thirteen Clicking Upgrades+
 *Converted most counters to the short number format*
@@ -14,7 +41,7 @@ r15.14.09.26
 +Two New Upgrades for previously implemented Automations+
 +Automation Stats+
 *Increased width of Upgrade Box to support longer upgrade names*
-!Fix income display bug after updating automation box!
+!Fix income display bug after upgrading automation box!
 
 r14.14.09.26
 +Intermediate Automation w/ 3 Upgrades+
@@ -29,7 +56,7 @@ r13.14.09.26
 +Novice Automation w/ 2 Upgrades+
 +Novice Basic Automation Upgrade+
 *Quality of life*
-!Move money conversion to a separate function to use everywhere!
+!-Move money conversion to a separate function to use everywhere!
 -IE Support- /* It acts like a kid; it wants things exactly how it wants which may or may not work in other browsers. May pick it up again in the future. */
 
 r12.14.09.26
@@ -62,7 +89,7 @@ r7.14.09.24
 +Save Manager Upgrade+
 +Ability to save whenever+
 +Ability to turn Auto-Save Off+
-!Degrade the save manager upgrade to put in a save manager upgrade!
+!-Degrade the save manager upgrade to put in a save manager upgrade!
 /* FUN FACT: Current total for all upgrades is at 3020. That's at least 1585 clicks. */
 
 r6.14.09.24
@@ -76,7 +103,7 @@ r6.14.09.24
 
 r5.14.09.23
 +New Upgrade+
-!Fix Saving from old to new versions!
+!-Fix Saving from old to new versions!
 
 r4.14.09.23
 +New Upgrades+
@@ -103,7 +130,7 @@ r1.14.09.23
 +Upgrade Requirements+
 *Modified upgrade storage*
 *Upgrade display (order of availability)*
-!Stats Upgrades!
+!-Stats Upgrades!
 !-Stats Updating!
 !More upgrades!
 !-Saving!

@@ -1,9 +1,11 @@
+convertSaveCookies();
 if (!loadGame()) // checks if there is a saved game
 	begin(); // starts the game from scratch
-else
-	buyLoading(true); // start the game
-
-
+else {
+	//buyLoading(true); // start the game
+	loadingGAME = false;
+	tickGame();
+}
 function begin() { // weird chat ai thing
 	var sprite = document.createElement("img");
 	var specialAward = document.createElement("div");
@@ -70,6 +72,8 @@ function buyLoading(alreadyPlaying) { // 'start' the game
 	loading.appendChild(loadingContainerBar);
 	document.body.appendChild(loading); // add stuff to their appropriate parent
 
+		clearScreen();
+		loadMainScreen();
 	function setTitle (text) { // I just realized these functions are inside of another function... fml
 		if (text == "") text = "&nbsp;";
 		loadingLabel.innerHTML = text;
@@ -81,19 +85,6 @@ function buyLoading(alreadyPlaying) { // 'start' the game
 		loadingText.innerHTML = percent;
 		return percent; // this will make the progress bar 'load'
 	} // HAH. IF THERE WAS EVER ANYTHING TO LOAD
-	
-	totalUpgrades = upgradeID.length; // erm... yea... this...
-	
-	clearScreen(); // ./util/utils.js
-	loadMainScreen(); // ./ui/uiHandler.js
-	if (alreadyPlaying) { // if a save exists
-		checkUpgrades(); // update the upgrades
-		for (startLoop = 0; startLoop < upgradeID.length; startLoop++) { // loop through upgrades
-			if (upgradeID[startLoop][5] == true) { // if the upgrade was bought before
-				upgradeID[startLoop][3](); // run it's function
-			}
-		}
-	}
 	loadingGAME = false; // MAKE SURE YOU STOP LOADING. FFS. THIS MAKES SHIT FREE
 	tickGame();
 }

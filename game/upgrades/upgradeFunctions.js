@@ -32,6 +32,18 @@ function finalNameUpgrade() { // makes the game actually human readable
 		updateUpgradeNames(); // THIS IS LITERALLY THE ONLY PLACE THIS FUNCTION IS -ACTUALLY- USEFUL...
 	} // AGAIN. WHY DO I EVEN HAVE VARIABLES
 }
+function titleFix() {
+	var thisUpgrade = getUpgradeID("titleFix");
+	if (enoughMoney(thisUpgrade)) {
+		document.title = "Upgrade Incremental";
+	}
+}
+function titleCounter() {
+	var thisUpgrade = getUpgradeID("titleCounter");
+	if (enoughMoney(thisUpgrade)) {
+		document.title = convertNumber(money) + " - Upgrade Incremental";
+	}
+}
 function displayMoney() { // Makes the counter actually display money
 	var thisUpgrade = getUpgradeID("moneyDisplay");
 	if (enoughMoney(thisUpgrade)) { // player has enough?
@@ -110,7 +122,7 @@ function simpleStatWindow() { // OO~H. SHINY.
 		for (TAIL = 0; TAIL < automations.length; TAIL++)
 			if (automations[TAIL][5] > 0)
 				totalIncome += (automations[TAIL][4] * automations[TAIL][5]);
-		statsAutomationIncome.innerHTML = "Total Automation Income: " + convertNumber(totalIncome);
+		statsAutomationIncome.innerHTML = "Total Automation Income: " + convertNumber(totalIncome) + "/s";
 		
 		/* ADD THINGS */
 		statWindow.appendChild(sTitle);
@@ -276,11 +288,54 @@ function automationUpgrades() {
 		// Only unlocks other upgrades`
 	}
 }
-function upgradeClickCPS(ID, amount) {
+function upgradeClickMPC(ID, amount) {
 	return function() {
 		var thisUpgrade = getUpgradeID(ID);
 		if (enoughMoney(thisUpgrade)) {
 			cps += amount;
+		}
+	}
+}
+function domainSystem() {
+	var thisUpgrade = getUpgradeID("domainSystemU1");
+	if (enoughMoney(thisUpgrade)) {
+	}
+}
+function startDomain(uID, autoID, oCost, costMod) {
+	return function() {
+		var thisUpgrade = getUpgradeID(uID);
+		if (enoughMoney(thisUpgrade)) { // witty remark about money
+			var aID = getAutomationID(autoID);
+			automations[aID][2] = oCost;
+			automations[aID][3] = costMod;
+			automations[aID][5] = 0;
+			updateAutomationIncome(autoID);
+		}
+	}
+}
+function multiplyAutomationIncome(uID, autoID, multiplier) {
+	return function() {
+		var thisUpgrade = getUpgradeID(uID);
+		if (enoughMoney(thisUpgrade)) {
+			var aID = getAutomationID(autoID);
+			automations[aID][4] *= multiplier;
+			updateAutomationIncome(autoID);
+		}
+	}
+}
+function upgradeCPS(uID, multiplier) {
+	return function() {
+		var thisUpgrade = getUpgradeID(uID);
+		if (enoughMoney(thisUpgrade)) {
+			AUTOcps += multiplier;
+		}
+	}
+}
+function upgradeBounceCPS(uID, multiplier) {
+	return function() {
+		var thisUpgrade = getUpgradeID(uID);
+		if (enoughMoney(thisUpgrade)) {
+			BOUNCEcps += multiplier;
 		}
 	}
 }

@@ -1,0 +1,199 @@
+/* -- OVERRIDES -- */
+html, body {
+	height: 100%;
+	margin: 0px;
+	background-color: #fff;
+}
+/* -- SPECIAL IDS -- */
+#body {}
+#sprite { display: block; margin: auto; }
+#talking { 
+position: absolute; left: calc(50% + 22px); top: 159px; 
+background-image: url("./assets/images/buttons/arrow_normal.png"); width: 22px; background-color: rgba(0,0,0,0); border: 0;}
+#talking:hover { background-image: url("./assets/images/buttons/arrow_hover.png"); }
+#special-reward { position: absolute; top: 190px; left: calc(50% - 155px); width: 200; height: 60px; background-image: url("./assets/images/sprites/misc/award.png"); border: 3px double black; border-radius: 8px; overflow: none;}
+#special-reward #sr-text { position: relative; left: 40px; top: 10px; }
+#start-button { position: absolute; top: 80px; left: calc(50% - 135px); background-color: rgba(0,0,0,0); border: 1px solid rgba(0,0,0,0.5); font-size: 36px; }
+#start-button:hover { border-color: black; }
+
+/* -- LOADING SCREEN -- */
+#loader {
+	width: 300px;
+	height: 50px;
+	margin: auto;
+	margin-top: 50px;
+	
+	background-color: rgba(0, 0, 0, 0.3);
+	color: rgba(255, 255, 255, 0.3);
+	font: 10px sans-serif;
+	text-align: center;
+}
+#loader #label {
+	position: relative;
+	top: 10px;
+}
+#progressContainer {
+	position: relative;
+	top: 5px;
+	width: calc(100% - 25px);
+	height: 8px;
+	border: 1px solid black;
+	margin: auto;
+}
+#progress {
+	width: 0;
+	height: 100%;
+	background-color: green;
+}
+#progressLabel {
+	position: relative;
+	top: -9px;
+	margin: auto;
+	font: 9px monospace;
+}
+
+/* -- HEADER INFORMATION -- */
+#header {
+	position: relative;
+	top: 4%;
+	width: 400px;
+	margin: auto;
+	padding: 5px;
+	
+	text-align: center;
+	font-family: sans-serif;
+	background-color: rgba(0, 0, 0, 0.3);
+	border: 3px double black;
+}
+#header #htitle {
+	margin: 3px;
+}
+#header #news-ticker {
+	margin: 0px;
+
+	color: rgba(0, 0, 0, 0.5);
+	font: 10px monospace;
+}
+#header #clicker {
+	position: relative;
+	top: -40px;
+	width: 40px;
+	height: 40px;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+#header #clicker:hover {
+	border: 1px solid rgb(0, 0, 0);
+	background-color: rgb(220, 220, 255);
+}
+#header #counter {
+	position: relative;
+	top: -40px;
+	margin: 0px;
+	float: right;
+	
+	font: 24px monospace;
+}
+/*-- SAVE INFORMATION -- */
+#save-manager {
+	position: relative;
+	left: 66%;
+	top: 10%;
+	width: 150px;
+	
+	border: 1px solid black;
+}
+#save-manager #save-title {
+	margin: 0;
+}
+/* -- UPGRADE INFORMATION -- */
+#upgrade-container {
+	position: relative;
+	top: 40px;
+	left: -132px;
+	width: 150px;
+	margin: auto;
+	border: 1px solid black;
+}
+#upgrade-container #utitle {
+	margin: 0px;
+}
+#upgrade-container #upgrade-list {
+	list-style: none;
+	margin: 0px;
+	padding-left: 20px;
+}
+#upgrade-container #upgrade-list li:hover {
+	color: blue;
+}
+#upgrade-container #upgrade-list p {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+#upgrade-container #upgrade-list .cost {
+	float: right;
+}
+/* -- STATS INFORMATION -- */
+#stats-window {
+	position: relative;
+	top: 40px;
+	left: 107px;
+	width: 200px;
+	margin: auto;
+	border: 1px solid black;
+}
+#stats-window #stitle {
+	margin: 0px;
+}
+#stats-window p {
+	margin: 0;
+	margin-left: 20px;
+	padding: 0;
+}
+#stats-upgrades-bought, #stats-automation-income {
+	display: none;
+}
+/* -- AUTOMATION INFORMATION -- */
+#automation-display {
+	position: relative;
+	top: 30px;
+	margin: auto;
+	width: 400px;
+	border: 1px solid black;
+}
+#automation-display #atitle {
+	position: relative;
+	left: -35px;
+	margin: 0;
+	padding: 0;
+}
+#automation-display .auto-display {
+	width: 90%;
+	margin-left: 20px;
+	border: 1px solid black;
+}
+#automation-display .auto-display:hover {
+	border-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.03);
+}
+#automation-display .auto-name {
+	position: relative;
+	left: -15px;
+}
+#automation-display .auto-cost {
+	float: right;
+}
+#automation-display .auto-counter {
+	display: block;
+	width: 50%;
+}
+#automation-display .auto-income {
+	position: relative;
+	top: -1em;
+	float: right;
+}
+#automation-display p { display: inline; margin: 0; }

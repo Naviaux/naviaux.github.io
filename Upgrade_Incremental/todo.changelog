@@ -4,6 +4,9 @@
 3. *Get time playing working*
 
 /* -- CHANGELOG */
+r21.14.10.01
++Started groundwork for tool tips+
+
 r20.14.09.28
 +Implemented CPS (14 Upgrades)+ /* Current upgrade total: 172 */
 +Bounce CPS(1 Upgrade)+

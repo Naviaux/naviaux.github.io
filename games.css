@@ -1,0 +1,28 @@
+.changelog {
+	width: 60%;
+	padding: 5px;
+	border: 1px solid;
+}
+.changelog hr {
+	border-color: rgba(0, 0, 255, 0.2);
+	margin-top: 2px;
+	margin-bottom: 6px;
+}
+.changelog ul, li, h5, h4 {
+	margin: 0;
+}
+.changelog li > ul {
+	display: none;
+}
+.changelog li:hover > ul {
+	display: block;
+}
+.fix {
+	color: rgba(0, 0, 200, 1);
+}
+.new {
+	color: rgba(0, 200, 0, 1);
+}
+.removed {
+	color: rgba(200, 0, 0, 1);
+}

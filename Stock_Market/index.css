@@ -1,0 +1,90 @@
+#market-title {
+	width: 70%;
+	margin: auto;
+	margin-bottom: 25px;
+	
+	text-align: center;
+}
+
+#market-stats {
+	position: fixed;
+	top: 10px;
+	width: 300px;
+	padding: 10px;
+	border: 2px solid;
+	float: left;
+}
+#stat-title {
+	margin: 0;
+	margin-bottom: 5px;
+}
+#market-stats p {
+	margin: 0;
+	margin-left: 20px;
+}
+
+#market {
+	width: 50%;
+	margin: auto;
+	
+	text-align: center;
+}
+#market .stock {
+	width: 30%;
+	height: 40px;
+	padding: 10px;
+	float: left;
+	
+	font: 10px Consolas, monospace;
+}
+#market .stock:hover {
+	background-color: rgba(0, 0, 255, 0.2);
+}
+#market .stock:hover > .follow {
+	background-image: url("./assets/follow.png");
+}
+#market .stock:hover .follow:hover {
+	background-image: url("./assets/follow_hover.png");
+}
+.stock .follow {
+	position: relative;
+	left: 15px;
+	top: -5px;
+	width: 16px;
+	height: 16px;
+	float: right;
+}
+.stock p {
+	margin: 0;
+	text-align: center;
+}
+.stock .name {
+	width: 100%;
+	margin: auto;
+	
+	font-size: 18px;
+}
+.stock .price {
+	width: 100%;
+	margin: auto;
+}
+.stock .free {
+	float: left;
+}
+.stock .total {
+	float: right;
+}
+.stock .free, .total {
+	position: relative;
+	top: -40px;
+}
+
+.increase {
+	background-color: rgba(0, 255, 0, 0.2);
+}
+.decrease {
+	background-color: rgba(255, 0, 0, 0.2);
+}
+.split {
+	background-color: rgba(255, 255, 0, 0.2);
+}

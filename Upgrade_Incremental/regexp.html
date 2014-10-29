@@ -1,0 +1,38 @@
+<html>
+<head><title>Regular Expression Tester</title>
+<style>.match { background-color: green; } .no-match { background-color: red; }</style>
+<script type="text/javascript">
+	function validate() {
+		var expression = document.getElementById("expression").value;
+		var stringText = document.getElementById("stringTest").value;
+		var matches = new Array();
+		var output = document.getElementById("output");
+		if (matches = stringText.match(expression)) {
+			output.class = "match";
+			output.innerHTML = "It's a match!";
+			console.log("YEA IT MATCHED. GET REKT");
+			console.log(matches);
+			for (i = 0; i < matches.length; i++) {
+				output.innerHTML += "\nMatched: " + matches[i];
+			}
+		} else {
+			output.class = "no-match";
+			output.innerHTML = "It doesn't match...";
+		}
+	}
+</script>
+</head>
+<body>
+<h1>Regular Expression Tester</h1>
+<form action="">
+	<fieldset>
+<label>Expression:</label>
+<input id="expression" type="text" />
+<label>String:</label>
+<input id="stringTest" type="text" />
+<input type="button" onclick="validate()" value="Check" />
+<label id="output"></label>
+</fieldset>
+</form>
+</body>
+</html>

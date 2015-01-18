@@ -10,6 +10,8 @@ function addMenu(currentPage) {
 	var homeLink = document.createElement("a");
 	var gamesItem = document.createElement("li");
 	var gamesLink = document.createElement("a");
+	var programsItem = document.createElement("li");
+	var programsLink = document.createElement("a");
 	
 	headDiv.id = "head";
 	menuDiv.id = "menu";
@@ -25,11 +27,16 @@ function addMenu(currentPage) {
 	gamesLink.innerHTML = "Web Projects";
 	gamesItem.appendChild(gamesLink);
 	
+	programsLink.href = "programs.html";
+	programsLink.innterHTML = "Programs";
+	programsItem.appendChild(programsLink);
+	
 	headDiv.appendChild(mainTitle);
 	headDiv.appendChild(subTitle);
 	
 	menuList.appendChild(homeItem);
 	menuList.appendChild(gamesItem);
+	menuList.appendChild(programsItem);
 	menuDiv.appendChild(menuList);
 	
 	document.body.appendChild(headDiv);

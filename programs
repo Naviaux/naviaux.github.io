@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title>Naviaux Github</title>
+		<link rel = "stylesheet" type = "text/css" href = "index.css" />
+		<link rel = "stylesheet" type = "text/css" href = "games.css" />
+		<script src="createPage.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript"> addMenu("Home"); </script>
+		<div id="body">
+		  <div class = "changelog" id = "blbChangeLog">
+		    <a href = "dllink">BorderlandsBot</a>
+		    <hr />
+		    <h4>Changelog</h4>
+		    <ul>
+		      <li>
+		        <h5>v1.0</h5>
+		        <ul>
+		          <li class="new">Initial Release</li>
+		        </ul>
+		      </li>
+		    </ul>
+		  </div><br />
+			<div class = "changelog" id = "ompChangeLog">
+				<a href = "https://www.dropbox.com/s/7akfrbpzibryv07/osu%21%20Music%20Playerv1.3.6.jar?dl=0">Osu Music Player</a><sup><a class="src" href = "https://github.com/Naviaux/osu-music-player" title="Source">*</a></sup>
+				<hr />
+				<h4>Changelog</h4>
+				<ul>
+					<li>
+						<h5>v1.3.6</h5>
+						<ul>
+							<li class="new">Playlists! (Create, Favorite, etc.)</li>
+							<li class="new">Close Button on MiniPlayer</li>
+							<li class="fix">(Hopefully) Fixed various issues with the miniplayer</li>
+						</ul>
+					</li>
+					<li>
+						<h5>v1.2.1</h5>
+						<ul>
+							<li class="new">Added update detection</li>
+							<li class="new">Import Settings (Toggle WAV, MP3 and turn off osu! beatmap sounds)</li>
+							<li class="new">Seeking (Click on the progress bar to seek)</li>
+							<li class="new">Ability to remove tracks from library</li>
+							<li class="fix">Fixed an issue with repeat one</li>
+						</ul>
+					</li>
+					<li>
+						<h5>v1.1</h5>
+						<ul>
+						  <li class="new">Some settings are now saved (position, volume, repeat mode, shuffle toggle)</li>
+							<li class="fix">Fixed an issue with volume control bugging out (it still does, not as badly).</li>
+						</ul>
+					</li>
+					<li>
+					  <h5>v1.0.1</h5>
+					  <ul>
+					    <li class="fix">Fixed an Issue when selecting a song always playing the first song on the list.</li>
+					  </ul>
+					</li>
+					<li>
+					  <h5></h5>
+					  <ul>
+					    <li class="new">Initial Release</li>
+					  </ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

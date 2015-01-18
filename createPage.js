@@ -28,7 +28,7 @@ function addMenu(currentPage) {
 	gamesItem.appendChild(gamesLink);
 	
 	programsLink.href = "programs.html";
-	programsLink.innterHTML = "Programs";
+	programsLink.innerHTML = "Programs";
 	programsItem.appendChild(programsLink);
 	
 	headDiv.appendChild(mainTitle);

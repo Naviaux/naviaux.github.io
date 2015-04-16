@@ -25,6 +25,7 @@ a:hover { color: red; }
 	float: left;
 	padding: 10px;
 	border-right: 1px solid black;
+	text-align: right;
 }
 
 #menu ul, li {

@@ -7,7 +7,7 @@
 			function tick() {
 				var request = $.ajax({url: "http://api.steampowered.com/ISteamUserStats/GetGlobalStatsForGame/v0001/?appid=218620",
 				method: "POST",
-				data: { count : 3, name[0]: crimefest_challenge_chains_1, name[1]: crimefest_challenge_dallas_1, name[2]: clover_1}
+				data: { "count" : "3", "name[0]" : "crimefest_challenge_chains_1", "name[1]": "crimefest_challenge_dallas_1", "name[2]": "crimfest_challenge_clover_1"}
 				dataType: "json"
 				});
 				request.done(function(data) {

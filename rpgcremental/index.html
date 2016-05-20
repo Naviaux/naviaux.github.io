@@ -1,0 +1,466 @@
+<html>
+	<head>
+		<title>Incremental</title>
+		<style>
+			* {
+				-webkit-user-select: none;
+				user-select: none;
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				margin: 0;
+				background-color: #AAAAAA;
+				font-family: "TimeBurner";
+			}
+			#container {
+				text-align: center;
+			}
+			#nav { margin: 0; padding: 0; }
+			#nav ul {
+				display: none;
+				padding: 0;
+				margin: 0;
+				width: 100%;
+			}
+			#nav li {
+				display: block;
+				width: 100%;
+				background-color: #3333AA;
+				color: white;
+				border-bottom: 1px solid black;
+				padding: 4px 0;
+				margin: 0;
+			}
+			#nav #m_structures {
+				display: none;
+			}
+			#nav li:hover {
+				background-color: #5555AA;
+			}
+			#nav li:last-child {
+				border-bottom: 0;
+			}
+			#nav_bar {
+				box-sizing: box-border;
+				height: 36px;
+				margin-bottom: 5px;
+				width: 100%;
+				background-color: #7777DD;
+				text-align: left;
+			}
+			#resources {
+				font-family: "TimeBurner";
+				font-size: 36px;
+				font-weight: 900;
+			}
+			div[id*="-container"] {
+				display: none;
+				margin: 0 auto;
+				width: 80%;
+			}
+			div[id*="-container"] #gather {
+				margin-bottom: 5px;
+			}
+			#coal-container {
+				display: block;
+			}
+			#levels {
+				display: none;
+				text-transform: capitalize;
+			}
+			#levels div {
+				display: none;
+				box-sizing: border-box;
+				width: 80%;
+				text-align: left;
+				border: 1px solid black;
+				border-radius: 2px;
+				margin: 0 auto;
+				padding: 5px;
+				background-color: #CCCCCC;
+				margin-bottom: 5px;
+			}
+			#levels #mining {
+				display: block;
+			}
+			#gather {
+				box-sizing: border-box;
+				float: left;
+				width: 90%;
+				background-color: white;
+				border: 1px solid grey;
+				border-right: 1px solid #FFAAAA;
+				font-size: 24px;
+				padding: 5px;
+			}
+			.buy {
+				display: none;
+				box-sizing: border-box;
+				float: right;
+				width: 10%;
+				background-color: red;
+				border: 1px solid grey;
+				font-size: 24px;3
+				color: white;
+				padding: 5px;
+				margin: 0;
+			}
+			
+			#note_area {
+				text-transform: capitalize;
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+				float: left;
+			}
+			#note_area div {
+				background-color: #8888AA;
+				padding: 10px;
+				margin-bottom: 5px;
+			}
+			#note_area div:last-child {
+				margin-bottom: 0;
+			}
+			#structures { display: none; }
+			#structures div {
+				width: 80%;
+				box-sizing: box-border;
+				background-color: #CCCCCC;
+				margin: 0 auto 5px;
+				padding: 5px 0;
+				border: 1px solid black;
+				border-radius: 2px;
+			}
+			
+			[tooltip]:before {
+				content: attr(tooltip) "\a" attr(tt2);
+				position: absolute;
+				opacity: 0;
+				margin-left: -25%;
+				
+				transition: all 0.15s ease;
+				padding: 10px;
+				color: #333;
+				border-radius: 10px;
+				white-space: pre;
+				font-size: 14px;
+				text-align:left
+			}
+
+			[tooltip]:hover:before {
+				opacity: 1;
+				background: #DDD;
+				margin-top: 15px;
+				margin-left: -25%;
+			}
+			
+			@media screen and (min-width: 600px) {
+				body { margin: 10px auto 0; }
+				#nav { display: none; }
+				#nav_bar { display: none; }
+				#levels {
+					display: block;
+					width: 20%;
+					float: left;
+				}
+				div[id*="-container"] {
+					width: 30%;
+				}
+				#structures {
+					position: absolute;
+					right: 0;
+					width: 20%;
+				}
+				[tooltip]:hover:before {
+					opacity: 1;
+					background: #DDD;
+					margin-top: 15px;
+					margin-left: -10%;
+				}
+			}
+			
+		</style>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script>
+			$(function() {
+			
+				$("#nav_bar").on("click", function() {
+					$("#nav ul").slideToggle();
+				});
+				$("#m_collection").on("click", function() { changeScreen(0) });
+				$("#m_levels").on("click", function() { changeScreen(1) });
+				$("#m_structures").on("click", function() { changeScreen(2) });
+				
+				var currentScreen = 0;
+				function changeScreen(screen) {
+					$("#nav ul").slideToggle();
+					var screens = ["collection", "levels", "structures"];
+					$("#" + screens[currentScreen]).hide();
+					$("#" + screens[screen]).show();
+					currentScreen = screen;
+				}
+
+				var player = {};
+				player.experience = {};
+				player.experience.mining = 0;
+				player.experience.smelting = 0;
+				player.experience.construction = 0;
+				player.levels = {};
+				player.levels.mining = 1;
+				player.levels.smelting = 1;
+				player.levels.construction = 1;
+				player.resources = {};
+				player.resources.coal = 0;
+				player.resources.ironore = 0;
+				player.resources.iron = 0;
+				player.resources.steel = 0;
+				player.structures = {};
+				player.structures.auto_mine_coal = 0;
+				player.structures.auto_mine_iron = 0;
+				player.structures.auto_smelt_iron = 0;
+				player.structures.auto_smelt_steel = 0;
+				player.structures.active = {};
+				player.structures.active.auto_mine_coal = 0;
+				player.structures.active.auto_mine_iron = 0;
+				player.structures.active.auto_smelt_iron = 0;
+				player.structures.active.auto_smelt_steel = 0;
+				
+				var game_data = {};
+				game_data.levels = {};
+				game_data.levels.mining = {3:["ironore"]};
+				game_data.levels.smelting = {5:["steel"]};
+				game_data.levels.construction = {};
+				game_data.smelting = {};
+				game_data.smelting.iron = {levelreq:1, res:{1:["ironore"], 2:["coal"]}}; // ["coal", "coal", "ironore"]
+				game_data.smelting.steel = {levelreq:5, res:{2:["iron", "coal"]}};  // ["coal", "coal", "iron", "iron"];
+				game_data.construction = {};
+				game_data.construction.auto_mine_coal = {levelreq:1, res:{1:["steel"], 5:["iron"]}}; // ["iron", "iron", "iron", "iron", "iron", "steel"]; 
+				game_data.construction.auto_mine_iron = {levelreq:3, res:{3:["steel"], 5:["iron"]}}; // ["iron", "iron", "iron", "iron", "iron", "steel", "steel", "steel"];
+				game_data.construction.auto_smelt_iron = {levelreq:5, res:{5:["steel"]}};		   // ["steel", "steel", "steel", "steel", "steel"];
+				game_data.construction.auto_smelt_steel = {levelreq:10, res:{7:["steel"]}};		   // ["steel", "steel", "steel", "steel", "steel", "steel", "steel", "steel"];
+				game_data.structure_data = {};
+				game_data.structure_data.auto_mine_coal = {resource:"coal", income:1};
+				game_data.structure_data.auto_mine_iron = {resource:"ironore", income:1};
+				game_data.structure_data.auto_smelt_iron = {resource:"iron", income:1, usesResources:"smelting"};
+				game_data.structure_data.auto_smelt_steel = {resource:"steel", income:1, usesResources:"smelting"};
+				game_data.specials = {};
+				game_data.specials.resources = {};
+				game_data.specials.resources.ironore = {1:["#smelting", "#iron-container"], activated:false};
+				game_data.specials.resources.steel = {1:["#construction", ".buy", "#m_structures"], activated:false};
+				game_data.specials_desktop = {};
+				game_data.specials_desktop.resources = {};
+				game_data.specials_desktop.resources.steel = {1:["#structures"], activated:false};
+
+				var exp_req = 100;
+
+				updateLevels();
+
+				$("#coal-container #gather").on("click", function() {
+					$(this).html("Mine Coal: " + ++player.resources.coal);
+					player.experience.mining += Math.floor(10 / player.levels.mining);
+					updateLevels();
+				});
+				$("#coal-container .buy").on("click", function() {
+					if (playerHasResources("construction", "auto_mine_coal")) {
+						$("#auto_mine_coal").html("Coal Mines: " + ++player.structures.active.auto_mine_coal + "/" + ++player.structures.auto_mine_coal);
+						player.experience.construction += Math.floor(50 / player.levels.construction);
+					}
+					updateLevels();
+				});
+				$("#ironore-container #gather").on("click", function() {
+					if (player.levels.mining >= 3) {
+						$(this).html("Mine Iron: " + ++player.resources.ironore);
+						player.experience.mining += Math.floor(20 / (player.levels.mining - 2));
+					}
+					updateLevels();
+				});
+				$("#ironore-container .buy").on("click", function() {
+					if (playerHasResources("construction", "auto_mine_iron")) {
+						$("#auto_mine_iron").html("Iron Mines: " + ++player.structures.active.auto_mine_iron + "/" + ++player.structures.auto_mine_iron);
+						player.experience.construction += Math.floor(75 / (player.levels.construction - 2));
+					}
+					updateLevels();
+				});
+				$("#iron-container #gather").on("click", function() {
+					if (playerHasResources("smelting", "iron")) {
+						$(this).html("Smelt Iron: " + ++player.resources.iron);
+						player.experience.smelting += Math.floor(25 / player.levels.smelting);
+					}
+					updateLevels();
+				});
+				$("#iron-container .buy").on("click", function() {
+					if (playerHasResources("construction", "auto_smelt_iron")) {
+						$("#auto_smelt_iron").html("Iron Smelteries: " + ++player.structures.active.auto_smelt_iron + "/" + ++player.structures.auto_smelt_iron);
+						player.experience.construction += Math.floor(150 / (player.levels.construction - 4));
+					}
+					updateLevels();
+				});
+				$("#steel-container #gather").on("click", function() {
+					if (playerHasResources("smelting", "steel")) {
+						$(this).html("Smelt Steel: " + ++player.resources.steel);
+						player.experience.smelting += Math.floor(50 / (player.levels.mining - 5));
+					}
+					updateLevels();
+				});
+				$("#steel-container .buy").on("click", function() {
+					if (playerHasResources("construction", "auto_smelt_steel")) {
+						$("#auto_smelt_steel").html("Steel Smelteries: " + ++player.structures.active.auto_smelt_steel + "/" + ++player.structures.auto_smelt_steel);
+						player.experience.construction += Math.floor(300 / (player.levels.construction - 9));
+					}
+					updateLevels();
+				});
+				
+				function playerHasResources(type, make, multiplicator) {
+					if (!multiplicator)
+						multiplicator = 1
+					if (player.levels[type] >= game_data[type][make].levelreq) {
+						for (var k in game_data[type][make].res) {
+							var key = game_data[type][make].res[k]
+							for (var v in key) {
+								if (player.resources[key[v]] < k * multiplicator)
+									return false;
+							}
+						}
+						for (var k in game_data[type][make].res) {
+							var key = game_data[type][make].res[k]
+							for (var v in key) {
+								player.resources[key[v]] -= k * multiplicator;
+							}
+						}
+						return true;
+					}
+					return false;
+				}
+				
+				function updateLevels() {
+					for (var k in player.levels) {
+						if (player.experience[k] >= player.levels[k] * exp_req) {
+							player.experience[k] -= player.levels[k] * exp_req;
+							player.levels[k]++;
+							if (game_data.levels[k][Math.floor(player.levels[k])] != null) {
+								$("#" + game_data.levels[k][Math.floor(player.levels[k])] + "-container").show();
+							}
+							notify(k + " is now level " + player.levels[k] + "!");
+						}
+						$('#levels #' + k + ' p').html(k + ": " + player.levels[k]);
+						$('#levels #' + k + ' progress').attr('value', String(player.experience[k]));
+						$('#levels #' + k + ' progress').attr('max', String(player.levels[k] * exp_req));
+					}
+					updateLabels();
+					checkSpecials();
+				}
+				var note_count = 0;
+				function notify(text) {
+					$("#note_area").append("<div id='note-" + ++note_count + "'>" + text + "</div>");
+					
+					$("#note_area div").on("click", removeNote(note_count));
+					setTimeout(removeNote(note_count), 5000);
+					
+					function removeNote(note_count_id) {
+						return (function() {
+							$("#note_area #note-" + note_count_id).remove();
+						});
+					}
+				}
+				function updateLabels() {
+					var ids = {container:["coal", "ironore", "iron", "steel"]};
+					var labels = ["Mine Coal", "Mine Iron", "Smelt Iron", "Smelt Steel"];
+					for (var k in ids) {
+						for (var v in ids[k]) {
+							var ind = ids[k];
+							$("#" + ind[v] + "-" + k + " #gather").html(labels[v] + ": " + player.resources[ind[v]]);
+						}
+					}
+				}
+				function checkSpecials() {
+					for (var base_loop in game_data.specials) {
+						for (var sub_loop in game_data.specials[base_loop]) {
+							for (var k in game_data.specials[base_loop][sub_loop]) {
+								if (!(game_data.specials[base_loop][sub_loop].activated)) {
+									var v = game_data.specials[base_loop][sub_loop][k];
+									var v_desk = game_data.specials_desktop[base_loop][sub_loop] != null ? game_data.specials_desktop[base_loop][sub_loop][k] : false;
+									switch (base_loop) {
+										case "resources":
+											if (player.resources[sub_loop] >= k) {
+												for (var value in v)
+													$(v[value]).show();
+												if ($(window).width() >= 600 && v_desk)
+													for (var value in v_desk)
+														$(v_desk[value]).show();
+												game_data.specials[base_loop][sub_loop].activated = true;
+											}
+											break;
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				function clock() {
+					for (var p_data in player.structures.active) {
+						for (var iterations = 0; iterations < player.structures.active[p_data]; iterations++) {
+							var g_data = game_data.structure_data[p_data];
+							var cont = true;
+							if (g_data.usesResources) {
+								if (!playerHasResources(g_data.usesResources, g_data.resource, g_data.income)) {
+									cont = false;
+								}
+							}
+							if (cont) {
+								player.resources[g_data.resource]++;
+								updateLabels();
+							}
+						}
+					}
+				}
+				setInterval(clock, 1000);
+			});
+
+		</script>
+	</head>
+	<body>
+		<div id = "container">
+			<div id = "nav">
+				<ul class = "">
+					<li id = "m_collection">Collection</li>
+					<li id = "m_levels">Levels</li>
+					<li id = "m_structures">Structures</li>
+				</ul>
+			</div>
+			<div id = "nav_bar"></div>
+			<div id = "levels">
+				<div id = "mining">
+					<p>Mining: 0</p>
+					<progress id = "progress"></progress>
+				</div>
+				<div id = "smelting">
+					<p>Smelting: 0</p>
+					<progress id = "progress"></progress>
+				</div>
+				<div id = "construction">
+					<p>Construction: 0</p>
+					<progress id = "progress"></progress>
+				</div>
+			</div>
+			<div id = "collection">
+				<div id = "resources"></div>
+				<div id = "coal-container"><div id = "gather" tooltip="Mining Level: 1">Mine Coal: 0</div><div class = "buy" tooltip = "Construction Level: 1" tt2="1 Steel, 5 Iron">+</div></div>
+				<div id = "ironore-container"><div id = "gather" tooltip="Mining Level: 3">Mine Iron: 0</div><div class = "buy" tooltip = "Construction Level: 3" tt2="3 Steel, 5 Iron">+</div></div>
+				<div id = "iron-container"><div id = "gather" tooltip="Smelting Level: 1" tt2="2 Coal, 1 Iron Ore">Smelt Iron: 0</div><div class = "buy" tooltip = "Construction Level: 5" tt2="5 Steel">+</div></div>
+				<div id = "steel-container"><div id = "gather" tooltip="Smelting Level: 5" tt2="2 Coal, 2 Iron">Smelt Steel: 0</div><div class = "buy" tooltip = "Construction Level: 10" tt2="7 Steel">+</div></div>
+			</div>
+			<div id = "structures">
+				<div id = "auto_mine_coal">Coal Mines: 0/0</div>
+				<div id = "auto_mine_iron">Iron Mines: 0/0</div>
+				<div id = "auto_smelt_iron">Iron Smelteries: 0/0</div>
+				<div id = "auto_smelt_steel">Steel Smelteries: 0/0</div>
+			</div>
+			<div id = "note_area">
+				
+			</div>
+		</div>
+	</body>
+</html>

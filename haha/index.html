@@ -1,0 +1,193 @@
+<html>
+	<head>
+		<title>Trial & Error</title>
+		<style>
+			.automation {
+				position: relative;
+				border: 2px solid black;
+				margin: 5 0;
+				padding: 3px;
+				width: 300px;
+				display: inline-block;
+			}
+			.automation p {
+				display: inline-block;
+				margin: 0;
+			}
+			.automation .production_percentage {
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-color: rgba(0, 150, 0, 0.35);
+				height: 100%;
+				width: 100%;
+			}
+			.automation #per_second {
+				float: right;
+			}
+			.automation #production {
+				float: right;
+			}
+			.upgrade {
+				display: inline-block;
+				border: 2px solid black;
+				visibility: hidden;
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script>
+				var player = [];
+				var update;
+				var game = [];
+			$(document).ready(function() {
+				player.currency = 0;
+				player.totals = [];
+				player.totals.currency = 0;
+				player.totals.clicks = 0;
+				player.totals.autoCurrency = 0;
+				player.autos = [];
+			//	player.autos.basic = 0;
+			//	player.autos.novice = 0;
+			//	player.autos.intermediate = 0;
+			//	player.autos.advanced = 0;
+			//	player.autos.expert = 0;
+			//	player.autos.professional = 0;
+			//	player.autos.master = 0;
+				
+				game.tickspeed = 100;
+				game.autos = [];
+			//	game.autos.basic = [];
+			//	game.autos.basic.cost = [];
+			//	game.autos.basic.cost.base = 10;
+			//	game.autos.basic.cost.multiplier = 1.015;
+			//	game.autos.basic.upgrade = [];
+			//	game.autos.basic.upgrade.cost = 10;
+			//	game.autos.basic.upgrade.multiplier = 5;
+			//	game.autos.basic.production = [];
+			//	game.autos.basic.production.base = 1;
+			//	game.autos.basic.production.multiplier = 2;
+				
+				var a_string = '\
+					<div id = "(_name_)" class = "automation">\
+						<div class="production_percentage"></div>\
+						<p id="name">(_name_) x(_amount_)</p><p id="per_second">0</p><br>\
+						<p id="cost">(_cost_)</p><p id="production">(_production_)</p>\
+					</div>\
+					<div id = "(_name_)" class = "upgrade">\
+						(_u_cost_)\
+					</div><br>\
+				';
+				
+				// String, Array[2], Array[3], Array[2]
+				function addAutomation (name, _cost, _upgrade, _production) {
+					player.autos.push(name);
+					player.autos[name] = [];
+					player.autos[name].count = 0;
+					player.autos[name].upgrades = 0;
+					game.autos[name] = [];
+					game.autos[name].cost = [];
+					game.autos[name].cost.base = _cost[0];
+					game.autos[name].cost.multiplier = _cost[1];
+					game.autos[name].upgrade = [];
+					game.autos[name].upgrade.cost = _upgrade[0];
+					game.autos[name].upgrade.multiplier = _upgrade[1];
+					game.autos[name].upgrade.max = _upgrade[2];
+					game.autos[name].production = [];
+					game.autos[name].production.base = _production[0];
+					game.autos[name].production.multiplier = _production[1];
+					$("#autos").html($("#autos").html() + a_string.replace(/\(\_name\_\)/g, name).replace(/\(\_amount\_\)/g, 0).replace(/\(\_cost\_\)/g, _cost[0]).replace(/\(\_production\_\)/g, _production[0]).replace(/\(\_u\_cost\_\)/g, _upgrade[0]));
+				}
+			
+				addAutomation("basic", [10, 1.015], [10, 5, 50], [1, 2]);
+				addAutomation("beginner", [20, 1.03], [20, 5.75, 50], [5, 1.85]);
+				addAutomation("novice", [50, 1.075], [50, 7.5, 50], [15, 1.775]);
+				addAutomation("intermediate", [75, 1.1], [100, 9, 50], [30, 1.7]);
+				addAutomation("advanced", [150, 1.135], [250, 11, 50], [90, 1.66]);
+				addAutomation("expert", [300, 1.15], [600, 13.75, 50], [200, 1.45]);
+				addAutomation("professional", [750, 1.245], [900, 14.65, 50], [600, 1.375]);
+				addAutomation("master", [1250, 1.29], [1500, 15.2, 50], [1800, 1.3]);
+				
+				function tick() {
+					update();
+					pp();
+					can_buy();
+					setTimeout(tick, game.tickspeed);
+				}
+				
+				function pp() {
+					let production = 0;
+					player.autos.forEach(function(a) {
+						production += game.autos[a].production.base * player.autos[a].count;
+					});
+					player.autos.forEach(function(a) {
+						$("#" + a + " .production_percentage").width((((game.autos[a].production.base * player.autos[a].count) / production) * 100) + "%");
+					});
+				}
+				
+				function can_buy () {
+					player.autos.forEach(function (a) {
+						if (player.currency >= game.autos[a].cost.base)
+							$("#" + a + " #cost").css("color", "black");
+						else
+							$("#" + a + " #cost").css("color", "red");
+						if (player.currency >= game.autos[a].upgrade.cost)
+							$("#" + a + ".upgrade").css("color", "black");
+						else
+							$("#" + a + ".upgrade").css("color", "red");
+					});
+				}
+				
+				update = function () {
+					let production = 0;
+					player.autos.forEach(function(e) {
+						production += game.autos[e].production.base * player.autos[e].count;
+						if (player.autos[e].count >= 25 + player.autos[e].upgrades * 25)
+							$("#" + e + ".upgrade").css("visibility", "visible");
+					});
+					player.currency += production / (1000 / game.tickspeed);
+					
+					$("#currency").html(Math.floor(player.currency));
+					
+				}
+				tick();
+				
+				$("#clicker").on("click", function () {
+					player.currency += 1;
+					update();
+				});
+				$(".automation").on("click", function() {
+					let id = $(this).attr('id');
+					if (player.currency >= game.autos[id].cost.base) {
+						player.currency -= game.autos[id].cost.base;
+						player.autos[id].count++;
+						game.autos[id].cost.base = Math.ceil(game.autos[id].cost.base * game.autos[id].cost.multiplier);
+						$(this).find("#name").html(id + " x" + player.autos[id].count);
+						$(this).find("#cost").html(game.autos[id].cost.base);
+						$(this).find("#per_second").html(game.autos[id].production.base * player.autos[id].count);
+					}
+				});
+				$(".upgrade").on("click", function() {
+					let id = $(this).attr('id');
+					if (player.currency >= game.autos[id].upgrade.cost && player.autos[id].upgrades < game.autos[id].upgrade.max) {
+						player.currency -= game.autos[id].upgrade.cost;
+						player.autos[id].upgrades++;
+						game.autos[id].upgrade.cost = Math.ceil(game.autos[id].upgrade.cost * game.autos[id].upgrade.multiplier);
+						game.autos[id].production.base = Math.floor(game.autos[id].production.base * game.autos[id].production.multiplier);
+						$("#" + id + ".automation #production").html(game.autos[id].production.base);
+						$("#" + id + ".automation #per_second").html(game.autos[id].production.base * player.autos[id].count);
+						$(this).html(game.autos[id].upgrade.cost);
+						if (player.autos[id].upgrades >= game.autos[id].upgrade.max || player.autos[id].count < 25 + player.autos[id].upgrades * 25)
+							$(this).css("visibility", "hidden");
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="currency">0</div>
+		<div id="clicker">$</div>
+		<div id="autos">
+			
+		</div>
+	</body>
+</html>

@@ -27,14 +27,12 @@ function isUpgradeBought(ID) { // TIME TO START REPLACING SOME VARIABLES
 		return upgradeID[getUpgradeID(ID)][5];
 	return false;
 }
-function convertNumber (numeral) {
-	var sNumeral = Math.round(numeral).toLocaleString();
-	var shortValues = new Array("K", "M", "B", "T", "q", "Q", "s");
-	if (sNumeral.length > 5 && Math.floor((sNumeral.length - 5) / 4) < shortValues.length) { // check length is above 5 and that math is less than shortValues length
-		var number = sNumeral.indexOf(","); // math signifies how many , there are... there must be an easier way of counting...
-		return sNumeral.substring(0, number) + "." + sNumeral.substring(number + 1, number + 2) + shortValues[Math.floor((sNumeral.length - 5) / 4)]; // weird displaying info
-	} else if (Math.floor((sNumeral.length - 5) / 4) > shortValues.length) { // same weird math thing... maybe a % operator would do the trick
-		return ">999.9" + shortValues[shortValues.length - 1]; // WHY DO YOU HAVE THIS MUCH MONEY
+function convertNumber(num) {
+	var counter = 0;
+	var units = new Array("","K", "M", "B", "T", "q", "Q", "s");
+	while(num > 1000 && counter < units.length-1) {
+		num = num/1000;
+		counter++;
 	}
-	return sNumeral;
+	return (Math.round(num*100)/100).toLocaleString()+units[counter];
 }

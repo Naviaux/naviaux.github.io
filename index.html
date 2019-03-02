@@ -1,77 +1,253 @@
 <html>
-  <head>
-    <title>Home | Naviaux Github</title>
-	<link rel = "stylesheet" type = "text/css" href = "index.css" />
-	<style>
-		.post {
-			width: 90%;
-			border-bottom: 1px solid black;
-		}
-		.post .content {
-			width: 75%;
-		}
-		.post h4 {
-			display: inline;
-			margin: 0;
-		}
-		.post #date {
-			font-family: monospace;
-			float: right;
-			position: relative;
-		}
-	</style>
-  </head>
-  <body>
-	<script src="createPage.js"></script>
-	<script type="text/javascript"> addMenu("Home"); </script>
-	<div id = "body">
-		<div class="post">
-			<div class="content">
-				<h4 id="title">Abandonment and Failings</h4>
-				<h4 id="date">2015-04-16</h4>
-				<p>
-					Well, essentially all of my projects are on hold currently.<br /><br />
-					I've realized that the best way to do BorderlandsBot is in a web interface, and unluckily for me, I don't have the backend to support that.<br /><br />
-					osu! Music Player is for the most part working, so it's on hold until something overly major comes up in the way of issues. Mainly minor things that become problematic.<br /><br />
-					Upgrade Incremental is for all intents and purposes, abandoned. I did not have many ideas going into the project because of that, it failed miserably. Also having a lack of interest in the genre of game currently is also keeping me away from revisiting the game. I may pick the idea back up in the future, but for now, it's finished.<br /><br />
-					In other news, I've gotten myself a coach to assist me in my gameplay on League of Legends. He is an accomplished Smite player, so I trust his judgement. As a side note: no, I am not looking to join a team at this time. No, he will not coach you and no, I will not give you his name (mainly because I'm not sure if he wants his name released).<br /><br />
-					BTW: Github is hard to use on mobile devices. This is the third edit I had to do in order to finish this post. As well as a follow up commit on a PC to fix mistakes.
-				</p>
-			</div>
+	<head>
+		<title>AzurLane Tier List Generator</title>
+	
+		<style>
+		
+			body {
+				background-color: #222;
+				color: white;
+				font-family: sans-serif;
+			}
+		
+			.tier {
+				min-height: 72px;
+			}
+			#ship_storage #overall th {
+				padding: 3px;
+			}
+			#ship_storage #ss_hide {
+				display: block;
+				float: right;
+				cursor: pointer;
+			}
+			#ship_storage table {
+				width: 100%;
+				border-collapse: collapse;
+			}
+			#ship_storage table, th, td {
+				border: 1px solid black;
+			}
+			#ship_storage td {
+				vertical-align: top;
+				align: left;
+			}
+			.ship {
+				position: relative;
+				left: 0;
+				top: 0;
+				height: calc(72px + 1em);
+				width: 72px;
+				float: left;
+				background-size: 72px;
+				vertical-align: bottom;
+			}
+			.normal {
+				background-color: gainsboro;
+			}
+			.rare {
+				background-color: powderblue;
+			}
+			.elite {
+				background-color: plum;
+			}
+			.super {
+				background-color: palegoldenrod;
+			}
+			.ultra {
+				-moz-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: -o-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: -webkit-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: linear-gradient(to bottom right, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+			}
+			.retro:before {
+				display: block;
+				content: "KAI";
+				color: white;
+				font-family: sans-serif;
+				transform: rotate(45deg);
+				position: relative;
+				right: -2.5em;
+				top: 0.75em;
+				background-color: red;
+				font-size: 10px;
+				text-align: center;
+			}
+			.retro {
+				overflow: hidden;
+			}
+			
+			.ship span {
+				font-family: sans-serif;
+				font-size: 8px;
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				background-color: gray;
+				color: white;
+				display: block;
+				text-align: right;
+				padding-right: 2px;
+				box-sizing: border-box;
+				background-repeat: no-repeat;
+				background-size: auto 14px;
+				background-position-y: -2px;
+			}
+			.ar {
+				background-image: url('imgs/AR.png');
+			}
+			.bb {
+				background-image: url('imgs/BB.png');
+			}
+			.bbv {
+				background-image: url('imgs/BBV.png');
+			}
+			.ca {
+				background-image: url('imgs/CA.png');
+			}
+			.cl {
+				background-image: url('imgs/CL.png');
+			}
+			.cv {
+				background-image: url('imgs/CV.png');
+			}
+			.dd {
+				background-image: url('imgs/DD.png');
+			}
+			.ss {
+				background-image: url('imgs/SS.png');
+			}
+			
+		</style>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="ShipList.js"></script>
+		<script>
+			$(document).ready( function() {
+			
+				$("#ss_hide").on('click', function () {
+					let t = $("#ship_storage tbody").toggle(250);
+					$(this).html($(this).html() == "SHOW" ? "HIDE" : "SHOW");
+				});
+			
+				function generalizeType (hullID, strict) {
+					switch (hullID) {
+						case ShipHulls.BB:
+						case ShipHulls.BC:
+						case ShipHulls.BM:
+							return "bb";
+						case ShipHulls.BBV:
+							if (!strict)
+								return "bb";
+							else
+								return "bbv";
+						case ShipHulls.CV:
+						case ShipHulls.CVL:
+							return "cv";
+						case ShipHulls.CA:
+							return "ca";
+						case ShipHulls.CL:
+							return "cl";
+						case ShipHulls.DD:
+							return "dd";
+						case ShipHulls.SS:
+							return "ss";
+						case ShipHulls.AR:
+							if (strict)
+								return "ar";
+						default:
+							return "misc";
+					}
+				}
+				function rarityID (shipRarity) {
+					switch (shipRarity) {
+						case Rarity.R:
+							return "rare";
+						case Rarity.E:
+							return "elite";
+						case Rarity.SR:
+							return "super";
+						case Rarity.UR:
+							return "ultra";
+						default:
+							return "normal";
+					}
+				}
+				function isRetro (id) {
+					return id > 3000 ? "retro" : "";
+				}
+				function isPrototype (id) {
+					return id.includes("Plan") ? "prototype" : "";
+				}
+				function populateStorage() {
+					for (let ship of ships) {
+						if (ship.rarity != Rarity.UN) {
+							var type = $("#" + generalizeType(ship.hull));
+							var classes = "ship " + rarityID(ship.rarity) + " " + isRetro(ship.id) + " " + isPrototype(ship.id);
+							type.html(type.html() + '<div class = "' + classes + '" style = "background-image: url(\'ships/' + ship.id + '.png\')"><span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span></div>');
+						}
+					}
+				}
+				populateStorage();
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id =tiers">
+		
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Main Fleet</th>
+					<th>Vanguard</th>
+					<th>Submarine</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class = "tier" id = "0">
+					<td>T0</td>
+					<td id = "main"></td>
+					<td id = "vanguard"></td>
+					<td id = "submarine"></td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+				
+				</tr>
+			</tfoot>
+		</table>
+		
 		</div>
-		<div class="post">
-			<div class="content">
-				<h4 id="title">Programs</h4>
-				<h4 id="date">2015-01-18</h4>
-				<p>
-					I've decided to start keeping a changelog and download link to the programs I'm developing on this webpage, both for organization and
-					consistency sake.<br /><br />
-					There are currently two programs that I've added to the website: BorderlandsBot and Osu Music Player<br /><br />
-					At the moment BorderlandsBot is under heavy development, but when it is done people who speedrun any Borderlands game on Twitch will be able to
-					add a bot to their channel (aka BorderlandsBot) and it will have general commands for the Borderlands games for questions that are asked
-					fairly often. Once it is done, I plan for it to have custom commands, timers, and various other things. However, the first release will
-					have preset commands that you can enable and disable.<br /><br />
-					osu! Music Player is - as you can hopefully tell - a music player. It's visuals are inspiried by a rhythm game that goes by the name of
-					osu!. The objective with this was to create a music player that has a low profile on screen, but still looks nice.
-				</p>
-			</div>
+		<div id="ship_storage">
+			<table>
+				<thead>
+					<tr id = "overall">
+						<th colspan='7'>Ship Storage<span id = "ss_hide">HIDE</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>BB, BC, BM, BBV</th>
+						<th>CV, CVL</th>
+						<th>CA</th>
+						<th>CL</th>
+						<th>DD, DE</th>
+						<th>SS</th>
+						<th>Misc</th>
+					</tr>
+					<tr>
+						<td id = "bb"></td>
+						<td id = "cv"></td>
+						<td id = "ca"></td>
+						<td id = "cl"></td>
+						<td id = "dd"></td>
+						<td id = "ss"></td>
+						<td id = "misc"></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<div class="post">
-			<div class="content">
-				<h4 id="title">Regarding Disappearance</h4>
-				<h4 id="date">2014-10-27</h4>
-				<p>
-					For those of you whom are wondering why there have been lack of updates on Upgrade Incremental is because I have been working on
-					other projects that require a lot of planning and personal time. <br /><br />
-					I have also been trying to find a job in attempt to improve various hardware and software components of my computer, though I have been
-					unsuccessful thus far. <br /><br />
-					I will keep this blog up to date with various information on when I will be able to resume Upgrade Incremental as well as other
-					projects that I will be working on. As for now, Upgrade Incremental is on hold and when I have time to work on it, will be receiving a
-					major overhaul in various aspects. <br /><br />
-					Again, sorry for any inconvenience this has caused as well as concerns as to where I have dissappeared to.
-				</p>
-			</div>
-		</div>
-	</div>
-  </body>
+	</body>
 </html>

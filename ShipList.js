@@ -1422,7 +1422,7 @@ var ships = [
 	},
 	{
 		id		:	"238",
-		name	:	"Königsberg",
+		name	:	"Konigsberg",
 		faction	:	"Ironblood",
 		hull	:	ShipHulls.CL,
 		rarity	:	Rarity.N,
@@ -1438,7 +1438,7 @@ var ships = [
 	},
 	{
 		id		:	"240",
-		name	:	"Köln",
+		name	:	"Koln",
 		faction	:	"Ironblood",
 		hull	:	ShipHulls.CL,
 		rarity	:	Rarity.N,
@@ -2759,8 +2759,8 @@ var ships = [
 	{
 		id		:	"3188",
 		name	:	"Mogami",
-		faction	:	"Heavy Cruiser",
-		hull	:	ShipHulls.CL,
+		faction	:	"Sakura Empire",
+		hull	:	ShipHulls.CA,
 		rarity	:	Rarity.SR,
 		hasRetro:	false
 	},

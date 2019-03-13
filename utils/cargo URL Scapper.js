@@ -1,5 +1,33 @@
 var table = $(".cargoTable tbody");
 var q = "";
+function hullf(fulltext) {
+	switch(fulltext){
+        case "Destroyer": return "ShipHulls.DD";
+        case "Light Cruiser": return "ShipHulls.CL";
+        case "Battleship": return "ShipHulls.BB";
+        case "Light Aircraft Carrier": return "ShipHulls.CVL";
+        case "Aircraft Carrier": return "ShipHulls.CV";
+        case "Repair Ship": return "ShipHulls.AR";
+        case "Heavy Cruiser": return "ShipHulls.CA";
+        case "Battlecruiser": return "ShipHulls.BC";
+        case "Monitor": return "ShipHulls.BM";
+        case "Submarine": return "ShipHulls.SS";
+        case "BBV": return "ShipHulls.BBV";
+        default: return "ERR";
+    }
+}
+function rarityf (fulltext) {
+	switch(fulltext) {
+        case "Normal": return "Rarity.N";
+        case "Rare": return "Rarity.R";
+        case "Elite": return "Rarity.E";
+        case "Super Rare": return "Rarity.SR";
+		case "Ultra Rare": return "Rarity.UR";
+        case "Priority": return "Rarity.P";
+        case "Unreleased": return "Rarity.UN";
+		default: return "ERR";
+    }
+}
 for (let ship of table.find("tr")) {
 	ship = $(ship);
 	var id = ship.find(".field_ShipID")[0].innerHTML;

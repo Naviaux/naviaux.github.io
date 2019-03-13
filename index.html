@@ -158,6 +158,14 @@
 			var timer;
 			var move_to_storage = false;
 		
+			var LANG = Object.freeze({
+				EN	:	"en",
+				CN	:	"cn",
+				JP	:	"jp"
+			});
+			
+			var ACTIVE_LANG = LANG.EN;
+		
 			$(document).ready( function() {
 			
 				$("#ss_hide").on('click', function () {
@@ -244,7 +252,7 @@
 							object.attr("class", classes);
 							object.css("background-image", "url('ships/" + ship.id + ".png')");
 							object.on("click", moveShip);
-							object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span>');
+							object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
 							
 							type.append(object);
 							
@@ -263,7 +271,7 @@
 						object.attr("class", classes);
 						object.css("background-image", "url('ships/" + ship.id + ".png')");
 						object.on("click", moveShip);
-						object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span>');
+						object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
 						
 						type.append(object);
 						

@@ -1,4 +1,4 @@
-var ShipHulls = Object.freeze({
+﻿var ShipHulls = Object.freeze({
 	"BB" : 0,
 	"BC" : 1,
 	"BM" : 2,
@@ -27,2941 +27,4352 @@ var ShipFleet = Object.freeze({
 });
 //var ShipFaction = Object.freeze({});
 
-var ships = [
-	{
-		id		:	"001",
-		name	:	"Universal Bullin",
-		faction	:	"Universal",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"002",
-		name	:	"Trial Bullin MKII",
-		faction	:	"Universal",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	}, //3,4
-	{
-		id		:	"005",
-		name	:	"Cassin",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"006",
-		name	:	"Downes",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"007",
-		name	:	"Gridley",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"008",
-		name	:	"Craven",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"009",
-		name	:	"McCall",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"010",
-		name	:	"Maury",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"011",
-		name	:	"Fletcher",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	}, //12
-	{
-		id		:	"013",
-		name	:	"Charles Ausburne",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"014",
-		name	:	"Thatcher",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"015",
-		name	:	"Aulick",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"016",
-		name	:	"Foote",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"017",
-		name	:	"Spence",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"018",
-		name	:	"Benson",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"019",
-		name	:	"Laffey",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	}, //20,21,22,23,24,25
-	{
-		id		:	"026",
-		name	:	"Sims",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"027",
-		name	:	"Hammann",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"028",
-		name	:	"Eldridge",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"029",
-		name	:	"Omaha",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"030",
-		name	:	"Raleigh",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"031",
-		name	:	"Brooklyn",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"032",
-		name	:	"Phoenix",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"033",
-		name	:	"Helena",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"034",
-		name	:	"Atlanta",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"035",
-		name	:	"Juneau",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"036",
-		name	:	"San Diego",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	true
-	},
-	{
-		id		:	"037",
-		name	:	"Cleveland",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"038",
-		name	:	"Columbia",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"039",
-		name	:	"Pensacola",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"040",
-		name	:	"Salt Lake City",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"041",
-		name	:	"Northampton",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"042",
-		name	:	"Chicago",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"043",
-		name	:	"Houston",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"044",
-		name	:	"Portland",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"045",
-		name	:	"Indianapolis",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"046",
-		name	:	"Astoria",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"047",
-		name	:	"Quincy",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"048",
-		name	:	"Vincennes",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"049",
-		name	:	"Wichita",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"052",
-		name	:	"Nevada",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"053",
-		name	:	"Oklahoma",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"054",
-		name	:	"Pennsylvania",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"055",
-		name	:	"Arizona",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"058",
-		name	:	"Tennessee",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"059",
-		name	:	"California",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"060",
-		name	:	"Colorado",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"061",
-		name	:	"Maryland",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"062",
-		name	:	"West Virginia",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"063",
-		name	:	"North Carolina",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"064",
-		name	:	"Washington",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"065",
-		name	:	"South Dakota",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"070",
-		name	:	"Long Island",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"071",
-		name	:	"Bogue",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"072",
-		name	:	"Langley",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"073",
-		name	:	"Lexington",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"074",
-		name	:	"Saratoga",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"075",
-		name	:	"Ranger",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"076",
-		name	:	"Yorktown",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"077",
-		name	:	"Enterprise",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"078",
-		name	:	"Hornet",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"079",
-		name	:	"Wasp",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"080",
-		name	:	"Vestal",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.AR,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"081",
-		name	:	"Amazon",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"082",
-		name	:	"Acasta",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"083",
-		name	:	"Ardent",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"086",
-		name	:	"Beagle",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"087",
-		name	:	"Bulldog",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"088",
-		name	:	"Comet",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"089",
-		name	:	"Crescent",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"090",
-		name	:	"Cygnet",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"091",
-		name	:	"Foxhound",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"092",
-		name	:	"Fortune",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"093",
-		name	:	"Grenville",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"094",
-		name	:	"Glowworm",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"101",
-		name	:	"Javelin",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"102",
-		name	:	"Juno",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"103",
-		name	:	"Vampire",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"104",
-		name	:	"Leander",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"105",
-		name	:	"Achilles",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"106",
-		name	:	"Ajax",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"111",
-		name	:	"Sheffield",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"114",
-		name	:	"Edinburgh",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"115",
-		name	:	"Belfast",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"116",
-		name	:	"Arethusa",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"117",
-		name	:	"Galatea",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"118",
-		name	:	"Aurora",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"119",
-		name	:	"London",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"120",
-		name	:	"Shropshire",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"121",
-		name	:	"Kent",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"122",
-		name	:	"Suffolk",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"123",
-		name	:	"Norfolk",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"124",
-		name	:	"Dorsetshire",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"125",
-		name	:	"York",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"126",
-		name	:	"Exeter",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"127",
-		name	:	"Renown",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"128",
-		name	:	"Repulse",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"129",
-		name	:	"Hood",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"130",
-		name	:	"Queen Elizabeth",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"131",
-		name	:	"Warspite",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	true
-	},
-	{
-		id		:	"132",
-		name	:	"Nelson",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"133",
-		name	:	"Rodney",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"135",
-		name	:	"Prince of Wales",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"136",
-		name	:	"Duke of York",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"140",
-		name	:	"Hermes",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"142",
-		name	:	"Unicorn",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"144",
-		name	:	"Ark Royal",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"145",
-		name	:	"Illustrious",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"146",
-		name	:	"Victorious",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"148",
-		name	:	"Glorious",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"149",
-		name	:	"Erebus",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BM,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"150",
-		name	:	"Terror",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BM,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"151",
-		name	:	"Fubuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"155",
-		name	:	"Ayanami",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"159",
-		name	:	"Akatsuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"161",
-		name	:	"Ikazuchi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"162",
-		name	:	"Inazuma",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"163",
-		name	:	"Shiratsuyu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"164",
-		name	:	"Yuudachi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"165",
-		name	:	"Shigure",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"166",
-		name	:	"Yukikaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"167",
-		name	:	"Kagerou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"168",
-		name	:	"Shiranui",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"170",
-		name	:	"Nowaki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"171",
-		name	:	"Hatsuharu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"173",
-		name	:	"Wakaba",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"174",
-		name	:	"Hatsushimo",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"175",
-		name	:	"Ariake",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"176",
-		name	:	"Yuugure",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"177",
-		name	:	"Kuroshio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"178",
-		name	:	"Oyashio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"179",
-		name	:	"Yuubari",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"182",
-		name	:	"Nagara",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"183",
-		name	:	"Isuzu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"187",
-		name	:	"Abukuma",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"188",
-		name	:	"Mogami",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"189",
-		name	:	"Mikuma",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"190",
-		name	:	"Furutaka",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"191",
-		name	:	"Kako",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"192",
-		name	:	"Aoba",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"193",
-		name	:	"Kinugasa",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"196",
-		name	:	"Myoukou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"197",
-		name	:	"Nachi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"198",
-		name	:	"Ashigara",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"200",
-		name	:	"Takao",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"201",
-		name	:	"Atago",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"202",
-		name	:	"Maya",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"203",
-		name	:	"Choukai",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"204",
-		name	:	"Kongou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"205",
-		name	:	"Hiei",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"206",
-		name	:	"Haruna",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"207",
-		name	:	"Kirishima",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"208",
-		name	:	"Fusou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"209",
-		name	:	"Yamashiro",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"210",
-		name	:	"Ise",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"211",
-		name	:	"Hyuuga",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"212",
-		name	:	"Nagato",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"213",
-		name	:	"Mutsu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"218",
-		name	:	"Hiyou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"219",
-		name	:	"Junyou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"220",
-		name	:	"Houshou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"222",
-		name	:	"Shouhou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"223",
-		name	:	"Ryuujou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"224",
-		name	:	"Akagi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"225",
-		name	:	"Kaga",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"226",
-		name	:	"Souryuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"227",
-		name	:	"Hiryuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"228",
-		name	:	"Shoukaku",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"229",
-		name	:	"Zuikaku",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"230",
-		name	:	"Taihou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"232",
-		name	:	"Akashi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.AR,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"233",
-		name	:	"Z1",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"236",
-		name	:	"Z23",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"237",
-		name	:	"Z25",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"238",
-		name	:	"Konigsberg",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"239",
-		name	:	"Karlsruhe",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"240",
-		name	:	"Koln",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"241",
-		name	:	"Leipzig",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"242",
-		name	:	"Admiral Hipper",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"244",
-		name	:	"Prinz Eugen",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"245",
-		name	:	"Deutschland",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"246",
-		name	:	"Admiral Graf Spee",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"248",
-		name	:	"Scharnhorst",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"249",
-		name	:	"Gneisenau",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"250",
-		name	:	"Bismarck",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.UN,
-		hasRetro:	false
-	},
-	{
-		id		:	"251",
-		name	:	"Tirpitz",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"252",
-		name	:	"Graf Zeppelin",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"253",
-		name	:	"An Shan",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"254",
-		name	:	"Fu Shun",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"255",
-		name	:	"Chang Chun",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"256",
-		name	:	"Tai Yuan",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"257",
-		name	:	"Yat Sen",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"258",
-		name	:	"Ning Hai",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"259",
-		name	:	"Ping Hai",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"262",
-		name	:	"Avrora",
-		faction	:	"North Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"263",
-		name	:	"Bailey",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"264",
-		name	:	"Z19",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"265",
-		name	:	"Z20",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"266",
-		name	:	"Z21",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"267",
-		name	:	"Z46",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"269",
-		name	:	"Kamikaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"270",
-		name	:	"Matsukaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"271",
-		name	:	"Mutsuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	true
-	},
-	{
-		id		:	"272",
-		name	:	"Kisaragi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"274",
-		name	:	"Uzuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"276",
-		name	:	"Minazuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"277",
-		name	:	"Fumizuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"278",
-		name	:	"Nagatsuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"280",
-		name	:	"Mikazuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"288",
-		name	:	"Kawakaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"295",
-		name	:	"Niizuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"296",
-		name	:	"Harutsuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"297",
-		name	:	"Yoizuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"299",
-		name	:	"Radford",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"300",
-		name	:	"Jenkins",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"301",
-		name	:	"Nicholas",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"303",
-		name	:	"Richmond",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.N,
-		hasRetro:	false
-	},
-	{
-		id		:	"304",
-		name	:	"Honolulu",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"305",
-		name	:	"St. Louis",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"306",
-		name	:	"Jupiter",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"307",
-		name	:	"Jersey",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"308",
-		name	:	"Sendai",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"309",
-		name	:	"Jintsuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	true
-	},
-	{
-		id		:	"310",
-		name	:	"Naka",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"316",
-		name	:	"Urakaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"317",
-		name	:	"Isokaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"318",
-		name	:	"Hamakaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"319",
-		name	:	"Tanikaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"320",
-		name	:	"Mikasa",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"321",
-		name	:	"Agano",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"325",
-		name	:	"Matchless",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"326",
-		name	:	"Musketeer",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"327",
-		name	:	"Fiji",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"328",
-		name	:	"Jamaica",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"329",
-		name	:	"Montpelier",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"330",
-		name	:	"Denver",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"331",
-		name	:	"Asashio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"332",
-		name	:	"Ooshio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"333",
-		name	:	"Michishio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"334",
-		name	:	"Arashio",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"335",
-		name	:	"Belchan",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"336",
-		name	:	"Abercrombie",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BM,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"337",
-		name	:	"Sussex",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"338",
-		name	:	"I-19",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"339",
-		name	:	"I-26",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"340",
-		name	:	"I-58",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"341",
-		name	:	"U-81",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"342",
-		name	:	"Dace",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"343",
-		name	:	"U-47",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"344",
-		name	:	"U-557",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"345",
-		name	:	"Z35",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"346",
-		name	:	"Z18",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"347",
-		name	:	"Le Triomphant",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"348",
-		name	:	"Forbin",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"349",
-		name	:	"Emile Bertin",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"350",
-		name	:	"Surcouf",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"351",
-		name	:	"Le Mars",
-		faction	:	"Vichya Dominion",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"352",
-		name	:	"Dunkerque",
-		faction	:	"Vichya Dominion",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"353",
-		name	:	"Jean Bart",
-		faction	:	"Vichya Dominion",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"354",
-		name	:	"Massachusetts",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"355",
-		name	:	"Bush",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"356",
-		name	:	"Centaur",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"357",
-		name	:	"Essex",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"358",
-		name	:	"Albacore",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.SS,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"359",
-		name	:	"Le Temeraire",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"360",
-		name	:	"Memphis",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"361",
-		name	:	"Newcastle",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	true
-	},
-	{
-		id		:	"362",
-		name	:	"Hobby",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"363",
-		name	:	"Kalk",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"364",
-		name	:	"Minneapolis",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"365",
-		name	:	"Hazelwood",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"366",
-		name	:	"Concord",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"367",
-		name	:	"Amagi",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BC,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"368",
-		name	:	"Kaga (Battleship)",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"369",
-		name	:	"Hatakaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"370",
-		name	:	"Makinami",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"371",
-		name	:	"Sirius",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"372",
-		name	:	"Curacoa",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"373",
-		name	:	"Curlew",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"374",
-		name	:	"Kimberly",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"375",
-		name	:	"Mullany",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"376",
-		name	:	"Chaser",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"9001",
-		name	:	"Tone",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.UN,
-		hasRetro:	false
-	},
-	{
-		id		:	"9002",
-		name	:	"Chikuma",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.UN,
-		hasRetro:	false
-	},
-	{
-		id		:	"9003",
-		name	:	"Jeanne d'Arc",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.UN,
-		hasRetro:	false
-	},
-	{
-		id		:	"9004",
-		name	:	"Richelieu",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.UN,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan001",
-		name	:	"HMS Neptune",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan002",
-		name	:	"Monarch",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan003",
-		name	:	"Ibuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan004",
-		name	:	"Izumo",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan005",
-		name	:	"Roon",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Plan006",
-		name	:	"Saint Louis",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.P,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab001",
-		name	:	"HDN Neptune",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab002",
-		name	:	"Noire",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab003",
-		name	:	"Blanc",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab004",
-		name	:	"Vert",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab005",
-		name	:	"Purple Heart",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab006",
-		name	:	"Black Heart",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab007",
-		name	:	"White Heart",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab008",
-		name	:	"Green Heart",
-		faction	:	"Neptunia",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab021",
-		name	:	"22",
-		faction	:	"Bilibili",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab022",
-		name	:	"33",
-		faction	:	"Bilibili",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab031",
-		name	:	"Kuon",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab032",
-		name	:	"Nekone",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab033",
-		name	:	"Rurutie",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab034",
-		name	:	"Uruuru",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab035",
-		name	:	"Saraana",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"Collab036",
-		name	:	"Fumiruiru",
-		faction	:	"Utawarerumono",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3005",
-		name	:	"Cassin",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3006",
-		name	:	"Downes",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3019",
-		name	:	"Laffey",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3026",
-		name	:	"Sims",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3027",
-		name	:	"Hammann",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3036",
-		name	:	"San Diego",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.UR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3044",
-		name	:	"Portland",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3052",
-		name	:	"Nevada",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3053",
-		name	:	"Oklahoma",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3070",
-		name	:	"Long Island",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3071",
-		name	:	"Bogue",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3072",
-		name	:	"Langley",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3074",
-		name	:	"Saratoga",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3075",
-		name	:	"Ranger",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3082",
-		name	:	"Acasta",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3083",
-		name	:	"Ardent",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3088",
-		name	:	"Comet",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3089",
-		name	:	"Crescent",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3090",
-		name	:	"Cygnet",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3091",
-		name	:	"Foxhound",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3092",
-		name	:	"Fortune",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3101",
-		name	:	"Javelin",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3104",
-		name	:	"Leander",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3105",
-		name	:	"Achilles",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3106",
-		name	:	"Ajax",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3122",
-		name	:	"Suffolk",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3125",
-		name	:	"York",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3126",
-		name	:	"Exeter",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3131",
-		name	:	"Warspite",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.BB,
-		rarity	:	Rarity.UR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3155",
-		name	:	"Ayanami",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3167",
-		name	:	"Kagerou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3168",
-		name	:	"Shiranui",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3187",
-		name	:	"Abukuma",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3188",
-		name	:	"Mogami",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3190",
-		name	:	"Furutaka",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3191",
-		name	:	"Kako",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CA,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3208",
-		name	:	"Fusou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BBV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3209",
-		name	:	"Yamashiro",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BBV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3210",
-		name	:	"Ise",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BBV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3211",
-		name	:	"Hyuuga",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.BBV,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3222",
-		name	:	"Shouhou",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CVL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3226",
-		name	:	"Souryuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3227",
-		name	:	"Hiryuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CV,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3236",
-		name	:	"Z23",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3239",
-		name	:	"Karlsruhe",
-		faction	:	"Ironblood",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3258",
-		name	:	"Ning Hai",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3259",
-		name	:	"Ping Hai",
-		faction	:	"Eastern Radiance",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3263",
-		name	:	"Bailey",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3269",
-		name	:	"Kamikaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3270",
-		name	:	"Matsukaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3271",
-		name	:	"Mutsuki",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.R,
-		hasRetro:	false
-	},
-	{
-		id		:	"3301",
-		name	:	"Nicholas",
-		faction	:	"Eagle Union",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3308",
-		name	:	"Sendai",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3309",
-		name	:	"Jintsuu",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.SR,
-		hasRetro:	false
-	},
-	{
-		id		:	"3318",
-		name	:	"Hamakaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3319",
-		name	:	"Tanikaze",
-		faction	:	"Sakura Empire",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3348",
-		name	:	"Forbin",
-		faction	:	"Iris Libre",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3351",
-		name	:	"Le Mars",
-		faction	:	"Vichya Dominion",
-		hull	:	ShipHulls.DD,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	},
-	{
-		id		:	"3361",
-		name	:	"Newcastle",
-		faction	:	"Royal Navy",
-		hull	:	ShipHulls.CL,
-		rarity	:	Rarity.E,
-		hasRetro:	false
-	}	
+var ships = [	
+	
+
+{
+	id		:	"Collab001",
+	name	:	{
+		en	:	"HDN Neptune",
+		cn	:	"涅普顿",
+		jp	:	"ネプテューヌ",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab002",
+	name	:	{
+		en	:	"Noire",
+		cn	:	"诺瓦露",
+		jp	:	"ノワール",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab003",
+	name	:	{
+		en	:	"Blanc",
+		cn	:	"布兰",
+		jp	:	"ブラン",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab004",
+	name	:	{
+		en	:	"Vert",
+		cn	:	"贝露",
+		jp	:	"ベール",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab005",
+	name	:	{
+		en	:	"Purple Heart",
+		cn	:	"绀紫之心",
+		jp	:	"パープルハート",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab006",
+	name	:	{
+		en	:	"Black Heart",
+		cn	:	"圣黑之心",
+		jp	:	"ブラックハート",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab007",
+	name	:	{
+		en	:	"White Heart",
+		cn	:	"群白之心",
+		jp	:	"ホワイトハート",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab008",
+	name	:	{
+		en	:	"Green Heart",
+		cn	:	"翡绿之心",
+		jp	:	"グリーンハート",
+	},
+	faction	:	"Neptunia",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab031",
+	name	:	{
+		en	:	"Kuon",
+		cn	:	"久远",
+		jp	:	"クオン",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab032",
+	name	:	{
+		en	:	"Nekone",
+		cn	:	"猫音",
+		jp	:	"ネコネ",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab033",
+	name	:	{
+		en	:	"Rurutie",
+		cn	:	"露露缇耶",
+		jp	:	"ルルティエ",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab034",
+	name	:	{
+		en	:	"Uruuru",
+		cn	:	"乌璐露",
+		jp	:	"ウルゥル",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab035",
+	name	:	{
+		en	:	"Saraana",
+		cn	:	"萨拉娜",
+		jp	:	"サラァナ",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab036",
+	name	:	{
+		en	:	"Fumiruiru",
+		cn	:	"芙米露露",
+		jp	:	"フミルィル",
+	},
+	faction	:	"Utawarerumono",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab021",
+	name	:	{
+		en	:	"22",
+		cn	:	"22",
+		jp	:	"",
+	},
+	faction	:	"Bilibili",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Collab022",
+	name	:	{
+		en	:	"33",
+		cn	:	"33",
+		jp	:	"",
+	},
+	faction	:	"Bilibili",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan001",
+	name	:	{
+		en	:	"HMS Neptune",
+		cn	:	"海王星",
+		jp	:	"ネプチューン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan002",
+	name	:	{
+		en	:	"Monarch",
+		cn	:	"君主",
+		jp	:	"モナーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan003",
+	name	:	{
+		en	:	"Ibuki",
+		cn	:	"峦",
+		jp	:	"伊吹",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan004",
+	name	:	{
+		en	:	"Izumo",
+		cn	:	"侌",
+		jp	:	"出雲",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan005",
+	name	:	{
+		en	:	"Roon",
+		cn	:	"罗恩",
+		jp	:	"ローン",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"Plan006",
+	name	:	{
+		en	:	"Saint Louis",
+		cn	:	"路易九世",
+		jp	:	"サン・ルイ",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.P,
+	hasRetro:	false,
+},
+{
+	id		:	"001",
+	name	:	{
+		en	:	"Universal Bullin",
+		cn	:	"泛用型布里",
+		jp	:	"汎用型ブリ",
+	},
+	faction	:	"Universal",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"002",
+	name	:	{
+		en	:	"Trial Bullin MKII",
+		cn	:	"试作型布里MKⅡ",
+		jp	:	"試作型ブリMKII",
+	},
+	faction	:	"Universal",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"005",
+	name	:	{
+		en	:	"Cassin",
+		cn	:	"卡辛",
+		jp	:	"カッシン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3005",
+	name	:	{
+		en	:	"Cassin",
+		cn	:	"卡辛",
+		jp	:	"カッシン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"006",
+	name	:	{
+		en	:	"Downes",
+		cn	:	"唐斯",
+		jp	:	"ダウンズ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3006",
+	name	:	{
+		en	:	"Downes",
+		cn	:	"唐斯",
+		jp	:	"ダウンズ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"007",
+	name	:	{
+		en	:	"Gridley",
+		cn	:	"格里德利",
+		jp	:	"グリッドレイ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"008",
+	name	:	{
+		en	:	"Craven",
+		cn	:	"克雷文",
+		jp	:	"クレイヴン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"009",
+	name	:	{
+		en	:	"McCall",
+		cn	:	"麦考尔",
+		jp	:	"マッコール",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"010",
+	name	:	{
+		en	:	"Maury",
+		cn	:	"莫里",
+		jp	:	"モーリー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"011",
+	name	:	{
+		en	:	"Fletcher",
+		cn	:	"弗莱彻",
+		jp	:	"フレッチャー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"013",
+	name	:	{
+		en	:	"Charles Ausburne",
+		cn	:	"查尔斯·奥斯本",
+		jp	:	"チャールズ・オースバーン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"014",
+	name	:	{
+		en	:	"Thatcher",
+		cn	:	"撒切尔",
+		jp	:	"サッチャー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"015",
+	name	:	{
+		en	:	"Aulick",
+		cn	:	"奥利克",
+		jp	:	"オーリック",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"016",
+	name	:	{
+		en	:	"Foote",
+		cn	:	"富特",
+		jp	:	"フート",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"017",
+	name	:	{
+		en	:	"Spence",
+		cn	:	"斯彭斯",
+		jp	:	"スペンス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"018",
+	name	:	{
+		en	:	"Benson",
+		cn	:	"本森",
+		jp	:	"ベンソン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"019",
+	name	:	{
+		en	:	"Laffey",
+		cn	:	"拉菲",
+		jp	:	"ラフィー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3019",
+	name	:	{
+		en	:	"Laffey",
+		cn	:	"拉菲",
+		jp	:	"ラフィー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"026",
+	name	:	{
+		en	:	"Sims",
+		cn	:	"西姆斯",
+		jp	:	"シムス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3026",
+	name	:	{
+		en	:	"Sims",
+		cn	:	"西姆斯",
+		jp	:	"シムス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"027",
+	name	:	{
+		en	:	"Hammann",
+		cn	:	"哈曼",
+		jp	:	"ハムマン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3027",
+	name	:	{
+		en	:	"Hammann",
+		cn	:	"哈曼",
+		jp	:	"ハムマン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"028",
+	name	:	{
+		en	:	"Eldridge",
+		cn	:	"埃尔德里奇",
+		jp	:	"エルドリッジ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"029",
+	name	:	{
+		en	:	"Omaha",
+		cn	:	"奥马哈",
+		jp	:	"オマハ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"030",
+	name	:	{
+		en	:	"Raleigh",
+		cn	:	"罗利",
+		jp	:	"ローリー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"031",
+	name	:	{
+		en	:	"Brooklyn",
+		cn	:	"布鲁克林",
+		jp	:	"ブルックリン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"032",
+	name	:	{
+		en	:	"Phoenix",
+		cn	:	"菲尼克斯",
+		jp	:	"フェニックス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"033",
+	name	:	{
+		en	:	"Helena",
+		cn	:	"海伦娜",
+		jp	:	"ヘレナ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"034",
+	name	:	{
+		en	:	"Atlanta",
+		cn	:	"亚特兰大",
+		jp	:	"アトランタ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"035",
+	name	:	{
+		en	:	"Juneau",
+		cn	:	"朱诺",
+		jp	:	"ジュノー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"036",
+	name	:	{
+		en	:	"San Diego",
+		cn	:	"圣地亚哥",
+		jp	:	"サンディエゴ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	true,
+},
+{
+	id		:	"3036",
+	name	:	{
+		en	:	"San Diego",
+		cn	:	"圣地亚哥",
+		jp	:	"サンディエゴ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.UR,
+},
+{
+	id		:	"037",
+	name	:	{
+		en	:	"Cleveland",
+		cn	:	"克利夫兰",
+		jp	:	"クリーブランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"038",
+	name	:	{
+		en	:	"Columbia",
+		cn	:	"哥伦比亚",
+		jp	:	"コロンビア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"039",
+	name	:	{
+		en	:	"Pensacola",
+		cn	:	"彭萨科拉",
+		jp	:	"ペンサコーラ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"040",
+	name	:	{
+		en	:	"Salt Lake City",
+		cn	:	"盐湖城",
+		jp	:	"ソルトレイクシティ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"041",
+	name	:	{
+		en	:	"Northampton",
+		cn	:	"北安普敦",
+		jp	:	"ノーザンプトン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"042",
+	name	:	{
+		en	:	"Chicago",
+		cn	:	"芝加哥",
+		jp	:	"シカゴ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"043",
+	name	:	{
+		en	:	"Houston",
+		cn	:	"休斯敦",
+		jp	:	"ヒューストン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"044",
+	name	:	{
+		en	:	"Portland",
+		cn	:	"波特兰",
+		jp	:	"ポートランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3044",
+	name	:	{
+		en	:	"Portland",
+		cn	:	"波特兰",
+		jp	:	"ポートランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"045",
+	name	:	{
+		en	:	"Indianapolis",
+		cn	:	"印第安纳波利斯",
+		jp	:	"インディアナポリス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"046",
+	name	:	{
+		en	:	"Astoria",
+		cn	:	"阿斯托利亚",
+		jp	:	"アストリア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"047",
+	name	:	{
+		en	:	"Quincy",
+		cn	:	"昆西",
+		jp	:	"クインシー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"048",
+	name	:	{
+		en	:	"Vincennes",
+		cn	:	"文森斯",
+		jp	:	"ヴィンセンス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"049",
+	name	:	{
+		en	:	"Wichita",
+		cn	:	"威奇塔",
+		jp	:	"ウィチタ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"052",
+	name	:	{
+		en	:	"Nevada",
+		cn	:	"内华达",
+		jp	:	"ネバダ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3052",
+	name	:	{
+		en	:	"Nevada",
+		cn	:	"内华达",
+		jp	:	"ネバダ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"053",
+	name	:	{
+		en	:	"Oklahoma",
+		cn	:	"俄克拉荷马",
+		jp	:	"オクラホマ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3053",
+	name	:	{
+		en	:	"Oklahoma",
+		cn	:	"俄克拉荷马",
+		jp	:	"オクラホマ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"054",
+	name	:	{
+		en	:	"Pennsylvania",
+		cn	:	"宾夕法尼亚",
+		jp	:	"ペンシルベニア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"055",
+	name	:	{
+		en	:	"Arizona",
+		cn	:	"亚利桑那",
+		jp	:	"アリゾナ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"058",
+	name	:	{
+		en	:	"Tennessee",
+		cn	:	"田纳西",
+		jp	:	"テネシー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"059",
+	name	:	{
+		en	:	"California",
+		cn	:	"加利福尼亚",
+		jp	:	"カリフォルニア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"060",
+	name	:	{
+		en	:	"Colorado",
+		cn	:	"科罗拉多",
+		jp	:	"コロラド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"061",
+	name	:	{
+		en	:	"Maryland",
+		cn	:	"马里兰",
+		jp	:	"メリーランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"062",
+	name	:	{
+		en	:	"West Virginia",
+		cn	:	"西弗吉尼亚",
+		jp	:	"ウェストバージニア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"063",
+	name	:	{
+		en	:	"North Carolina",
+		cn	:	"北卡罗来纳",
+		jp	:	"ノースカロライナ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"064",
+	name	:	{
+		en	:	"Washington",
+		cn	:	"华盛顿",
+		jp	:	"ワシントン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"065",
+	name	:	{
+		en	:	"South Dakota",
+		cn	:	"南达科他",
+		jp	:	"サウスダコタ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"070",
+	name	:	{
+		en	:	"Long Island",
+		cn	:	"长岛",
+		jp	:	"ロング・アイランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3070",
+	name	:	{
+		en	:	"Long Island",
+		cn	:	"长岛",
+		jp	:	"ロング・アイランド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"071",
+	name	:	{
+		en	:	"Bogue",
+		cn	:	"博格",
+		jp	:	"ボーグ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3071",
+	name	:	{
+		en	:	"Bogue",
+		cn	:	"博格",
+		jp	:	"ボーグ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"072",
+	name	:	{
+		en	:	"Langley",
+		cn	:	"兰利",
+		jp	:	"ラングレー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3072",
+	name	:	{
+		en	:	"Langley",
+		cn	:	"兰利",
+		jp	:	"ラングレー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"073",
+	name	:	{
+		en	:	"Lexington",
+		cn	:	"列克星敦",
+		jp	:	"レキシントン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"074",
+	name	:	{
+		en	:	"Saratoga",
+		cn	:	"萨拉托加",
+		jp	:	"サラトガ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3074",
+	name	:	{
+		en	:	"Saratoga",
+		cn	:	"萨拉托加",
+		jp	:	"サラトガ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"075",
+	name	:	{
+		en	:	"Ranger",
+		cn	:	"突击者",
+		jp	:	"レンジャー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3075",
+	name	:	{
+		en	:	"Ranger",
+		cn	:	"突击者",
+		jp	:	"レンジャー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"076",
+	name	:	{
+		en	:	"Yorktown",
+		cn	:	"约克城",
+		jp	:	"ヨークタウン",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"077",
+	name	:	{
+		en	:	"Enterprise",
+		cn	:	"企业",
+		jp	:	"エンタープライズ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"078",
+	name	:	{
+		en	:	"Hornet",
+		cn	:	"大黄蜂",
+		jp	:	"ホーネット",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"079",
+	name	:	{
+		en	:	"Wasp",
+		cn	:	"胡蜂",
+		jp	:	"ワスプ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"080",
+	name	:	{
+		en	:	"Vestal",
+		cn	:	"女灶神",
+		jp	:	"ヴェスタル",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.AR,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"081",
+	name	:	{
+		en	:	"Amazon",
+		cn	:	"女将",
+		jp	:	"アマゾン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"082",
+	name	:	{
+		en	:	"Acasta",
+		cn	:	"阿卡司塔",
+		jp	:	"アカスタ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3082",
+	name	:	{
+		en	:	"Acasta",
+		cn	:	"阿卡司塔",
+		jp	:	"アカスタ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"083",
+	name	:	{
+		en	:	"Ardent",
+		cn	:	"热心",
+		jp	:	"アーデント",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3083",
+	name	:	{
+		en	:	"Ardent",
+		cn	:	"热心",
+		jp	:	"アーデント",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"086",
+	name	:	{
+		en	:	"Beagle",
+		cn	:	"小猎兔犬",
+		jp	:	"ビーグル",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"087",
+	name	:	{
+		en	:	"Bulldog",
+		cn	:	"大斗犬",
+		jp	:	"ブルドッグ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"088",
+	name	:	{
+		en	:	"Comet",
+		cn	:	"彗星",
+		jp	:	"コメット",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3088",
+	name	:	{
+		en	:	"Comet",
+		cn	:	"彗星",
+		jp	:	"コメット",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"089",
+	name	:	{
+		en	:	"Crescent",
+		cn	:	"新月",
+		jp	:	"クレセント",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3089",
+	name	:	{
+		en	:	"Crescent",
+		cn	:	"新月",
+		jp	:	"クレセント",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"090",
+	name	:	{
+		en	:	"Cygnet",
+		cn	:	"小天鹅",
+		jp	:	"シグニット",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3090",
+	name	:	{
+		en	:	"Cygnet",
+		cn	:	"小天鹅",
+		jp	:	"シグニット",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"091",
+	name	:	{
+		en	:	"Foxhound",
+		cn	:	"狐提",
+		jp	:	"フォックスハウンド",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3091",
+	name	:	{
+		en	:	"Foxhound",
+		cn	:	"狐提",
+		jp	:	"フォックスハウンド",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"092",
+	name	:	{
+		en	:	"Fortune",
+		cn	:	"命运女神",
+		jp	:	"フォーチュン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3092",
+	name	:	{
+		en	:	"Fortune",
+		cn	:	"命运女神",
+		jp	:	"フォーチュン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"093",
+	name	:	{
+		en	:	"Grenville",
+		cn	:	"格伦维尔",
+		jp	:	"グレンヴィル",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"094",
+	name	:	{
+		en	:	"Glowworm",
+		cn	:	"萤火虫",
+		jp	:	"グローウォーム",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"096",
+	name	:	{
+		en	:	"Hardy",
+		cn	:	"勇敢",
+		jp	:	"ハーディ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"100",
+	name	:	{
+		en	:	"Hunter",
+		cn	:	"猎人",
+		jp	:	"ハンター",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"101",
+	name	:	{
+		en	:	"Javelin",
+		cn	:	"标枪",
+		jp	:	"ジャベリン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3101",
+	name	:	{
+		en	:	"Javelin",
+		cn	:	"标枪",
+		jp	:	"ジャベリン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"102",
+	name	:	{
+		en	:	"Juno",
+		cn	:	"天后",
+		jp	:	"ジュノー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"103",
+	name	:	{
+		en	:	"Vampire",
+		cn	:	"吸血鬼",
+		jp	:	"ヴァンパイア",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"104",
+	name	:	{
+		en	:	"Leander",
+		cn	:	"利安得",
+		jp	:	"リアンダー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3104",
+	name	:	{
+		en	:	"Leander",
+		cn	:	"利安得",
+		jp	:	"リアンダー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"105",
+	name	:	{
+		en	:	"Achilles",
+		cn	:	"阿基里斯",
+		jp	:	"アキリーズ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3105",
+	name	:	{
+		en	:	"Achilles",
+		cn	:	"阿基里斯",
+		jp	:	"アキリーズ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"106",
+	name	:	{
+		en	:	"Ajax",
+		cn	:	"阿贾克斯",
+		jp	:	"エイジャックス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3106",
+	name	:	{
+		en	:	"Ajax",
+		cn	:	"阿贾克斯",
+		jp	:	"エイジャックス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"111",
+	name	:	{
+		en	:	"Sheffield",
+		cn	:	"谢菲尔德",
+		jp	:	"シェフィールド",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"114",
+	name	:	{
+		en	:	"Edinburgh",
+		cn	:	"爱丁堡",
+		jp	:	"エディンバラ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"115",
+	name	:	{
+		en	:	"Belfast",
+		cn	:	"贝尔法斯特",
+		jp	:	"ベルファスト",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"116",
+	name	:	{
+		en	:	"Arethusa",
+		cn	:	"阿瑞托莎",
+		jp	:	"アリシューザ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"117",
+	name	:	{
+		en	:	"Galatea",
+		cn	:	"加拉蒂亚",
+		jp	:	"ガラティア",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"118",
+	name	:	{
+		en	:	"Aurora",
+		cn	:	"欧若拉",
+		jp	:	"オーロラ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"119",
+	name	:	{
+		en	:	"London",
+		cn	:	"伦敦",
+		jp	:	"ロンドン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"120",
+	name	:	{
+		en	:	"Shropshire",
+		cn	:	"什罗普郡",
+		jp	:	"シュロップシャー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"121",
+	name	:	{
+		en	:	"Kent",
+		cn	:	"肯特",
+		jp	:	"ケント",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"122",
+	name	:	{
+		en	:	"Suffolk",
+		cn	:	"萨福克",
+		jp	:	"サフォーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3122",
+	name	:	{
+		en	:	"Suffolk",
+		cn	:	"萨福克",
+		jp	:	"サフォーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"123",
+	name	:	{
+		en	:	"Norfolk",
+		cn	:	"诺福克",
+		jp	:	"ノーフォーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"124",
+	name	:	{
+		en	:	"Dorsetshire",
+		cn	:	"多塞特郡",
+		jp	:	"ドーセットシャー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"125",
+	name	:	{
+		en	:	"York",
+		cn	:	"约克",
+		jp	:	"ヨーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3125",
+	name	:	{
+		en	:	"York",
+		cn	:	"约克",
+		jp	:	"ヨーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"126",
+	name	:	{
+		en	:	"Exeter",
+		cn	:	"埃克塞特",
+		jp	:	"エクセター",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3126",
+	name	:	{
+		en	:	"Exeter",
+		cn	:	"埃克塞特",
+		jp	:	"エクセター",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"127",
+	name	:	{
+		en	:	"Renown",
+		cn	:	"声望",
+		jp	:	"レナウン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"128",
+	name	:	{
+		en	:	"Repulse",
+		cn	:	"反击",
+		jp	:	"レパルス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"129",
+	name	:	{
+		en	:	"Hood",
+		cn	:	"胡德",
+		jp	:	"フッド",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"130",
+	name	:	{
+		en	:	"Queen Elizabeth",
+		cn	:	"伊丽莎白女王",
+		jp	:	"クイーン・エリザベス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"131",
+	name	:	{
+		en	:	"Warspite",
+		cn	:	"厌战",
+		jp	:	"ウォースパイト",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	true,
+},
+{
+	id		:	"3131",
+	name	:	{
+		en	:	"Warspite",
+		cn	:	"厌战",
+		jp	:	"ウォースパイト",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.UR,
+},
+{
+	id		:	"132",
+	name	:	{
+		en	:	"Nelson",
+		cn	:	"纳尔逊",
+		jp	:	"ネルソン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"133",
+	name	:	{
+		en	:	"Rodney",
+		cn	:	"罗德尼",
+		jp	:	"ロドニー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"135",
+	name	:	{
+		en	:	"Prince of Wales",
+		cn	:	"威尔士亲王",
+		jp	:	"プリンス・オブ・ウェールズ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"136",
+	name	:	{
+		en	:	"Duke of York",
+		cn	:	"约克公爵",
+		jp	:	"デューク・オブ・ヨーク",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"140",
+	name	:	{
+		en	:	"Hermes",
+		cn	:	"竞技神",
+		jp	:	"ハーミーズ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"142",
+	name	:	{
+		en	:	"Unicorn",
+		cn	:	"独角兽",
+		jp	:	"ユニコーン",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"144",
+	name	:	{
+		en	:	"Ark Royal",
+		cn	:	"皇家方舟",
+		jp	:	"アーク・ロイヤル",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"145",
+	name	:	{
+		en	:	"Illustrious",
+		cn	:	"光辉",
+		jp	:	"イラストリアス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"146",
+	name	:	{
+		en	:	"Victorious",
+		cn	:	"胜利",
+		jp	:	"ヴィクトリアス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"148",
+	name	:	{
+		en	:	"Glorious",
+		cn	:	"光荣",
+		jp	:	"グロリアス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"149",
+	name	:	{
+		en	:	"Erebus",
+		cn	:	"黑暗界",
+		jp	:	"エレバス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BM,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"150",
+	name	:	{
+		en	:	"Terror",
+		cn	:	"恐怖",
+		jp	:	"テラー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BM,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"151",
+	name	:	{
+		en	:	"Fubuki",
+		cn	:	"桐",
+		jp	:	"吹雪",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"155",
+	name	:	{
+		en	:	"Ayanami",
+		cn	:	"柚",
+		jp	:	"綾波",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3155",
+	name	:	{
+		en	:	"Ayanami",
+		cn	:	"柚",
+		jp	:	"綾波",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"159",
+	name	:	{
+		en	:	"Akatsuki",
+		cn	:	"枫",
+		jp	:	"暁",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"161",
+	name	:	{
+		en	:	"Ikazuchi",
+		cn	:	"梓",
+		jp	:	"雷",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"162",
+	name	:	{
+		en	:	"Inazuma",
+		cn	:	"柏",
+		jp	:	"電",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"163",
+	name	:	{
+		en	:	"Shiratsuyu",
+		cn	:	"梿",
+		jp	:	"白露",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"164",
+	name	:	{
+		en	:	"Yuudachi",
+		cn	:	"椿",
+		jp	:	"夕立",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"165",
+	name	:	{
+		en	:	"Shigure",
+		cn	:	"栴",
+		jp	:	"時雨",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"166",
+	name	:	{
+		en	:	"Yukikaze",
+		cn	:	"莲",
+		jp	:	"雪風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"167",
+	name	:	{
+		en	:	"Kagerou",
+		cn	:	"萩",
+		jp	:	"陽炎",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3167",
+	name	:	{
+		en	:	"Kagerou",
+		cn	:	"萩",
+		jp	:	"陽炎",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"168",
+	name	:	{
+		en	:	"Shiranui",
+		cn	:	"蒲",
+		jp	:	"不知火",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3168",
+	name	:	{
+		en	:	"Shiranui",
+		cn	:	"蒲",
+		jp	:	"不知火",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"170",
+	name	:	{
+		en	:	"Nowaki",
+		cn	:	"苓",
+		jp	:	"野分",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"171",
+	name	:	{
+		en	:	"Hatsuharu",
+		cn	:	"梅",
+		jp	:	"初春",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"173",
+	name	:	{
+		en	:	"Wakaba",
+		cn	:	"楉",
+		jp	:	"若葉",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"174",
+	name	:	{
+		en	:	"Hatsushimo",
+		cn	:	"檨",
+		jp	:	"初霜",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"175",
+	name	:	{
+		en	:	"Ariake",
+		cn	:	"榎",
+		jp	:	"有明",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"176",
+	name	:	{
+		en	:	"Yuugure",
+		cn	:	"棭",
+		jp	:	"夕暮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"177",
+	name	:	{
+		en	:	"Kuroshio",
+		cn	:	"蓉",
+		jp	:	"黒潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"178",
+	name	:	{
+		en	:	"Oyashio",
+		cn	:	"藮",
+		jp	:	"親潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"179",
+	name	:	{
+		en	:	"Yuubari",
+		cn	:	"狐",
+		jp	:	"夕張",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"182",
+	name	:	{
+		en	:	"Nagara",
+		cn	:	"貊",
+		jp	:	"長良",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"183",
+	name	:	{
+		en	:	"Isuzu",
+		cn	:	"貉",
+		jp	:	"五十鈴",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"187",
+	name	:	{
+		en	:	"Abukuma",
+		cn	:	"貃",
+		jp	:	"阿武隈",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3187",
+	name	:	{
+		en	:	"Abukuma",
+		cn	:	"貃",
+		jp	:	"阿武隈",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"188",
+	name	:	{
+		en	:	"Mogami",
+		cn	:	"猨",
+		jp	:	"最上",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3188",
+	name	:	{
+		en	:	"Mogami",
+		cn	:	"猨",
+		jp	:	"最上",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"189",
+	name	:	{
+		en	:	"Mikuma",
+		cn	:	"狻",
+		jp	:	"三隈",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"190",
+	name	:	{
+		en	:	"Furutaka",
+		cn	:	"狼",
+		jp	:	"古鷹",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3190",
+	name	:	{
+		en	:	"Furutaka",
+		cn	:	"狼",
+		jp	:	"古鷹",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"191",
+	name	:	{
+		en	:	"Kako",
+		cn	:	"狌",
+		jp	:	"加古",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3191",
+	name	:	{
+		en	:	"Kako",
+		cn	:	"狌",
+		jp	:	"加古",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"192",
+	name	:	{
+		en	:	"Aoba",
+		cn	:	"犹",
+		jp	:	"青葉",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"193",
+	name	:	{
+		en	:	"Kinugasa",
+		cn	:	"猅",
+		jp	:	"衣笠",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"196",
+	name	:	{
+		en	:	"Myoukou",
+		cn	:	"獌",
+		jp	:	"妙高",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"197",
+	name	:	{
+		en	:	"Nachi",
+		cn	:	"狏",
+		jp	:	"那智",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"198",
+	name	:	{
+		en	:	"Ashigara",
+		cn	:	"",
+		jp	:	"足柄",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"200",
+	name	:	{
+		en	:	"Takao",
+		cn	:	"獒",
+		jp	:	"高雄",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"201",
+	name	:	{
+		en	:	"Atago",
+		cn	:	"犬",
+		jp	:	"愛宕",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"202",
+	name	:	{
+		en	:	"Maya",
+		cn	:	"犮",
+		jp	:	"摩耶",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"203",
+	name	:	{
+		en	:	"Choukai",
+		cn	:	"猋",
+		jp	:	"鳥海",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"204",
+	name	:	{
+		en	:	"Kongou",
+		cn	:	"鲤",
+		jp	:	"金剛",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"205",
+	name	:	{
+		en	:	"Hiei",
+		cn	:	"鲟",
+		jp	:	"比叡",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"206",
+	name	:	{
+		en	:	"Haruna",
+		cn	:	"鲑",
+		jp	:	"榛名",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"207",
+	name	:	{
+		en	:	"Kirishima",
+		cn	:	"鳗",
+		jp	:	"霧島",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"208",
+	name	:	{
+		en	:	"Fusou",
+		cn	:	"魟",
+		jp	:	"扶桑",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3208",
+	name	:	{
+		en	:	"Fusou",
+		cn	:	"魟",
+		jp	:	"扶桑",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"209",
+	name	:	{
+		en	:	"Yamashiro",
+		cn	:	"鲼",
+		jp	:	"山城",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3209",
+	name	:	{
+		en	:	"Yamashiro",
+		cn	:	"鲼",
+		jp	:	"山城",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"210",
+	name	:	{
+		en	:	"Ise",
+		cn	:	"鳌",
+		jp	:	"伊勢",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3210",
+	name	:	{
+		en	:	"Ise",
+		cn	:	"鳌",
+		jp	:	"伊勢",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"211",
+	name	:	{
+		en	:	"Hyuuga",
+		cn	:	"螯",
+		jp	:	"日向",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3211",
+	name	:	{
+		en	:	"Hyuuga",
+		cn	:	"螯",
+		jp	:	"日向",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"212",
+	name	:	{
+		en	:	"Nagato",
+		cn	:	"鲨",
+		jp	:	"長門",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"213",
+	name	:	{
+		en	:	"Mutsu",
+		cn	:	"鲛",
+		jp	:	"陸奥",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"218",
+	name	:	{
+		en	:	"Hiyou",
+		cn	:	"鸱",
+		jp	:	"飛鷹",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"219",
+	name	:	{
+		en	:	"Junyou",
+		cn	:	"鸢",
+		jp	:	"隼鷹",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"220",
+	name	:	{
+		en	:	"Houshou",
+		cn	:	"凤",
+		jp	:	"鳳翔",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"222",
+	name	:	{
+		en	:	"Shouhou",
+		cn	:	"鹞",
+		jp	:	"祥鳳",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3222",
+	name	:	{
+		en	:	"Shouhou",
+		cn	:	"鹞",
+		jp	:	"祥鳳",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"223",
+	name	:	{
+		en	:	"Ryuujou",
+		cn	:	"龙骧",
+		jp	:	"龍驤",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"224",
+	name	:	{
+		en	:	"Akagi",
+		cn	:	"凰",
+		jp	:	"赤城",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"225",
+	name	:	{
+		en	:	"Kaga",
+		cn	:	"鸾",
+		jp	:	"加賀",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"226",
+	name	:	{
+		en	:	"Souryuu",
+		cn	:	"蛟",
+		jp	:	"蒼龍",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3226",
+	name	:	{
+		en	:	"Souryuu",
+		cn	:	"蛟",
+		jp	:	"蒼龍",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"227",
+	name	:	{
+		en	:	"Hiryuu",
+		cn	:	"龙",
+		jp	:	"飛龍",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3227",
+	name	:	{
+		en	:	"Hiryuu",
+		cn	:	"龙",
+		jp	:	"飛龍",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"228",
+	name	:	{
+		en	:	"Shoukaku",
+		cn	:	"鹬",
+		jp	:	"翔鶴",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"229",
+	name	:	{
+		en	:	"Zuikaku",
+		cn	:	"鹤",
+		jp	:	"瑞鶴",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"230",
+	name	:	{
+		en	:	"Taihou",
+		cn	:	"鹩",
+		jp	:	"大鳳",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"232",
+	name	:	{
+		en	:	"Akashi",
+		cn	:	"茗",
+		jp	:	"明石",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.AR,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"233",
+	name	:	{
+		en	:	"Z1",
+		cn	:	"Z1",
+		jp	:	"Z1",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"236",
+	name	:	{
+		en	:	"Z23",
+		cn	:	"Z23",
+		jp	:	"Z23",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3236",
+	name	:	{
+		en	:	"Z23",
+		cn	:	"Z23",
+		jp	:	"Z23",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"237",
+	name	:	{
+		en	:	"Z25",
+		cn	:	"Z25",
+		jp	:	"Z25",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"238",
+	name	:	{
+		en	:	"Königsberg",
+		cn	:	"柯尼斯堡",
+		jp	:	"ケーニヒスベルク",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"239",
+	name	:	{
+		en	:	"Karlsruhe",
+		cn	:	"卡尔斯鲁厄",
+		jp	:	"カールスルーエ",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3239",
+	name	:	{
+		en	:	"Karlsruhe",
+		cn	:	"卡尔斯鲁厄",
+		jp	:	"カールスルーエ",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"240",
+	name	:	{
+		en	:	"Köln",
+		cn	:	"科隆",
+		jp	:	"ケルン",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"241",
+	name	:	{
+		en	:	"Leipzig",
+		cn	:	"莱比锡",
+		jp	:	"ライプツィヒ",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"242",
+	name	:	{
+		en	:	"Admiral Hipper",
+		cn	:	"希佩尔海军上将",
+		jp	:	"アドミラル・ヒッパー",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"244",
+	name	:	{
+		en	:	"Prinz Eugen",
+		cn	:	"欧根亲王",
+		jp	:	"プリンツ・オイゲン",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"245",
+	name	:	{
+		en	:	"Deutschland",
+		cn	:	"德意志",
+		jp	:	"ドイッチュラント",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"246",
+	name	:	{
+		en	:	"Admiral Graf Spee",
+		cn	:	"斯佩伯爵海军上将",
+		jp	:	"アドミラル・グラーフ・シュペー",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"248",
+	name	:	{
+		en	:	"Scharnhorst",
+		cn	:	"沙恩霍斯特",
+		jp	:	"シャルンホルスト",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"249",
+	name	:	{
+		en	:	"Gneisenau",
+		cn	:	"格奈森瑙",
+		jp	:	"グナイゼナウ",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"251",
+	name	:	{
+		en	:	"Tirpitz",
+		cn	:	"提尔比茨",
+		jp	:	"ティルピッツ",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"252",
+	name	:	{
+		en	:	"Graf Zeppelin",
+		cn	:	"齐柏林伯爵",
+		jp	:	"グラーフ・ツェッペリン",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"253",
+	name	:	{
+		en	:	"An Shan",
+		cn	:	"鞍山",
+		jp	:	"鞍山",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"254",
+	name	:	{
+		en	:	"Fu Shun",
+		cn	:	"抚顺",
+		jp	:	"撫順",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"255",
+	name	:	{
+		en	:	"Chang Chun",
+		cn	:	"长春",
+		jp	:	"長春",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"256",
+	name	:	{
+		en	:	"Tai Yuan",
+		cn	:	"太原",
+		jp	:	"太原",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"257",
+	name	:	{
+		en	:	"Yat Sen",
+		cn	:	"逸仙",
+		jp	:	"逸仙",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"258",
+	name	:	{
+		en	:	"Ning Hai",
+		cn	:	"宁海",
+		jp	:	"寧海",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3258",
+	name	:	{
+		en	:	"Ning Hai",
+		cn	:	"宁海",
+		jp	:	"寧海",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"259",
+	name	:	{
+		en	:	"Ping Hai",
+		cn	:	"平海",
+		jp	:	"平海",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3259",
+	name	:	{
+		en	:	"Ping Hai",
+		cn	:	"平海",
+		jp	:	"平海",
+	},
+	faction	:	"Eastern Radiance",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"262",
+	name	:	{
+		en	:	"Avrora",
+		cn	:	"阿芙乐尔",
+		jp	:	"アヴローラ",
+	},
+	faction	:	"North Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"263",
+	name	:	{
+		en	:	"Bailey",
+		cn	:	"贝利",
+		jp	:	"ベイリー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3263",
+	name	:	{
+		en	:	"Bailey",
+		cn	:	"贝利",
+		jp	:	"ベイリー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"264",
+	name	:	{
+		en	:	"Z19",
+		cn	:	"Z19",
+		jp	:	"Z19",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"265",
+	name	:	{
+		en	:	"Z20",
+		cn	:	"Z20",
+		jp	:	"Z20",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"266",
+	name	:	{
+		en	:	"Z21",
+		cn	:	"Z21",
+		jp	:	"Z21",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"267",
+	name	:	{
+		en	:	"Z46",
+		cn	:	"Z46",
+		jp	:	"Z46",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"269",
+	name	:	{
+		en	:	"Kamikaze",
+		cn	:	"榊",
+		jp	:	"神風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3269",
+	name	:	{
+		en	:	"Kamikaze",
+		cn	:	"榊",
+		jp	:	"神風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"270",
+	name	:	{
+		en	:	"Matsukaze",
+		cn	:	"棡",
+		jp	:	"松风",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3270",
+	name	:	{
+		en	:	"Matsukaze",
+		cn	:	"棡",
+		jp	:	"松风",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"271",
+	name	:	{
+		en	:	"Mutsuki",
+		cn	:	"松",
+		jp	:	"睦月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	true,
+},
+{
+	id		:	"3271",
+	name	:	{
+		en	:	"Mutsuki",
+		cn	:	"松",
+		jp	:	"睦月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+},
+{
+	id		:	"272",
+	name	:	{
+		en	:	"Kisaragi",
+		cn	:	"樟",
+		jp	:	"如月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"274",
+	name	:	{
+		en	:	"Uzuki",
+		cn	:	"楙",
+		jp	:	"卯月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"276",
+	name	:	{
+		en	:	"Minazuki",
+		cn	:	"杌",
+		jp	:	"水無月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"277",
+	name	:	{
+		en	:	"Fumizuki",
+		cn	:	"橗",
+		jp	:	"文月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"278",
+	name	:	{
+		en	:	"Nagatsuki",
+		cn	:	"枨",
+		jp	:	"長月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"280",
+	name	:	{
+		en	:	"Mikazuki",
+		cn	:	"檧",
+		jp	:	"三日月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"288",
+	name	:	{
+		en	:	"Kawakaze",
+		cn	:	"茳",
+		jp	:	"江風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"295",
+	name	:	{
+		en	:	"Niizuki",
+		cn	:	"枥",
+		jp	:	"新月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"296",
+	name	:	{
+		en	:	"Harutsuki",
+		cn	:	"桸",
+		jp	:	"春月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"297",
+	name	:	{
+		en	:	"Yoizuki",
+		cn	:	"楛",
+		jp	:	"宵月",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"299",
+	name	:	{
+		en	:	"Radford",
+		cn	:	"拉德福特",
+		jp	:	"ラドフォード",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"300",
+	name	:	{
+		en	:	"Jenkins",
+		cn	:	"杰金斯",
+		jp	:	"ジェンキンス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"301",
+	name	:	{
+		en	:	"Nicholas",
+		cn	:	"尼古拉斯",
+		jp	:	"ニコラス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3301",
+	name	:	{
+		en	:	"Nicholas",
+		cn	:	"尼古拉斯",
+		jp	:	"ニコラス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"303",
+	name	:	{
+		en	:	"Richmond",
+		cn	:	"里士满",
+		jp	:	"リッチモンド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.N,
+	hasRetro:	false,
+},
+{
+	id		:	"304",
+	name	:	{
+		en	:	"Honolulu",
+		cn	:	"火奴鲁鲁",
+		jp	:	"ホノルル",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"305",
+	name	:	{
+		en	:	"St. Louis",
+		cn	:	"圣路易斯",
+		jp	:	"セントルイス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"306",
+	name	:	{
+		en	:	"Jupiter",
+		cn	:	"丘比特",
+		jp	:	"ジュピター",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"307",
+	name	:	{
+		en	:	"Jersey",
+		cn	:	"泽西",
+		jp	:	"ジャージー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"308",
+	name	:	{
+		en	:	"Sendai",
+		cn	:	"貆",
+		jp	:	"川内",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3308",
+	name	:	{
+		en	:	"Sendai",
+		cn	:	"貆",
+		jp	:	"川内",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"309",
+	name	:	{
+		en	:	"Jintsuu",
+		cn	:	"貎",
+		jp	:	"神通",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	true,
+},
+{
+	id		:	"3309",
+	name	:	{
+		en	:	"Jintsuu",
+		cn	:	"貎",
+		jp	:	"神通",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+},
+{
+	id		:	"310",
+	name	:	{
+		en	:	"Naka",
+		cn	:	"",
+		jp	:	"那珂",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"316",
+	name	:	{
+		en	:	"Urakaze",
+		cn	:	"槆",
+		jp	:	"浦風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"317",
+	name	:	{
+		en	:	"Isokaze",
+		cn	:	"柉",
+		jp	:	"磯風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"318",
+	name	:	{
+		en	:	"Hamakaze",
+		cn	:	"樇",
+		jp	:	"浜風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3318",
+	name	:	{
+		en	:	"Hamakaze",
+		cn	:	"樇",
+		jp	:	"浜風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"319",
+	name	:	{
+		en	:	"Tanikaze",
+		cn	:	"栭",
+		jp	:	"谷風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3319",
+	name	:	{
+		en	:	"Tanikaze",
+		cn	:	"栭",
+		jp	:	"谷風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"320",
+	name	:	{
+		en	:	"Mikasa",
+		cn	:	"鲐",
+		jp	:	"三笠",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"321",
+	name	:	{
+		en	:	"Agano",
+		cn	:	"豼",
+		jp	:	"阿賀野",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"325",
+	name	:	{
+		en	:	"Matchless",
+		cn	:	"无敌",
+		jp	:	"マッチレス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"326",
+	name	:	{
+		en	:	"Musketeer",
+		cn	:	"火枪手",
+		jp	:	"マスケティーア",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"327",
+	name	:	{
+		en	:	"Fiji",
+		cn	:	"斐济",
+		jp	:	"フィジー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"328",
+	name	:	{
+		en	:	"Jamaica",
+		cn	:	"牙买加",
+		jp	:	"ジャマイカ",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"329",
+	name	:	{
+		en	:	"Montpelier",
+		cn	:	"蒙彼利埃",
+		jp	:	"モントピリア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"330",
+	name	:	{
+		en	:	"Denver",
+		cn	:	"丹佛",
+		jp	:	"デンバー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"331",
+	name	:	{
+		en	:	"Asashio",
+		cn	:	"棹",
+		jp	:	"朝潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"332",
+	name	:	{
+		en	:	"Ooshio",
+		cn	:	"荙",
+		jp	:	"大潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"333",
+	name	:	{
+		en	:	"Michishio",
+		cn	:	"樠",
+		jp	:	"満潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"334",
+	name	:	{
+		en	:	"Arashio",
+		cn	:	"栘",
+		jp	:	"荒潮",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"335",
+	name	:	{
+		en	:	"Belchan",
+		cn	:	"小贝法",
+		jp	:	"ベルちゃん",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"336",
+	name	:	{
+		en	:	"Abercrombie",
+		cn	:	"阿贝克隆比",
+		jp	:	"アバークロンビー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.BM,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"337",
+	name	:	{
+		en	:	"Sussex",
+		cn	:	"苏塞克斯",
+		jp	:	"サセックス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"338",
+	name	:	{
+		en	:	"I-19",
+		cn	:	"伊-19",
+		jp	:	"伊-19",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"339",
+	name	:	{
+		en	:	"I-26",
+		cn	:	"伊-26",
+		jp	:	"伊-26",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"340",
+	name	:	{
+		en	:	"I-58",
+		cn	:	"伊-58",
+		jp	:	"伊-58",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"341",
+	name	:	{
+		en	:	"U-81",
+		cn	:	"U-81",
+		jp	:	"U-81",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"342",
+	name	:	{
+		en	:	"Dace",
+		cn	:	"鲦鱼",
+		jp	:	"デイス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"343",
+	name	:	{
+		en	:	"U-47",
+		cn	:	"U-47",
+		jp	:	"U-47",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"344",
+	name	:	{
+		en	:	"U-557",
+		cn	:	"U-557",
+		jp	:	"U-557",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"345",
+	name	:	{
+		en	:	"Z35",
+		cn	:	"Z35",
+		jp	:	"Z35",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"346",
+	name	:	{
+		en	:	"Z18",
+		cn	:	"Z18",
+		jp	:	"Z18",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"347",
+	name	:	{
+		en	:	"Le Triomphant",
+		cn	:	"凯旋",
+		jp	:	"ル・トリオンファン",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"348",
+	name	:	{
+		en	:	"Forbin",
+		cn	:	"福尔班",
+		jp	:	"フォルバン",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3348",
+	name	:	{
+		en	:	"Forbin",
+		cn	:	"福尔班",
+		jp	:	"フォルバン",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"349",
+	name	:	{
+		en	:	"Emile Bertin",
+		cn	:	"埃米尔·贝尔汀",
+		jp	:	"エミール・ベルタン",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"350",
+	name	:	{
+		en	:	"Surcouf",
+		cn	:	"絮库夫",
+		jp	:	"シュルクーフ",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"351",
+	name	:	{
+		en	:	"Le Mars",
+		cn	:	"勒马尔",
+		jp	:	"ル・マルス",
+	},
+	faction	:	"Vichya Dominion",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3351",
+	name	:	{
+		en	:	"Le Mars",
+		cn	:	"勒马尔",
+		jp	:	"ル・マルス",
+	},
+	faction	:	"Vichya Dominion",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"352",
+	name	:	{
+		en	:	"Dunkerque",
+		cn	:	"敦刻尔克",
+		jp	:	"ダンケルク",
+	},
+	faction	:	"Vichya Dominion",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"353",
+	name	:	{
+		en	:	"Jean Bart",
+		cn	:	"让·巴尔",
+		jp	:	"ジャン・バール",
+	},
+	faction	:	"Vichya Dominion",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"354",
+	name	:	{
+		en	:	"Massachusetts",
+		cn	:	"马萨诸塞",
+		jp	:	"マサチューセッツ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"355",
+	name	:	{
+		en	:	"Bush",
+		cn	:	"布什",
+		jp	:	"ブッシュ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"356",
+	name	:	{
+		en	:	"Centaur",
+		cn	:	"半人马",
+		jp	:	"セントー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"357",
+	name	:	{
+		en	:	"Essex",
+		cn	:	"埃塞克斯",
+		jp	:	"エセックス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"358",
+	name	:	{
+		en	:	"Albacore",
+		cn	:	"大青花鱼",
+		jp	:	"アルバコア",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"359",
+	name	:	{
+		en	:	"Le Temeraire",
+		cn	:	"鲁莽",
+		jp	:	"ル・テメレール",
+	},
+	faction	:	"Iris Libre",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"360",
+	name	:	{
+		en	:	"Memphis",
+		cn	:	"孟菲斯",
+		jp	:	"メンフィス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"361",
+	name	:	{
+		en	:	"Newcastle",
+		cn	:	"纽卡斯尔",
+		jp	:	"ニューカッスル",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	true,
+},
+{
+	id		:	"3361",
+	name	:	{
+		en	:	"Newcastle",
+		cn	:	"纽卡斯尔",
+		jp	:	"ニューカッスル",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.E,
+},
+{
+	id		:	"362",
+	name	:	{
+		en	:	"Hobby",
+		cn	:	"霍比",
+		jp	:	"ホビー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"363",
+	name	:	{
+		en	:	"Kalk",
+		cn	:	"科尔克",
+		jp	:	"カーク",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"364",
+	name	:	{
+		en	:	"Minneapolis",
+		cn	:	"明尼阿波利斯",
+		jp	:	"ミネアポリス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CA,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"365",
+	name	:	{
+		en	:	"Hazelwood",
+		cn	:	"黑泽伍德",
+		jp	:	"ヘイゼルウッド",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"366",
+	name	:	{
+		en	:	"Concord",
+		cn	:	"康克德",
+		jp	:	"コンコード",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"367",
+	name	:	{
+		en	:	"Amagi",
+		cn	:	"鳐",
+		jp	:	"天城",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BC,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"368",
+	name	:	{
+		en	:	"Kaga (Battleship)",
+		cn	:	"鸾",
+		jp	:	"加賀",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.BB,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"369",
+	name	:	{
+		en	:	"Hatakaze",
+		cn	:	"樋",
+		jp	:	"旗風",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"370",
+	name	:	{
+		en	:	"Makinami",
+		cn	:	"棬",
+		jp	:	"巻波",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"371",
+	name	:	{
+		en	:	"Sirius",
+		cn	:	"天狼星",
+		jp	:	"シリアス",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"372",
+	name	:	{
+		en	:	"Curacoa",
+		cn	:	"库拉索",
+		jp	:	"キュラソー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"373",
+	name	:	{
+		en	:	"Curlew",
+		cn	:	"杓鹬",
+		jp	:	"カーリュー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"374",
+	name	:	{
+		en	:	"Kimberly",
+		cn	:	"金伯利",
+		jp	:	"キンバリー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
+	id		:	"375",
+	name	:	{
+		en	:	"Mullany",
+		cn	:	"马拉尼",
+		jp	:	"マラニー",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"376",
+	name	:	{
+		en	:	"Chaser",
+		cn	:	"追赶者",
+		jp	:	"チェイサー",
+	},
+	faction	:	"Royal Navy",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"377",
+	name	:	{
+		en	:	"Independence",
+		cn	:	"独立",
+		jp	:	"インディペンデンス",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CVL,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"378",
+	name	:	{
+		en	:	"Shangri-La",
+		cn	:	"香格里拉",
+		jp	:	"シャングリラ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"379",
+	name	:	{
+		en	:	"Z2",
+		cn	:	"Z2",
+		jp	:	"Z2",
+	},
+	faction	:	"Ironblood",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
 ];

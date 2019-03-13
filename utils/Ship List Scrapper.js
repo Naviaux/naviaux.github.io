@@ -1,3 +1,5 @@
+//https://azurlane.koumakan.jp/w/index.php?title=Special:ViewData&tables=ships&fields=ShipGroup%3DShipGroup%2CShipID%3DShipID%2CName%3DName%2CCNName%3DCNName%2CJPName%3DJPName%2CRarity%3DRarity%2CNationality%3DNationality%2CType%3DType%2CSubtypeRetro%3DSubtypeRetro%2CRemodelId%3DRemodelId%2CImageShipyardIcon%3DImageShipyardIcon%2CImageShipyardIconKai%3DImageShipyardIconKai&limit=400&max+display+chars=3000
+
 var table = $("#standard tbody");
 var q = "";
 function hull(fulltext) {

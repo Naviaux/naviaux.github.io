@@ -403,7 +403,7 @@
 					alert("Tierlist string copied to clipboard");
 				});
 				$("#load").on("click", function() {
-					load(prompt("Enter Tierlist String", localStorage.getItem("AZTL")));
+					load(prompt("Enter Tierlist String", localStorage.getItem("AZTL") ? localStorage.getItem("AZTL") : ""));
 				});
 				
 				function load(load_string) {

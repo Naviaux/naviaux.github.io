@@ -319,6 +319,18 @@ var ships = [
 	hasRetro:	false,
 },
 {
+	id		:	"004",
+	name	:	{
+		en	:	"Dewey",
+		cn	:	"",
+		jp	:	"デューイ",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.R,
+	hasRetro:	false,
+},
+{
 	id		:	"005",
 	name	:	{
 		en	:	"Cassin",
@@ -2252,7 +2264,18 @@ var ships = [
 	faction	:	"Sakura Empire",
 	hull	:	ShipHulls.CL,
 	rarity	:	Rarity.E,
-	hasRetro:	false,
+	hasRetro:	true,
+},
+{
+	id		:	"3179",
+	name	:	{
+		en	:	"Yuubari",
+		cn	:	"狐",
+		jp	:	"夕張",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CL,
+	rarity	:	Rarity.SR,
 },
 {
 	id		:	"182",
@@ -4372,6 +4395,42 @@ var ships = [
 	},
 	faction	:	"Ironblood",
 	hull	:	ShipHulls.DD,
+	rarity	:	Rarity.E,
+	hasRetro:	false,
+},
+{
+	id		:	"380",
+	name	:	{
+		en	:	"Bunker Hill",
+		cn	:	"",
+		jp	:	"バンカー・ヒル",
+	},
+	faction	:	"Eagle Union",
+	hull	:	ShipHulls.CV,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"381",
+	name	:	{
+		en	:	"I-13",
+		cn	:	"伊-13",
+		jp	:	"伊-13",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.SS,
+	rarity	:	Rarity.SR,
+	hasRetro:	false,
+},
+{
+	id		:	"382",
+	name	:	{
+		en	:	"Suzuya",
+		cn	:	"狺",
+		jp	:	"鈴谷",
+	},
+	faction	:	"Sakura Empire",
+	hull	:	ShipHulls.CA,
 	rarity	:	Rarity.E,
 	hasRetro:	false,
 },

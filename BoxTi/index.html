@@ -1,0 +1,261 @@
+<html>
+	<head>
+		<title>BoxTi</title>
+		<link rel="stylesheet" href= "./main.css" />
+		<style>
+			
+		</style>
+		<script src = "https://code.jquery.com/jquery-3.4.0.min.js"></script>
+		<script src = "moment.js"></script>
+		<script>
+			/**
+				drag_id
+					Is used to make sure that the correct entity is being moved.
+					Setting this to -1 or undefined will prevent entities from moving.
+				drag_x, drag_y
+					Positional data to get the correct type of movement when dragging entities.
+				drag_postpos
+					Used to determine whether to open the entity
+				zin
+					Used to keep the most recently selected entity on top
+			**/
+			var drag_id, drag_x, drag_y, drag_postpos, zin = 0;
+			var resizing = false;
+			
+			function countBoxtis () {
+				return $(".boxti").length;
+			}
+			// When the page is done loading.
+			$(document).ready(function() {
+				var test_date = new Date('April 24, 2019 10:00:00');
+				
+				$("#0 .date").html(moment(test_date).fromNow());
+				
+				$(".boxti").toArray().forEach(function(e) { 
+					let x = -1, y = -1;
+					while (x < 0 || y < 150) {
+						x = Math.random() * ($(window).width() / 2);
+						y = Math.random() * $(window).height() - 250;
+					}
+					$(e).css("top", y).css("left", x);
+				});
+			
+				/** Sets BoxTi Entity Events	
+					Called after creating BoxTi Entities as new objects don't have events associated with them.
+				**/
+				function setBoxtiEvents() {
+					$(".boxti").on("mousedown", function( click_event ) {
+						zin += countBoxtis();
+						$(click_event.currentTarget).css("z-index", zin);
+						drag_id = click_event.currentTarget.id;
+						drag_x = click_event.offsetX;
+						drag_y = click_event.offsetY;
+						drag_postpos = $(click_event.currentTarget).position();
+					});
+					$(".boxti").on("mouseup", function( click_event ) {
+						drag_id = -1;
+						if (drag_postpos.top == $(click_event.currentTarget).position().top && drag_postpos.left == $(click_event.currentTarget).position().left) {
+							// execute order 66
+						}
+					});
+					$(".boxti").on("mousemove", function ( drag_event ) {
+						if ( drag_id == drag_event.currentTarget.id ) {
+							var target = $(drag_event.currentTarget);
+							var t_position = target.position();
+						//	target.css("top", t_position.top + (drag_event.offsetY - drag_y)).css("left", t_position.left + (drag_event.offsetX - drag_x));
+							dragged = true;
+						}
+					});
+				}
+				function setReaderEvents() {
+					$(".replies").on("click", function (click_event) {
+						console.log(click_event);
+						if (click_event.target.className.includes("replies")) {
+							$("#" + click_event.currentTarget.parentElement.id + ' .sub').toggleClass("show");
+							$(click_event.currentTarget).toggleClass("detract");
+						}
+					});
+				}
+				setBoxtiEvents();
+				setReaderEvents();
+				
+				$("#boxti_resizer").on("mousedown", function( click_event ) {
+					resizing = true;
+					drag_x = click_event.offsetX;
+				});
+				$("#boxti_resizer").on("mouseup", function( click_event ) {
+					resizing = false;
+				});
+				$("body").on("mousemove", function( drag_event ) {
+					if ( resizing ) {
+						var boxtis = $("#boxti_room");
+						var resizer = $("#boxti_resizer");
+						var reader = $("#boxti_reader");
+						
+						boxtis.css("width", drag_event.pageX - drag_x);
+						reader.css("width", $(window).width() - boxtis.width() - resizer.width() - 9);
+					}
+					if ( drag_id > -1 ) {
+						var boxti = $("#" + drag_id);
+						var b_position = boxti.position();
+						boxti.css("top", drag_event.pageY - drag_y).css("left", drag_event.pageX - drag_x);
+						dragged = true;
+					}
+				});
+				$("html").on("mouseup", function ( mouseup_event ) {
+					drag_id = -1;
+					resizing = false;
+				});
+				$(window).on("resize", function (resize_event ) {
+					var boxtis = $("#boxti_room");
+						var resizer = $("#boxti_resizer");
+						var reader = $("#boxti_reader");
+						
+						boxtis.css("width", resize_event.pageX - drag_x);
+						reader.css("width", $(window).width() - boxtis.width() - resizer.width() - 9);
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="boxti_room">
+			<div id = "search">
+				<input type="text" placeholder="boxti" name = "toSearch" id="header"></input>
+				<div id = "search_options">
+					<label><input type = "checkbox" name="allowNSFW"><span class="inputtext">Show NSFW</span></label>
+					<label><input type = "checkbox" name="allowOld"><span class="inputtext">Show Outdated</span></label>
+					<label><input type = "checkbox" name="allowSeen"><span class="inputtext">Show Seen</span></label>
+				</div>
+			</div>
+			<div class="boxti" id="0">
+				<div class="upper">
+					<span class="attributes">
+						<span class="image"></span>
+					</span>
+					<span class="title">
+						Jean Bart is feeling overshadowed
+					</span>
+					<span class="author">
+						CinroIzumi
+					</span>
+					<span class="warnings">
+					</span>
+					<span class="date">
+					</span>
+				</div>
+				<div class="lower">
+					<span class="content"><img src="https://i.redd.it/wczhn2fkt7u21.jpg"></span>
+					<span class="tags">
+						AzurLane Art <!--- help -->
+					</span>
+					<span class="comments">29 comments</span>
+				</div>
+				<div class="cals"></div>
+			</div>
+			<div class="boxti" id="1">
+				<div class="upper">
+					<span class="attributes">
+						<span class="pinned"></span>
+						<span class="text"></span>
+						<span class="image"></span>
+						<span class="link"></span>
+					</span>
+					<span class="title">
+						How can she
+					</span>
+					<span class="author">
+						An.1
+					</span>
+					<span class="warnings">
+						<span class="nsfw">NSFW</span>
+						<span class="spoiler">SPOIL</span>
+					</span>
+					<span class="date">1h
+					</span>
+				</div>
+				<div class="lower">
+					<span class="content"></span>
+					
+					<span class="comments">0 comments</span>
+				</div>
+				<div class="cals"></div>
+			</div>
+		</div>
+		<div id="boxti_resizer"></div>
+		<div id="boxti_reader">
+			<div id = "title">Jean Bart is feeling overshadowed</div>
+			<div class = "user op">CirnoIzumi</div>
+			<div id = "post_content"><img src="https://i.redd.it/wczhn2fkt7u21.jpg"></div>
+			<div id = "comments">
+				<div class = "main op" id = "001">
+					<div class = "user">CirnoIzumi</div>
+					<div class = "content">I wouldn't have expected there to be so little fanart of her, <a href="https://www.pixiv.net/member_illust.php?mode=medium&illust_id=70589030" target="blank">Source</a></div>
+					<div class = "replies">
+						<div class = "sub" id = "002">
+							<div class = "user">Sveniven</div>
+							<div class = "content">Is she on EN servers? She looks super bad ass</div>
+						</div>
+						<div class = "sub" id = "003">
+							<div class = "user">_Issoupe</div>
+							<div class = "content">
+								Nope.<br>
+								But the event she appears in is the last non rerun we are missing on en.<br>
+								So we can expect her to be released pretty soon.
+							</div>
+						</div>
+						<div class = "sub" id = "004">
+							<div class = "user">Devnhar</div>
+							<div class = "content">I hope you're right, she seems so OP and cool (plus, I'm French, so I must have this ship at all cost :D)</div>
+						</div>
+						<div class = "sub" id = "005">
+							<div class = "user">Frost004</div>
+							<div class = "content">Her & Dunkerque are really awesome, and gorgeous to boot</div>
+						</div>
+						<div class = "sub" id = "006">
+							<div class = "user">Devnhar</div>
+							<div class = "content">
+								Totally agree with you!<br>
+								And let's not forget Richelieu, she'll most likelly become the most powerfull BB in AL and her skin is awesome :)
+							</div>
+						</div>
+						<div class = "sub op" id = "007">
+							<div class = "user">CirnoIzumi</div>
+							<div class = "content">
+								Jean Bart is the highest single damage BB in AL, other notable ships from .Iris of light and dark. would be<br>
+								Le Triomphant and Le Temeraire (aka Greenviles french sis)
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "main" id = "020">
+					<div class = "user">ImpCJCaesar</div>
+					<div class = "content">
+						Just patiently waiting for the day when she'll come to EN
+					</div>
+				</div>
+				<div class = "main" id = "021">
+					<div class = "user">Gadac</div>
+					<div class = "content">
+						In term of skin she is my favorite in the game right now.
+					</div>
+				</div>
+				<div class = "main" id = "022">
+					<div class = "user">type_beta</div>
+					<div class = "content">
+						We are just a bad match. I am Auto Man!!
+					</div>
+					<div class = "replies">
+						<div class = "sub">
+							<div class = "user">_Issoupe</div>
+							<div class = "content">
+								The first salvo she shoots at the beggining of the battle benefits from her skill regardless of manual.<br>
+								You can make use of her to insta nuke sirens roamers even on auto
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -35,13 +35,16 @@
 				
 				function drawWorld() {
 					var world = [
-					"wwwwwww",
-					"w_____w",
-					"w_____w",
-					"w_____w",
-					"w_____w",
-					"w_____w",
-					"wwwwwww"
+					"wwwwwww ",
+					"wt___tw ",
+					"w_____w ",
+					"w__t__w ",
+					"w_____w ",
+					"w_____ww",
+					"wwwww__w",
+					"w______w",
+					"w______w",
+					"wwwwwwww"
 					];
 					
 					var hi_color = 155;
@@ -54,56 +57,138 @@
 					Math.seedrandom(seed);
 					for ( let y = 0; y < world.length; y++) {
 						for (let x = 0; x < world[y].length; x++) {
-							if (world[y][x] == "w") {
-								var tC = Math.random() * ((hi_color + variation) - (hi_color - variation)) + (hi_color - variation);
-								var lC = Math.random() * ((mi_color + variation) - (mi_color - variation)) + (mi_color - variation);
-								var rC = Math.random() * ((lo_color + variation) - (lo_color - variation)) + (lo_color - variation);
-								var sTx = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2;
-								var sTy = (y * block_size / 2 + x * block_size / 2) * angle;
- 								var tAttr = {
-									//fillColor: (x % 4 == 0 ? tC : 0) + "," + (y % 3 == 0 ? tC : 0) + "," + (y % 4 == 0 ? tC : 0),
-									fillColor: tC + "," + tC + "," + tC,
-									x: sTx,
-									y: sTy,
-									//width: block_size,
-									//height: block_size
-									path: [
-										[sTx + block_size / 2, sTy + block_size / 2 * angle],
-										[sTx, sTy + block_size * angle],
-										[sTx - block_size / 2, sTy + block_size / 2 * angle],
-									]
-								};
-								var sLx = world[y].length / 2 * block_size - y * block_size / 2 + x * block_size / 2 - block_size / 2;
-								var sLy = block_size / 2 * angle + (y * block_size / 4 + x * block_size / 4) ;
- 								var lAttr = {
-									fillColor: lC + "," + lC + "," + lC,
-									x: sLx,
-									y: sLy,
-									//width: block_size,
-									//height: block_size
-									path: [
-										[sLx + block_size / 2, sLy + block_size / 2 * angle],
-										[sLx + block_size / 2, sLy + block_size / 2 * 3 * angle],
-										[sLx, sLy + block_size * angle],
-									]
-								};
-								var sRx = world[y].length / 2 * block_size + x * block_size / 2 - y * block_size / 2;
-								var sRy = block_size * angle + (y * block_size / 4 + x * block_size / 4) + block_size * angle;
- 								var rAttr = {
-									fillColor: rC + "," + rC + "," + rC,
-									x: sRx,
-									y: sRy,
-									//width: block_size,
-									//height: block_size
-									path: [
-										[sRx + block_size / 2, sRy - block_size / 2 * angle],
-										[sRx + block_size / 2, sRy - block_size / 2 * 3 * angle],
-										[sRx, sRy - block_size * angle],
-									]
-								};
-								drawPath(rAttr);
-								drawPath(lAttr);
-								drawPath(tAttr);
+							switch ( world[y][x] ) {
+								case 'w':
+									var tC = Math.random() * ((hi_color + variation) - (hi_color - variation)) + (hi_color - variation);
+									var lC = Math.random() * ((mi_color + variation) - (mi_color - variation)) + (mi_color - variation);
+									var rC = Math.random() * ((lo_color + variation) - (lo_color - variation)) + (lo_color - variation);
+									var sTx = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2;
+									var sTy = (y * block_size / 2 + x * block_size / 2) * angle;
+									var tAttr = {
+										//fillColor: (x % 4 == 0 ? tC : 0) + "," + (y % 3 == 0 ? tC : 0) + "," + (y % 4 == 0 ? tC : 0),
+										fillColor: tC + "," + tC + "," + tC,
+										x: sTx,
+										y: sTy,
+										//width: block_size,
+										//height: block_size
+										path: [
+											[sTx + block_size / 2, sTy + block_size / 2 * angle],
+											[sTx, sTy + block_size * angle],
+											[sTx - block_size / 2, sTy + block_size / 2 * angle],
+										]
+									};
+									var sLx = world[y].length / 2 * block_size - y * block_size / 2 + x * block_size / 2 - block_size / 2;
+									var sLy = block_size / 2 * angle + (y * block_size / 4 + x * block_size / 4) ;
+									var lAttr = {
+										fillColor: lC + "," + lC + "," + lC,
+										x: sLx,
+										y: sLy,
+										//width: block_size,
+										//height: block_size
+										path: [
+											[sLx + block_size / 2, sLy + block_size / 2 * angle],
+											[sLx + block_size / 2, sLy + block_size / 2 * 3 * angle],
+											[sLx, sLy + block_size * angle],
+										]
+									};
+									var sRx = world[y].length / 2 * block_size + x * block_size / 2 - y * block_size / 2;
+									var sRy = block_size * angle + (y * block_size / 4 + x * block_size / 4) + block_size * angle;
+									var rAttr = {
+										fillColor: rC + "," + rC + "," + rC,
+										x: sRx,
+										y: sRy,
+										//width: block_size,
+										//height: block_size
+										path: [
+											[sRx + block_size / 2, sRy - block_size / 2 * angle],
+											[sRx + block_size / 2, sRy - block_size / 2 * 3 * angle],
+											[sRx, sRy - block_size * angle],
+										]
+									};
+									drawPath(rAttr);
+									drawPath(lAttr);
+									drawPath(tAttr);
+								break;
+								case 't':
+									var barkColor = "100, 85, 65";
+									var sB1x = world[y].length / 2 * block_size - y * block_size / 2 + x * block_size / 2 - block_size / 4;
+									var sB1y = (block_size + x * block_size / 2 + y * block_size / 2) * angle + block_size / 8;
+									var b1Attr = {
+										fillColor: barkColor,
+										x: sB1x,
+										y: sB1y,
+										path: [
+											[sB1x + block_size / 2, sB1y + block_size / 4],
+											[sB1x + block_size / 16 * 6, sB1y + block_size / 8 * angle],
+											[sB1x + block_size / 16 * 6, sB1y - block_size / 2 * angle],
+											[sB1x + block_size / 16 * 4.5, sB1y - block_size / 1.8 * angle],
+											[sB1x + block_size / 16 * 3, sB1y - block_size / 16 * angle],
+										]
+									};
+									var sB2x = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2 + block_size / 4;
+									var sB2y = (block_size + x * block_size / 2 + y * block_size / 2) * angle + block_size / 8;
+									var b2Attr = {
+										fillColor: barkColor,
+										x: sB2x,
+										y: sB2y,
+										path: [
+											[sB2x - block_size / 2, sB2y + block_size / 4],
+											[sB2x - block_size / 16 * 6, sB2y + block_size / 8 * angle],
+											[sB2x - block_size / 16 * 6, sB2y - block_size / 2 * angle],
+											[sB2x - block_size / 16 * 4.5, sB2y - block_size / 1.8 * angle],
+											[sB2x - block_size / 16 * 3, sB2y - block_size / 16 * angle],
+										]
+									};
+									var leafColor = "40, 100, 40";
+									var sT1x = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2 - block_size / 5;
+									var sT1y = (block_size + x * block_size / 2 + y * block_size / 2) * angle - block_size / 32;
+									var t1Attr = {
+										fillColor: leafColor,
+										x: sT1x,
+										y: sT1y,
+										path: [
+											[sT1x + block_size / 3, sT1y + block_size / 4 * angle],
+											[sT1x + block_size / 3, sT1y - block_size / 2 * angle],
+											[sT1x, sT1y - block_size / 1.25 * angle],
+										]
+									};
+									var sT2x = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2 + block_size / 8;
+									var sT2y = (block_size + x * block_size / 2 + y * block_size / 2) * angle - block_size / 32;
+									var t2Attr = {
+										fillColor: leafColor,
+										x: sT2x,
+										y: sT2y,
+										path: [
+											[sT2x - block_size / 3, sT2y + block_size / 3 * angle],
+											[sT2x - block_size / 3, sT2y - block_size / 2 * angle],
+											[sT2x, sT2y - block_size / 1.25 * angle],
+										]
+									};
+								case '_':
+									var fC = Math.random() * ((hi_color + variation) - (hi_color - variation)) + (hi_color - variation);
+									var sFx = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2;
+									var sFy = (block_size + y * block_size / 2 + x * block_size / 2) * angle;
+									var fAttr = {
+										//fillColor: (x % 4 == 0 ? tC : 0) + "," + (y % 3 == 0 ? tC : 0) + "," + (y % 4 == 0 ? tC : 0),
+										fillColor: "128," + fC + "," + fC,
+										x: sFx,
+										y: sFy,
+										//width: block_size,
+										//height: block_size
+										path: [
+											[sFx + block_size / 2, sFy + block_size / 2 * angle],
+											[sFx, sFy + block_size * angle],
+											[sFx - block_size / 2, sFy + block_size / 2 * angle],
+										]
+									};
+									drawPath(fAttr);
+									if (world[x][y] == 't') {
+										drawPath (b1Attr);
+										drawPath (b2Attr);
+										drawPath (t1Attr);
+										drawPath (t2Attr);
+									}
+								break;
 							}
 						}
 					}

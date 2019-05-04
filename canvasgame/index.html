@@ -1,0 +1,176 @@
+<html>
+	<head>
+		<title>4House</title>
+		<script src = "https://code.jquery.com/jquery-3.4.0.min.js"></script>
+		<script src = "http://davidbau.com/encode/seedrandom.js"></script>
+		<script>
+			
+			$(document).ready( function () {
+				var seed = Math.random();
+			
+				var player = {};
+				player.stats = {};
+				player.stats.level = 1;
+				player.stats.currentHealth = 100;
+				player.stats.maxHealth = 100;
+			
+				var tick = 0;
+				var jGame = $("#game");
+				var eGame = document.getElementById("game");
+				var g = eGame.getContext("2d");
+				function ticking () {
+					tick++;
+					if (tick % 7 == 0) {
+						//player.stats.currentHealth-- < 0 ? player.stats.currentHealth = player.stats.maxHealth : player.stats.currentHealth--;
+						draw();
+					}
+					
+				}
+				function draw() {
+					drawWorld();
+				//	units();
+				//	spells();
+					drawUI();
+				}
+				
+				function drawWorld() {
+					var world = [
+					"wwwwwww",
+					"w_____w",
+					"w_____w",
+					"w_____w",
+					"w_____w",
+					"w_____w",
+					"wwwwwww"
+					];
+					
+					var hi_color = 155;
+					var mi_color = 125;
+					var lo_color = 80;
+					var variation = 7;
+					
+					var angle = 0.5;
+					var block_size = 64;
+					Math.seedrandom(seed);
+					for ( let y = 0; y < world.length; y++) {
+						for (let x = 0; x < world[y].length; x++) {
+							if (world[y][x] == "w") {
+								var tC = Math.random() * ((hi_color + variation) - (hi_color - variation)) + (hi_color - variation);
+								var lC = Math.random() * ((mi_color + variation) - (mi_color - variation)) + (mi_color - variation);
+								var rC = Math.random() * ((lo_color + variation) - (lo_color - variation)) + (lo_color - variation);
+								var sTx = world[y].length / 2 * block_size + (y * (-block_size / 2)) + x * block_size / 2;
+								var sTy = (y * block_size / 2 + x * block_size / 2) * angle;
+ 								var tAttr = {
+									//fillColor: (x % 4 == 0 ? tC : 0) + "," + (y % 3 == 0 ? tC : 0) + "," + (y % 4 == 0 ? tC : 0),
+									fillColor: tC + "," + tC + "," + tC,
+									x: sTx,
+									y: sTy,
+									//width: block_size,
+									//height: block_size
+									path: [
+										[sTx + block_size / 2, sTy + block_size / 2 * angle],
+										[sTx, sTy + block_size * angle],
+										[sTx - block_size / 2, sTy + block_size / 2 * angle],
+									]
+								};
+								var sLx = world[y].length / 2 * block_size - y * block_size / 2 + x * block_size / 2 - block_size / 2;
+								var sLy = block_size / 2 * angle + (y * block_size / 4 + x * block_size / 4) ;
+ 								var lAttr = {
+									fillColor: lC + "," + lC + "," + lC,
+									x: sLx,
+									y: sLy,
+									//width: block_size,
+									//height: block_size
+									path: [
+										[sLx + block_size / 2, sLy + block_size / 2 * angle],
+										[sLx + block_size / 2, sLy + block_size / 2 * 3 * angle],
+										[sLx, sLy + block_size * angle],
+									]
+								};
+								var sRx = world[y].length / 2 * block_size + x * block_size / 2 - y * block_size / 2;
+								var sRy = block_size * angle + (y * block_size / 4 + x * block_size / 4) + block_size * angle;
+ 								var rAttr = {
+									fillColor: rC + "," + rC + "," + rC,
+									x: sRx,
+									y: sRy,
+									//width: block_size,
+									//height: block_size
+									path: [
+										[sRx + block_size / 2, sRy - block_size / 2 * angle],
+										[sRx + block_size / 2, sRy - block_size / 2 * 3 * angle],
+										[sRx, sRy - block_size * angle],
+									]
+								};
+								drawPath(rAttr);
+								drawPath(lAttr);
+								drawPath(tAttr);
+							}
+						}
+					}
+				}
+				
+				function drawUI() {
+					// hp outer circle
+					var hpOuterAttributes = {
+						strokeColor: "155, 155, 155",
+						fillColor: "60, 60, 60",
+						width: 6,
+						padding: 10,
+						radius: 70,
+						x: "padding + radius + (width / 2)",
+						y: "jGame.height() - radius - (width / 2) - padding",
+						start: 0,
+						end: 2 * Math.PI
+					};
+					var hpInnerAttributes = {
+						fillColor: "175, 40, 40",
+						padding: 16,
+						radius: 70 - 3,
+						x: "padding + radius",
+						y: "jGame.height() - radius - padding",
+						start: (0.5 - player.stats.currentHealth / player.stats.maxHealth) * Math.PI,
+						end: (0.5 + player.stats.currentHealth / player.stats.maxHealth) * Math.PI
+					};
+					drawArc ( hpOuterAttributes );
+					drawArc ( hpInnerAttributes );
+				}
+				function drawArc ( attributes ) {
+					attributes.x = attributes.x.replace(/padding/g, "attributes.padding").replace(/radius/g, "attributes.radius").replace(/width/g, "attributes.width");
+					attributes.y = attributes.y.replace(/padding/g, "attributes.padding").replace(/radius/g, "attributes.radius").replace(/width/g, "attributes.width");
+					g.lineWidth = attributes.width;
+					g.strokeStyle = "rgba(" + attributes.strokeColor + ")";
+					g.fillStyle = "rgba(" + attributes.fillColor + ")";
+					g.beginPath();
+					g.arc (eval(attributes.x), eval(attributes.y), attributes.radius, attributes.start, attributes.end);
+					attributes.fillColor ? g.fill() : false;
+					attributes.strokeColor ? g.stroke() : false;
+				}
+				function drawPath ( attributes ) {
+					g.lineWidth = attributes.width;
+					g.strokeStyle = "rgba(" + attributes.strokeColor + ")";
+					g.fillStyle = "rgba(" + attributes.fillColor + ")";
+					g.beginPath();
+					g.moveTo(attributes.x, attributes.y);
+					for (let p = 0; p < attributes.path.length; p++) {
+						g.lineTo(attributes.path[p][0], attributes.path[p][1]);
+					}
+					attributes.fillColor ? g.fill() : false;
+					attributes.strokeColor ? g.stroke() : false;
+				}
+				function drawBox ( attributes ) {
+					g.lineWidth = attributes.width;
+					g.strokeStyle = "rgba(" + attributes.strokeColor + ")";
+					g.fillStyle = "rgba(" + attributes.fillColor + ")";
+					attributes.fillColor ? g.fillRect ( attributes.x, attributes.y, attributes.width, attributes.height) : false;
+					attributes.strokeColor ? g.strokeRect ( attributes.x, attributes.y, attributes.width, attributes.height) : false;
+				}
+				setInterval(ticking, 1000/60);
+			});
+		</script>
+	</head>
+	<body>
+		<canvas id="game" width=1280 height=720>
+		
+		</canvas>
+	</body>
+</html>

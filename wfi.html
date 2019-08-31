@@ -8,6 +8,7 @@
 				margin: 0; padding: 0;
 				font-family: 'Comfortaa', cursive;
 				overflow: hidden;
+				color: #3f3f4f;
 			}
 			.screen {
 				width: 100%;
@@ -51,7 +52,7 @@
 				bottom: 25px;
 				margin-left: calc(50vw - 45px / 2);
 				color: #9e4242;
-				background-color:f7f4e5;
+				background-color: #f7f4e5;
 			}
 			#next:hover {
 				background-color: #3f3f4f;
@@ -74,7 +75,7 @@
 				top: 25px;
 				margin-left: calc(50vw - 45px / 2);
 				color: #9e4242;
-				background-color:f7f4e5;
+				background-color: #f7f4e5;
 			}
 			#previous:hover {
 				background-color: #3f3f4f;
@@ -99,37 +100,43 @@
 			
 			var currentScreen = 1;
 			var maxScreens = $(".screen").length;
+			var animating = false;
 			function nextSlide () {
-				currentScreen++;
-				if (currentScreen > maxScreens) {
-					currentScreen = maxScreens;
-					return;
-				} 
-				
-				if (currentScreen >= maxScreens)
-					$("#next").hide();
-				else
-					$("#next").show();
+				if (!animating) {
+					currentScreen++;
+					if (currentScreen > maxScreens) {
+						currentScreen = maxScreens;
+						return;
+					} 
+					animating = true;
+					if (currentScreen >= maxScreens)
+						$("#next").hide();
+					else
+						$("#next").show();
+						
 					
-				
-				$("#previous").show();
-				$("#s" + (currentScreen - 1)).slideUp();
+					$("#previous").show();
+					$("#s" + (currentScreen - 1)).slideUp( function () { animating = false } );
+				}
 			}
 			function previousSlide () {
-				currentScreen--;
-				if (currentScreen < 1) {
-					currentScreen = 1;
-					return;
-				}
-				
-				if (currentScreen <= 1)
-					$("#previous").hide();
-				else
-					$("#previous").show();
+				if (!animating) {
+					currentScreen--;
+					if (currentScreen < 1) {
+						currentScreen = 1;
+						return;
+					}
 					
-				
-				$("#next").show();
-				$("#s" + (currentScreen)).slideDown();
+					animating = true;
+					if (currentScreen <= 1)
+						$("#previous").hide();
+					else
+						$("#previous").show();
+						
+					
+					$("#next").show();
+					$("#s" + (currentScreen)).slideDown( function () { animating = false } );
+				}
 			}
 		</script>
 	</head>

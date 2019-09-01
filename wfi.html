@@ -14,12 +14,23 @@
 				width: 100%;
 				height: 100%;
 			}
+			.left:before {
+				content: "";
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
+			}
 			.left {
 				float: left;
 				width: 50%;
 				height: 100%;
 				text-align: center;
-				margin-top: calc(50vh - 48px / 2);
+			}
+			.right:before {
+				content: "";
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
 			}
 			.right {
 				float: right;
@@ -27,8 +38,9 @@
 				height: 100%;
 				background-color: #3f3f4f;
 				overflow: hidden;
+				white-space: nowrap;
 			}
-			
+			.content { display: inline-block; }
 			#s1 .left {
 				font-size: 48px;
 				width: 100%;
@@ -40,17 +52,15 @@
 				font-family: "Cambria Math";
 				content: "⩔";
 			}
-			#next {
+			#next  {
 				text-align: center;
-				font-size: 2.2vh;
+				font-size: 2.5vh;
 				font-family: "Cambria Math";
-				border: 1px solid #9e4242;
-				border-radius: 25px;
-				width: 2.5vw;
-				height: 2.5vh;
-				margin-left: calc(50vw - 2.5vw / 2);
+				border-top: 1px solid #9e4242;
+				width: 100vw;
+				height: 3vh;
 				position: absolute;
-				bottom: 25px;
+				bottom: 0px;
 				color: #9e4242;
 				background-color: #f7f4e5;
 			}
@@ -65,15 +75,13 @@
 			}
 			#previous {
 				text-align: center;
-				font-size: 2.2vh;
+				font-size: 2.5vh;
 				font-family: "Cambria Math";
-				border: 1px solid #9e4242;
-				border-radius: 25px;
-				width: 2.5vw;
-				height: 2.5vh;
-				margin-left: calc(50vw - 2.5vw / 2);
+				border-bottom: 1px solid #9e4242;
+				width: 100%;
+				height: 3vh;
 				position: absolute;
-				top: 25px;
+				top: 0;
 				color: #9e4242;
 				background-color: #f7f4e5;
 			}
@@ -82,18 +90,36 @@
 				color: #f7f4e5;
 				cursor: pointer;
 			}
+			
+			@media (min-width: 600px) and (orientation:landscape) {
+				#previous {
+					font-size: 22px;
+					border: 1px solid #9e4242;
+					border-radius: 25px;
+					width: 50px;
+					height: 25px;
+					margin-left: calc(50vw - 2.5vw / 2);
+					top: 25px;
+				}
+				#next  {
+					font-size: 22px;
+					border: 1px solid #9e4242;
+					border-radius: 25px;
+					width: 50px;
+					height: 25px;
+					margin-left: calc(50vw - 2.5vw / 2);
+					bottom: 25px;
+				}
+			}
+			
+			.ctr {
+				vertical-align: middle;
+			}
 		</style>
 		<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 		<script src="http://code.jquery.com/mobile/1.5.0-rc1/jquery.mobile-1.5.0-rc1.js"></script>
 		<script>
-			// jQueryMobile-SwipeUpDown
-// ----------------------------------
-//
-// Copyright (c)2012 Donnovan Lewis
-// Distributed under MIT license
-//
-// https://github.com/blackdynamo/jquerymobile-swipeupdown
 		(function () {
 // initializes touch and scroll events
     var supportTouch = $.support.touch,
@@ -241,20 +267,23 @@
 		<meta property="og:title" content="WhiteFang Industries" />
 		<meta property="og:description" content="Welcome to WhiteFang Industries. This webpage is a mockup." />
 		<meta property="og:url" content="naviaux.github.com/wfi" />
-		<meta property="og:image" content="https://cdn.discordapp.com/attachments/256111404224872448/595794782736089099/fox.png" />
 	</head>
 	<body>
 		<div class = "screen" id = "s1">
 			<div class = "left">
-				WhiteFang Industries<br>
-				<span style="display: block;font-size: 16px; margin-top: 12px;">This webpage is a mockup.</span>
+				<div class = "content">
+					WhiteFang Industries<br>
+					<span style="display: block;font-size: 16px; margin-top: 12px;">This webpage is a mockup.</span>
+				</div>
 			</div>
 		</div>
 		<div class = "screen" id = "s2">
 			<div class="left">
-				Mining. Industry. Trade.
+				<div class = "content">
+					Mining. Industry. Trade.
+				</div>
 			</div>
-			<div class="right"><img src="https://imperium.news/wp-content/uploads/2017/05/eve_mining_orca.jpg" style="position: relative; left: -700px;"></div>
+			<div class="right"><img class="ctr" src="https://imperium.news/wp-content/uploads/2017/05/eve_mining_orca.jpg" style="position: relative; right: 700px;"></div>
 		</div>
 		
 		<div id = "previous" style="display: none"></div>

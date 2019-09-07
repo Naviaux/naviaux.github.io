@@ -1,0 +1,250 @@
+<!-- var myWindow = window.open("", "", "width=200,height=100"); -->
+
+<html>
+	<head>
+		<title>Mageiks</title>
+		<link rel="stylesheet" type="text/css" href="mage.css" />
+		<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+		<script src="./mage.js"></script>
+		<script>
+			$(document).ready ( function() {
+			
+				game.enemy = {};
+				game.enemy.stats = {};
+				game.enemy.stats.hp = {};
+				game.enemy.stats.hp.current = 10;
+				game.enemy.stats.hp.max = 10;
+				game.enemy.attack = {};
+				game.enemy.attack.speed = 25;
+				game.enemy.attack.damage = 1;
+				game.enemy.attack.delay = 0;
+				
+				game.mechanics = {}
+				game.mechanics.tick = 0;
+				game.mechanics.tick_rate = 100;
+				game.mechanics.enemy_respawn_ticks = 0;
+				game.mechanics.respawn_delay = 0;
+				game.mechanics.refresh_delay = -1;
+				
+				game.player.activeTab = RESEARCHING;
+				game.player.currentConstruction = false;
+				
+				$("#slot1").click(function () {
+					var spellSlot = game.player.spells[0];
+					var mana = game.player.stats.mana;
+					var enemy = game.enemy.stats;
+					
+					game.player.currentAction = FIGHTING;
+					
+					var spell = calculateSpellAttributes(spellSlot.attributes);
+					(game.player.safetyNet <= spell.cost) ? game.player.safetyNet = spell.cost : 0;
+					
+					if (mana.current >= spell.cost && enemy.hp.current > 0) {
+						mana.increaseCounter += spell.cost;
+						mana.current -= spell.cost;
+						enemy.hp.current -= spell.damage;
+					}
+					update();
+				});
+				
+				function calculateSpellAttributes(attributes) {
+					var magics = game.player.magics;
+					var damage = magics[attributes[0]].primaryDamage;
+					var cost = magics[attributes[0]].primaryCost;
+					
+					return { damage : damage, cost : cost };
+				};
+				
+				function update() {
+					var enemy = game.enemy.stats;
+					var enemy_attack = game.enemy.attack;
+					var player = game.player.stats;
+					var mechanics = game.mechanics;
+					mechanics.tick++;
+					
+					if (enemy.hp.current <= 0) {
+						enemy.hp.current = 0;
+						mechanics.respawn_delay++;
+						if (mechanics.respawn_delay >= mechanics.enemy_respawn_ticks) {
+							enemy.hp.current = enemy.hp.max;
+							enemy_attack.delay = 0;
+							mechanics.respawn_delay = 0;
+						}
+					} else {
+						enemy_attack.delay++;
+						if (game.player.currentAction == FIGHTING) {
+							if (enemy_attack.delay >= enemy_attack.speed) {
+								player.hp.current -= enemy_attack.damage;
+								enemy_attack.delay = 0;
+							}
+						} else {
+							enemy_attack.delay += enemy_attack.speed;
+						}
+					}
+					
+					if (player.mana.current > player.mana.max)
+						player.mana.current = player.mana.max;
+					
+					if (player.mana.increaseCounter >= player.mana.increaseRequired) {
+						player.mana.max += player.mana.increaseAmount;
+						player.mana.increaseCounter = 0;
+					}
+					
+					player.mana.regenCounter++;
+					if (player.mana.regenCounter >= player.mana.regenDelay && game.player.currentAction != CONSTRUCTING) {
+						player.mana.current += player.mana.regenFlat;
+						player.mana.current += player.mana.max * player.mana.regenMax;
+						player.mana.regenCounter = 0;
+						if (player.mana.current >= player.mana.max) {
+							player.mana.current = player.mana.max;
+						}
+					}
+					
+					if (game.player.currentAction == RESEARCHING) {
+						game.research[game.player.currentResearch].researchProgress += player.research.progress * player.research.progressMultiplier;
+						if (game.research[game.player.currentResearch].researchProgress >= game.research[game.player.currentResearch].researchTime) {
+							onUpgrade(game.player.currentResearch);
+							game.player.currentAction = IDLE;
+							game.research[game.player.currentResearch].researchProgress = 0;
+							game.mechanics.refresh_delay = -1;
+						}
+					}
+					if (game.player.currentAction == CONSTRUCTING) {
+						player.construction.delay++;
+						if (player.construction.delay >= player.construction.speed) {
+							game.construct[game.player.currentConstruction].constructionProgress += player.construction.progress * player.construction.progressMultiplier;
+							player.construction.delay = 0;
+						}
+						if (game.player.currentConstruction && game.construct[game.player.currentConstruction].constructionProgress >= game.construct[game.player.currentConstruction].constructionTime) {
+							onConstruct (game.player.currentConstruction);
+							game.construct[game.player.currentConstruction].constructionProgress = 0;
+							game.player.currentAction = IDLE;
+							game.player.currentConstruction = false;
+							game.mechanics.refresh_delay = -1;
+						}
+					} else {
+						player.construction.delay = 0;
+					}
+					
+					if (game.player.activeTab != CONSTRUCTING && ((game.mechanics.refresh_delay % 4) == 0 || game.player.currentAction == RESEARCHING) || (game.mechanics.refresh_delay == -1 && game.player.activeTab == RESEARCHING)) {
+						$("#menu_options").html( () => {
+							var research = game.research;
+							var toAdd = "";
+							for (var r in research) {
+								var hasReqs = true;
+								for (var reqs in research[r].requirements) {
+									if (!research[r].requirements[reqs]()) {
+										hasReqs = false;
+										break;
+									}
+								}
+								if (hasReqs && !(research[r].count >= research[r].max)) {
+									toAdd += '<div id="' + r.replace(/ /g, "_") + '">' + r + ' ' + research[r].count + ' ' + research[r].researchProgress + '/' + Math.ceil(research[r].researchTime) + '</div>';
+								}
+							}
+							return toAdd;
+						});
+						$("#slot1 .spellInfo").html( () => {
+							var spellSlot = game.player.spells[0];
+							var spell = calculateSpellAttributes(spellSlot.attributes);
+							return Math.floor(spell.damage) + " damage<br>" + Math.floor(spell.cost) + " mana";
+						});
+						$("#menu_options div").click( function(e) {
+							game.player.currentResearch = e.currentTarget.id.replace(/_/g, " ");
+							game.player.currentAction = RESEARCHING;
+						});
+						game.mechanics.refresh_delay = 1;
+					} else if (game.player.activeTab == CONSTRUCTING && game.mechanics.refresh_delay % 4 == 0  || game.mechanics.refresh_delay == -1) {
+						$("#menu_options").html( () => {
+							var construct = game.construct;
+							var toAdd = "";
+							for (var c in construct) {
+								var hasReqs = true;
+								for (var reqs in construct[c].requirements) {
+									if (!construct[c].requirements[reqs]()) {
+										hasReqs = false;
+										break;
+									}
+								}
+								if (hasReqs && !(construct[c].count >= construct[c].max)) {
+									toAdd += '<div id="' + c.replace(/ /g, "_") + '">' + c + ' ' + construct[c].count + ' ' + construct[c].constructionProgress + '/' + Math.ceil(construct[c].constructionTime) + '</div>';
+								}
+							}
+							return toAdd;
+						});
+						$("#menu_options div").click( function(e) {
+							var con = e.currentTarget.id.replace(/_/g, " ");
+							if (!game.player.currentConstruction && startConstruction(con)) {
+								game.player.currentConstruction = con;
+								game.player.currentAction = CONSTRUCTING;
+							} else if (game.player.currentConstruction) {
+								game.player.currentAction = CONSTRUCTING;
+							}
+						});
+						game.mechanics.refresh_delay = 1;
+					} else {
+						game.mechanics.refresh_delay++;
+					}
+					
+					
+					$("#enemyHealth").html(Math.floor(enemy.hp.current) + "/" + enemy.hp.max);
+					$("#playerHealth").html(Math.floor(player.hp.current) + "/" + player.hp.max);
+					$("#playerMana").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent)) + ")" );
+				
+						
+				}
+				$(".btn").click( function (e) {
+					game.player.activeTab = e.currentTarget.id == "CONSTRUCTING" ? CONSTRUCTING : RESEARCHING;
+				});
+				
+				
+				setInterval(update, game.mechanics.tick_rate);
+			});
+		</script>
+		<style>
+			#cast {
+				display:inline-block;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id = "enemy">
+			<div id = "enemyHealth">
+				5/5
+			</div>
+		</div>
+		<div id = "player">
+			<div id = "menu_options"></div>
+			<div id = "menu">
+				<div id = "RESEARCHING" class="btn">R</div>
+				<div id = "spells" class="btn">NYI</div>
+				<div id = "CONSTRUCTING" class="btn">C</div>
+			</div>
+			<div id = "playerHealth">
+				100/100
+			</div>
+			<div id = "playerMana">
+				100/100
+			</div>
+			<div id = "playerSpells">
+				<div id = "slot1">
+					1<br>
+					<span class="spellInfo">5 Damage<br>20 Mana</span>
+				</div>
+				<div id = "slot2">
+					2<br>
+					<span class="spellInfo">None</span>
+				</div>
+				<div id = "slot3">
+					3<br>
+					<span class="spellInfo">None</span>
+				</div>
+				<div id = "slot4">
+					4<br>
+					<span class="spellInfo">None</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

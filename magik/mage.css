@@ -10,11 +10,35 @@ html, body {
 #enemy {
 	width: 100%;
 }
-#enemyHealth {
-	background-color: #cc3a5f;
+#enemyHealth_info {
+	height: 1em;
+	padding: 3px;
+	width: 100%;
+	position: absolute;
+	float: left;
+	z-index: 2;
 	text-align: center;
 	color: #f7f3ef;
+}
+#enemyHealth {
+	background-color: #cc3a5f;
 	padding: 3px;
+	position: relative;
+	height: 1em;
+	z-index: 1;
+}
+#enemyHealth_max {
+	content: "";
+	background-color: #7e153e;
+	text-align: center;
+	color: #f7f3ef;
+	height: 1em;
+	padding: 3px;
+	position: absolute;
+	top: 0;
+	float: left;
+	width: 100%;
+	z-index: 0;
 }
 
 #player {
@@ -26,12 +50,50 @@ html, body {
 	width: 100%;
 }
 
+#playerStats {
+	position: relative;
+}
+
+#playerHealth_info {
+	height: 1em;
+	padding: 3px;
+	width: 100%;
+	position: absolute;
+	float: left;
+	z-index: 2;
+	text-align: center;
+	color: #f7f3ef;
+}
 #playerHealth {
 	background-color: #cc3a5f;
 	text-align: center;
 	color: #f7f3ef;
 	height: 1em;
 	padding: 3px;
+	z-index: 1;
+	position: relative;
+}
+#playerHealth_max {
+	background-color: #7e153e;
+	text-align: center;
+	color: #f7f3ef;
+	height: 1em;
+	padding: 3px;
+	position: absolute;
+	bottom: calc(1em + 6px);
+	float: left;
+	width: 100%;
+	z-index: 0;
+}
+#playerMana_info {
+	height: 1em;
+	padding: 3px;
+	width: 100%;
+	position: absolute;
+	float: left;
+	z-index: 2;
+	text-align: center;
+	color: #f7f3ef;
 }
 #playerMana {
 	background-color: #3333dd;
@@ -39,10 +101,25 @@ html, body {
 	color: #f7f3ef;
 	height: 1em;
 	padding: 3px;
+	z-index: 1;
+	position: relative;
+}
+#playerMana_max {
+	background-color: #15156f;
+	text-align: center;
+	color: #f7f3ef;
+	height: 1em;
+	padding: 3px;
+	z-index: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	float: left;
 }
 
 #playerSpells {
 	display: table;
+	table-layout: fixed;
 }
 
 #playerSpells div {
@@ -71,6 +148,7 @@ html, body {
 	position: relative;
 	height: 100%;
 	display: table;
+	table-layout: fixed;
 }
 
 #menu_options div {

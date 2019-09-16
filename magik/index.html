@@ -65,16 +65,6 @@
 						}
 					}
 				};
-			
-		/*		game.enemy = {};
-				game.enemy.stats = {};
-				game.enemy.stats.hp = {};
-				game.enemy.stats.hp.current = 10;
-				game.enemy.stats.hp.max = 10;
-				game.enemy.attack = {};
-				game.enemy.attack.speed = 25;
-				game.enemy.attack.damage = 1;
-				game.enemy.attack.delay = 0;*/
 				
 				game.mechanics = {}
 				game.mechanics.tick = 0;
@@ -83,7 +73,7 @@
 				game.mechanics.respawn_delay = 0;
 				game.mechanics.refresh_delay = -1;
 				
-				game.player.activeTab = RESEARCHING;
+				game.player.activeTab = SPELL;
 				game.player.currentConstruction = false;
 				
 				$(".slot").click(function (e) { // When a spell slot is clicked
@@ -121,9 +111,16 @@
 					TODO: Implement multiple magic types and effects
 					TODO: Make attributes objects instead of Strings
 				*/
-				function calculateSpellAttributes(attribute) {
+				function calculateSpellAttributes(attribute, ignoreForce) {
+					ignoreForce = (ignoreForce == undefined ? false : ignoreForce);
+					if (attribute.length < 1 && !ignoreForce)
+						attribute.push("arcana");
+						
 					var magics = game.player.magics;
 					var attributes = Object.create(attribute);
+					if (attributes.length < 1)
+						attributes.push("arcana");
+					
 					var damage = magics[attributes[0]].primary.damage;
 					var cost = magics[attributes[0]].primary.cost;
 					var effects = new Array();
@@ -150,20 +147,60 @@
 					
 				*/
 				function getActiveTabUI (tab) {
-					var toAdd = "";
-					for (var item in tab) {
-						var hasReqs = true;
-						for (var reqs in tab[item].requirements) {
-							if (!tab[item].requirements[reqs]()) {
-								hasReqs = false;
-								break;
+					if (tab != SPELL) {
+						var toAdd = "";
+						for (var item in tab) {
+							var hasReqs = true;
+							for (var reqs in tab[item].requirements) {
+								if (!tab[item].requirements[reqs]()) {
+									hasReqs = false;
+									break;
+								}
+							}
+							if (hasReqs && !(tab[item].count >= tab[item].max)) {
+								toAdd += '<div id="' + item.replace(/ /g, "_") + '">' + item + ' ' + tab[item].count + ' ' + Math.ceil(tab[item].Progress) + '/' + Math.ceil(tab[item].Time) + '</div>';
 							}
 						}
-						if (hasReqs && !(tab[item].count >= tab[item].max)) {
-							toAdd += '<div id="' + item.replace(/ /g, "_") + '">' + item + ' ' + tab[item].count + ' ' + Math.ceil(tab[item].Progress) + '/' + Math.ceil(tab[item].Time) + '</div>';
+						return toAdd;
+					} else {
+						var spell_menu = $("<div>");
+						spell_menu.attr("id", "spell_menu");
+						var spellSlot_Selection = $("<div>");
+						spellSlot_Selection.attr("id", "select");
+						var element_Selection = $("<div>");
+						element_Selection.attr("id", "elements");
+						
+						for (let spellSlot in game.player.spells) {
+							var ss = $("<div>").html(spellSlot * 1 + 1);
+							ss.attr("id", spellSlot);
+							ss.addClass (spellSlot == selectedSpell ? "selected " : "");
+							ss.addClass( game.player.spells[spellSlot].unlocked ? "" : "locked");
+							ss.click ( (e) => {
+								if (!e.currentTarget.className.includes("locked"))
+									selectedSpell = e.currentTarget.id;
+							});
+							ss.appendTo(spellSlot_Selection);
 						}
+						for (let element in game.player.magics) {
+							var es = $("<div>").html(game.player.magics[element].researched ? element : "?");
+							es.attr("id", element);
+							es.addClass (game.player.magics[element].researched ? "" : "hidden");
+							
+							for (let attr of game.player.spells[selectedSpell].attributes)
+								if (attr == element)
+									es.addClass("selected");
+							
+							es.click ( toggleElementAttribute );
+							
+							es.appendTo(element_Selection);
+						}
+						
+						
+						spellSlot_Selection.appendTo(spell_menu);
+						element_Selection.appendTo(spell_menu);
+						
+						return spell_menu;
 					}
-					return toAdd;
 				}
 				
 				function getStatusEffect(target, effect) {
@@ -187,6 +224,21 @@
 					return effectiveness;
 				}
 				
+				const EFFECTS = { POS : 0, NEG : 1, ALL : 2};
+				const TARGETS = { PLAYER : game.player, ENEMY : game.enemy };
+				
+				function cleanseEffects(target, effectTargets) {
+					if (effectTargets == EFFECTS.POS || effectTargets == EFFECTS.ALL) {
+						// TODO: Cleanse Positive Effects
+					}
+					if (effectTargets == EFFECTS.NEG || effectTargets == EFFECTS.ALL) {
+						console.log("Cleansing Negatives");
+						for (var effectType in target.status.negative) {
+							target.status.negative[effectType] = {};
+						}
+					}
+				}
+				
 				/*
 					Loops through the game and updates various states
 						NYI boolean onlyUIUpdate: only causes the UI to update
@@ -203,6 +255,7 @@
 						mechanics.respawn_delay++; // increases the respawn delay of the enemy
 						if (mechanics.respawn_delay >= mechanics.enemy_respawn_ticks) { // if the enemy can respawn
 							enemy.hp.current = enemy.hp.max; // resets some values
+							cleanseEffects(TARGETS.ENEMY, EFFECTS.ALL);
 							enemy.attack.counter = 0;
 							mechanics.respawn_delay = 0;
 						}
@@ -281,14 +334,6 @@
 								}
 								return toAdd;
 							});*/
-							$(".slot .spellInfo").html( (e) => { // updates spell slot info
-								var spellSlot = game.player.spells[e];
-								if (spellSlot.unlocked) {
-									var spell = calculateSpellAttributes(spellSlot.attributes);
-									return Math.floor(spell.damage) + " damage<br>" + Math.floor(spell.cost) + " mana";
-								}
-								return "None";
-							});
 							$("#menu_options div").click( function(e) {
 								game.player.currentResearch = e.currentTarget.id.replace(/_/g, " ");
 								game.player.currentAction = RESEARCHING;
@@ -321,7 +366,17 @@
 									game.player.currentAction = CONSTRUCTING;
 								}
 							});
+						} else if (game.player.activeTab == SPELL) {
+							$("#menu_options").html( getActiveTabUI(SPELL) );
 						}
+						$(".slot .spellInfo").html( (e) => { // updates spell slot info
+							var spellSlot = game.player.spells[e];
+							if (spellSlot.unlocked) {
+								var spell = calculateSpellAttributes(spellSlot.attributes, true);
+								return Math.floor(spell.damage) + " damage<br>" + Math.floor(spell.cost) + " mana";
+							}
+							return "None";
+						});
 						game.mechanics.refresh_delay = 1;
 					} else {
 						game.mechanics.refresh_delay++;
@@ -329,7 +384,7 @@
 					
 					
 					
-					$("#enemyHealth_info").html(Math.floor(enemy.hp.current) + "/" + enemy.hp.max);
+					$("#enemyHealth_info").html(Math.ceil(enemy.hp.current) + "/" + enemy.hp.max);
 					$("#enemyHealth").css("width", (enemy.hp.current / enemy.hp.max) * 100 + "%");
 					$("#playerHealth_info").html(Math.floor(player.hp.current) + "/" + player.hp.max);
 					$("#playerHealth").css("width", (player.hp.current / player.hp.max) * 100 + "%");
@@ -339,8 +394,27 @@
 						
 				}
 				$(".btn").click( function (e) {
-					game.player.activeTab = e.currentTarget.id == "CONSTRUCTING" ? CONSTRUCTING : RESEARCHING;
+					switch(e.currentTarget.id) {
+						case "CONSTRUCTING": game.player.activeTab = CONSTRUCTING; break;
+						case "SPELL": game.player.activeTab = SPELL; break;
+						default: game.player.activeTab = RESEARCHING;
+					}
 				});
+				
+				var selectedSpell = 0;
+				
+				function toggleElementAttribute (e) {
+					var element = e.currentTarget.id;
+					var magics = game.player.magics;
+					var spells = game.player.spells;
+					if (magics[element].researched) {
+						$(this).toggleClass("selected");
+						if (!spells[selectedSpell].attributes.includes(element))
+							spells[selectedSpell].attributes.push(element)
+						else
+							spells[selectedSpell].attributes.splice(spells[selectedSpell].attributes.indexOf(element), 1);
+					}
+				};
 				
 				
 				setInterval(update, game.mechanics.tick_rate);
@@ -359,11 +433,27 @@
 			<div id = "enemyHealth"></div>
 			<div id = "enemyHealth_max"></div>
 		</div>
+		<div id = "menu_options">
+			<div id = "spell_menu">
+				<div id = "select">
+					<div class="selected" id = "1">1</div>
+					<div class="locked" id = "2">2</div>
+					<div class="locked" id = "2">3</div>
+					<div class="locked" id = "2">4</div>
+				</div>
+				<div id = "elements">
+					<div class="selected" id = "arcana">Arcana</div>
+					<div class="hidden" id = "wind">?</div>
+					<div class="hidden" id = "earth">?</div>
+					<div class="hidden" id = "fire">?</div>
+					<div class="hidden" id = "water">?</div>
+				</div>
+			</div>
+		</div>
 		<div id = "player">
-			<div id = "menu_options"></div>
 			<div id = "menu">
 				<div id = "RESEARCHING" class="btn">Research</div>
-				<div id = "spells" class="btn">Spells</div>
+				<div id = "SPELL" class="btn">Spells</div>
 				<div id = "CONSTRUCTING" class="btn">Construction</div>
 			</div>
 			<div id = "playerStats">

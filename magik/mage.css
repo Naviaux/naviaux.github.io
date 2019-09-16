@@ -5,6 +5,7 @@ html, body {
 	overflow: hidden;
 	font-family: sans-serif;
 	font-weight: bold;
+	user-select: none;
 }
 
 #enemy {
@@ -151,14 +152,21 @@ html, body {
 	table-layout: fixed;
 }
 
-#menu_options div {
+#menu_options {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+	flex: 1 1 auto;
+}
+
+#menu_options > div:not(#spell_menu) {
 	user-select: none;
 	display: block;
 	width: 100%;
 	background-color: rgba(0,0,0,0.01);
 	padding: 4px;
 }
-#menu_options div:hover {
+#menu_options > div:hover:not(#spell_menu) {
 	background-color: #edffcc;
 	cursor: pointer;
 }
@@ -173,4 +181,54 @@ html, body {
 	cursor: pointer;
 	background-color: #edffcc;
 }
-#spells { cursor: not-allowed; background-color: #3d3d3d; border: 3px solid #e3e3ff; color: #e3e3ff; }
+#spell_menu { 
+	width: 100%;
+	background-color: rgba(0,0,0,0.01);
+}
+#spell_menu div div:hover {
+	background-color: #edffcc;
+	cursor: pointer;
+}
+
+#select {
+	display: table;
+	table-layout: fixed;
+	height: 24px;
+	width: calc(100% - 8px);
+	margin: 4px;
+}
+#select div {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	width: 25%;
+}
+
+.selected {
+	background-color: #4fe4e4;
+	border: 2px solid #4f4f4f;
+}
+.locked {
+	border: 3px solid #e3e3ff;
+	background-color: #3d3d3d;
+	color: #e3e3ff;
+}
+.locked:hover {
+	cursor: not-allowed !important; 
+	background-color: #3d3d3d !important;
+}
+
+
+#elements {
+	height: 100%;
+	width: 100%;
+}
+#elements div {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	width: calc(25% - 3.5px);
+	padding: 6px;
+	box-sizing: border-box;
+	text-transform: capitalize;
+}

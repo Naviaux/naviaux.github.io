@@ -116,16 +116,50 @@ game.research = {
 	},
 	"Mana Control" : {
 		count: 0,
-		max : 500,
+		max : 50,
 		Progress: 0,
-		Time: 1,
+		Time: 10,
 		scopes : () => { return [
 			game.research["Mana Control"],
 			game.player.stats.mana
 		]},
 		effects : [
+			[3, (r) => { r.scopes[1].increaseRequired -= r.value } ],
+			[1.65, (r) => { r.scopes[0].Time *= r.value } ]
+		],
+	},
+	"Mana Mastering" : {
+		count: 0,
+		max : 100,
+		Progress: 0,
+		Time: 1,
+		scopes : () => { return [
+			game.research["Mana Mastering"],
+			game.player.stats.mana
+		]},
+		effects : [
+			[2, (r) => { r.scopes[1].increaseRequired -= r.value } ],
+			[4, (r) => { r.scopes[0].Time *= r.value } ]
+		],
+		requirements : [
+			() => { return game.research["Mana Mastering"].count >= 40 }
+		],
+	},
+	"Mana Creation" : {
+		count: 0,
+		max : 100,
+		Progress: 0,
+		Time: 1,
+		scopes : () => { return [
+			game.research["Mana Creation"],
+			game.player.stats.mana
+		]},
+		effects : [
 			[1, (r) => { r.scopes[1].increaseRequired -= r.value } ],
-			[2.5, (r) => { r.scopes[0].Time *= r.value } ]
+			[12, (r) => { r.scopes[0].Time *= r.value } ]
+		],
+		requirements : [
+			() => { return game.research["Mana Mastering"].count >= 75 }
 		],
 	},
 	"Cyclic Breathing" : {
@@ -200,6 +234,25 @@ game.research = {
 			[1.5, (r) => { r.scopes[0].Time *= r.value } ] // increase Time
 		],
 	},
+	"Arcana Blending" : {
+		count : 0,
+		max : 10,
+		Progress : 0,
+		Time : 75,
+		scopes : () => { return [
+			game.research["Arcana Blending"],
+			game.player.magics.arcana
+		]},
+		effects : [
+			[0.16, (r) => { r.scopes[1].secondary.damage += r.value } ], // increases arcane secondary damage multiplier
+			[0.01, (r) => { r.scopes[1].secondary.cost -= r.value } ], // decreases arcane secondary cost multiplier
+			[3, (r) => { r.scopes[0].Time *= r.value } ]
+		],
+		requirements : [
+			() => { return game.research["Arcana Specialization"].count >= 10 },
+			() => { return game.research["Wind Research"].count >= 1 }
+		]
+	},
 	"Wind Research" : {
 		count : 0,
 		max : 1,
@@ -208,17 +261,15 @@ game.research = {
 		scopes : () => { return [
 			game.research["Wind Research"],
 			game.player.magics.wind,
-			game.player.spells // temp
 		]},
 		effects : [
 			[true, (r) => { r.scopes[1].researched = r.value; } ],
-			[true, (r) => { r.scopes[2][1].unlocked = r.value; }] // temp
 		],
 		requirements : [
 			() => { return game.research["Arcana Specialization"].count >= 5 }
 		]
 	},
-/*	"Wind Specialization" : {
+	"Wind Specialization" : {
 		count : 0,
 		Progress: 0,
 		Time: 90,
@@ -227,10 +278,54 @@ game.research = {
 			game.player.magics.wind
 		]},
 		effects : [
-			
+			[4, (r) => { r.scopes[1].primary.damage += r.value } ],
+			[6, (r) => { r.scopes[1].primary.cost += r.value } ],
+			[1.1, (r) => { r.scopes[0].effects[0] *= r.value } ],
+			[1.22, (r) => { r.scopes[0].effects[1] *= r.value } ],
+			[1.66, (r) => { r.scopes[0].Time *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Wind Research"].count >= 1 }
+		]
+	},
+	"Wind Effect" : {
+		count : 0,
+		max : 25,
+		Progress: 0,
+		Time: 33,
+		scopes : () => { return [
+			game.research["Wind Effect"],
+			game.player.magics.wind
+		]},
+		effects : [
+			[2, (r) => { r.scopes[1].primary.effects[0][1] += r.value } ],
+			[5, (r) => { r.scopes[1].primary.effects[0][2] += r.value } ],
+			[0.5, (r) => { r.scopes[1].secondary.effects[0][1] += r.value } ],
+			[1, (r) => { r.scopes[1].secondary.effects[0][2] += r.value } ],
+			[1.66, (r) => {r.scopes[0].Time *= r.value } ],
+		],
+		requirements : [
+			() => { return game.research["Wind Research"].count >= 1 },
+			() => { return game.research["Wind Specialization"].count >= 5 }
+		],
+	},
+	"Wind Blending" : {
+		count : 0,
+		max : 10,
+		Progress : 0,
+		Time : 225,
+		scopes : () => { return [
+			game.research["Wind Blending"],
+			game.player.magics.wind
+		]},
+		effects : [
+			[0.005, (r) => { r.scopes[1].secondary.damage += r.value } ], // increases wind secondary damage multiplier
+			[0.01, (r) => { r.scopes[1].secondary.cost -= r.value } ], // decreases wind secondary cost multiplier
+			[1.4, (r) => { r.scopes[0].Time *= r.value } ]
+		],
+		requirements : [
+			() => { return game.research["Wind Research"].count >= 1 },
+			() => { return game.research["Wind Specialization"].count >= 10 },
 		]
 	},
 	"Memorization" : {
@@ -240,7 +335,7 @@ game.research = {
 		Time: 600,
 		scopes : () => { return [
 			game.research["Memorization"],
-			game.player.magics.spells
+			game.player.spells
 		]},
 		effects : [
 			[true, (r) => { r.scopes[1][1].unlocked = r.value; }]
@@ -250,7 +345,7 @@ game.research = {
 			() => { return game.research["Cyclic Breathing"].count >= 10},
 			() => { return game.player.stats.mana.max >= 250}
 		]
-	}*/
+	}
 }
 game.construct = {
 	"Librarian" : {

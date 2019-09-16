@@ -280,8 +280,8 @@ game.research = {
 		effects : [
 			[4, (r) => { r.scopes[1].primary.damage += r.value } ],
 			[6, (r) => { r.scopes[1].primary.cost += r.value } ],
-			[1.1, (r) => { r.scopes[0].effects[0] *= r.value } ],
-			[1.22, (r) => { r.scopes[0].effects[1] *= r.value } ],
+			[1.1, (r) => { r.scopes[0].effects[0][0] *= r.value } ],
+			[1.22, (r) => { r.scopes[0].effects[1][0] *= r.value } ],
 			[1.66, (r) => { r.scopes[0].Time *= r.value } ],
 		],
 		requirements : [

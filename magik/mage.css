@@ -159,16 +159,45 @@ html, body {
 	flex: 1 1 auto;
 }
 
-#menu_options > div:not(#spell_menu) {
+#menu_list > div:not(#spell_menu) {
 	user-select: none;
 	display: block;
 	width: 100%;
 	background-color: rgba(0,0,0,0.01);
 	padding: 4px;
 }
-#menu_options > div:hover:not(#spell_menu) {
+#menu_list > div:hover:not(#spell_menu) {
 	background-color: #edffcc;
 	cursor: pointer;
+}
+
+.menu_option {
+	box-sizing: border-box;
+	position: relative;
+	padding: 0 !important;
+}
+.info {
+	padding: 4px;
+}
+.top_right {
+	float: right;
+}
+.bottom_left {
+	font-weight: initial;
+	font-size: 14px;
+}
+
+.menu_option .description {
+	display: none;
+	background-color: #999;
+	width: 100%;
+	padding: 4px;
+	border-top: 2px solid #444;
+	font-weight: initial;
+	font-size: 14px;
+}
+.menu_option:hover .description {
+	display: block;
 }
 
 .btn {
@@ -203,13 +232,31 @@ html, body {
 	vertical-align: middle;
 	width: 25%;
 }
-
 .selected {
-	background-color: #4fe4e4;
+	background-color: #22e0dd;
 	border: 2px solid #4f4f4f;
 }
+.primary {
+	background-color: #aaaaff;
+}
+#elements .selected:after {
+	white-space: pre-line;
+	content: '\Asecondary';
+	font-family: monospace;
+	font-size: 8px;
+	font-weight: initial;
+	text-transform: lowercase;
+}
+#elements .primary:after {
+	white-space: pre-line;
+	content: '\Aprimary';
+	font-family: monospace;
+	font-size: 8px;
+	font-weight: initial;
+	text-transform: lowercase;
+}
 .locked {
-	border: 3px solid #e3e3ff;
+	border: 3px inset #e3e3ff;
 	background-color: #3d3d3d;
 	color: #e3e3ff;
 }

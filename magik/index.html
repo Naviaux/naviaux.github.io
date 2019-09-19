@@ -7,6 +7,7 @@
 		<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
 		<script src="./mage.js"></script>
 		<script>
+			var calculateSpellAttributes;
 			$(document).ready ( function() {
 			
 				function addStatusEffect (spell, effect, target) {
@@ -20,6 +21,13 @@
 									duration : effect[2],
 								}
 							break;
+						case "dot" :
+							target.status[type][name][spell] = {
+								effect : effect[1],
+								interval : effect[2],
+								duration : effect[3],
+							}
+							break;
 						default: 
 							target.status[type][name][spell] = {
 								effect : effect[1],
@@ -30,7 +38,8 @@
 			
 				game.enemy = {
 					stats : {
-						hp : {
+						level : 0,
+						health : {
 							current : 100,
 							max : 100,
 							regen : {
@@ -38,15 +47,22 @@
 								is : true,
 								delay : 20,
 								interval : 2,
-								counter : 0,
+								timer : 0,
 							}
 						},
 						mana : {},
 						attack : {
 							damage : 1,
 							speed : 25,
-							counter : 0,
+							timer : 0,
 							delay : 0,
+						},
+						respawn : {
+							timer : 0,
+							delay : 5,
+							effects : {
+							 // none;
+							}
 						}
 					},
 					status : {
@@ -66,6 +82,36 @@
 					}
 				};
 				
+				function enemyUpdate () {
+					var stats = game.enemy.stats;
+					//var status = game.enemy.status;
+					
+					stats.health.current -= getStatusEffect(TARGETS.ENEMY, "negative.dot");
+					
+					if (stats.health.current <= 0) {
+						stats.health.current = 0;
+						stats.respawn.timer++;
+						if (stats.respawn.timer >= stats.respawn.delay) {
+							stats.health.current = stats.health.max;
+							stats.respawn.timer = 0;
+							stats.attack.timer = 0;
+							stats.health.regen.timer = 0;
+							cleanseEffects (TARGETS.ENEMY, EFFECTS.ALL);
+						}
+					} else {
+						if (!getStatusEffect(TARGETS.ENEMY, "negative.stun") > 0)
+							stats.attack.timer++; // possibly reset timer on stun? stuns will likely need a cooldown
+						if (game.player.currentAction == FIGHTING) {
+							if (stats.attack.timer >= stats.attack.speed + getStatusEffect(TARGETS.ENEMY, "negative.slow")) {
+								let damage = (stats.attack.damage - getStatusEffect(TARGETS.ENEMY, "negative.weakness")) * (1 - getStatusEffect(TARGETS.ENEMY, "negative.enfeeble"));
+								game.player.stats.health.current -= Math.ceil(damage);
+								stats.attack.timer = 0;
+							}
+						} else
+							stats.attack.timer = stats.attack.speed + getStatusEffect(TARGETS.ENEMY, "negative.slow");
+					}
+				}
+				
 				game.mechanics = {}
 				game.mechanics.tick = 0;
 				game.mechanics.tick_rate = 100;
@@ -73,7 +119,7 @@
 				game.mechanics.respawn_delay = 0;
 				game.mechanics.refresh_delay = -1;
 				
-				game.player.activeTab = SPELL;
+				game.player.activeTab = RESEARCHING;
 				game.player.currentConstruction = false;
 				
 				$(".slot").click(function (e) { // When a spell slot is clicked
@@ -92,10 +138,10 @@
 						
 						/* this needs to change based on the spell, this only works for offensive spells */
 						/* TODO: cast spell based on effects */
-						if (mana.current >= spell.cost && enemy.hp.current > 0) {
+						if (mana.current >= spell.cost && enemy.health.current > 0) {
 							mana.increaseCounter += spell.cost; 
 							mana.current -= spell.cost;
-							enemy.hp.current -= spell.damage;
+							enemy.health.current -= spell.damage * (1 + getStatusEffect(TARGETS.ENEMY, "negative.curse"));
 							if (spell.effects.length > 0)
 								for (var effect of spell.effects)
 									addStatusEffect(spellID, effect, game.enemy);
@@ -111,7 +157,8 @@
 					TODO: Implement multiple magic types and effects
 					TODO: Make attributes objects instead of Strings
 				*/
-				function calculateSpellAttributes(attribute, ignoreForce) {
+				calculateSpellAttributes = function(attribute,ignoreForce) {
+				//function calculateSpellAttributes(attribute, ignoreForce) {
 					ignoreForce = (ignoreForce == undefined ? false : ignoreForce);
 					if (attribute.length < 1 && !ignoreForce)
 						attribute.push("arcana");
@@ -125,13 +172,17 @@
 					var cost = magics[attributes[0]].primary.cost;
 					var effects = new Array();
 					if (magics[attributes[0]].primary.effects)
-						for (let effect_list of magics[attributes[0]].primary.effects)
-							effects.push(effect_list);
-						
-					attributes.shift();
+						for (let effect_list of magics[attributes[0]].primary.effects) {
+							effects.push(effect_list.slice(0));
+						}
+					var primaryElement = attributes.shift();
 					if (attributes.length > 0) {
 						for (var key of attributes) {
-							damage *= magics[key].secondary.damage;
+							if (!magics[primaryElement].primary.secondaryAppliesToEffect == undefined) {
+								damage *= magics[key].secondary.damage;
+							} else {
+								effects[magics[primaryElement].primary.secondaryAppliesToEffect][1] *= magics[key].secondary.damage;
+							}
 							cost *= magics[key].secondary.cost
 							if (magics[key].secondary.effects)
 								for (let effect_list of magics[key].secondary.effects)
@@ -148,7 +199,8 @@
 				*/
 				function getActiveTabUI (tab) {
 					if (tab != SPELL) {
-						var toAdd = "";
+						var toAdd = $("<div>");
+						toAdd.attr("id", "menu_list");
 						for (var item in tab) {
 							var hasReqs = true;
 							for (var reqs in tab[item].requirements) {
@@ -158,11 +210,49 @@
 								}
 							}
 							if (hasReqs && !(tab[item].count >= tab[item].max)) {
-								toAdd += '<div id="' + item.replace(/ /g, "_") + '">' + item + ' ' + tab[item].count + ' ' + Math.ceil(tab[item].Progress) + '/' + Math.ceil(tab[item].Time) + '</div>';
+								var listItem = $("<div>");
+								listItem.addClass("menu_option");
+								listItem.attr("id", item.replace(/ /g, "_"));
+								var level, manaCost;
+								var progress = Math.round(tab[item].Progress / tab[item].Time * 100);
+								if (tab == game.research) {
+									level = "Level: " + tab[item].count + (tab[item].max != undefined ? "/" + tab[item].max : "");
+									manaCost = Math.floor(tab[item].progressCost[0][0]) + " mana";
+								} else {
+									level = "Count: " + tab[item].count + (tab[item].max != undefined ? "/" + tab[item].max : "");
+									manaCost = Math.floor(tab[item].constructionCosts[0](tab[item].scopes())[1]) + " maximum mana";
+								}
+								level += " - Progress: " + progress + "%";
+								var info = $("<div>");
+								info.addClass("info");
+								var topLeft = $("<span>").html(item);
+								var bottomLeft = $("<span>").html(level);
+								topLeft.addClass("top_left");
+								bottomLeft.addClass("bottom_left");
+								
+								var topRight = $("<span>").html(manaCost);
+								topRight.addClass("top_right");
+								
+								topLeft.appendTo(info);
+								topRight.appendTo(info);
+								info.append("<br>");
+								bottomLeft.appendTo(info);
+								
+								info.appendTo(listItem);
+								
+								var description = $("<div>").html(tab[item].description);
+								description.addClass("description");
+								
+								description.appendTo(listItem);
+								
+								listItem.appendTo(toAdd);
+								
+								//toAdd += '<div id="' + item.replace(/ /g, "_") + '">' + item + ' ' + tab[item].count + ' ' + Math.ceil(tab[item].Progress) + '/' + Math.ceil(tab[item].Time) + '</div>';
 							}
 						}
 						return toAdd;
-					} else {
+					} else 
+					{
 						var spell_menu = $("<div>");
 						spell_menu.attr("id", "spell_menu");
 						var spellSlot_Selection = $("<div>");
@@ -181,14 +271,22 @@
 							});
 							ss.appendTo(spellSlot_Selection);
 						}
+						
 						for (let element in game.player.magics) {
 							var es = $("<div>").html(game.player.magics[element].researched ? element : "?");
 							es.attr("id", element);
 							es.addClass (game.player.magics[element].researched ? "" : "hidden");
 							
+							var firstElementInSpell = true;
 							for (let attr of game.player.spells[selectedSpell].attributes)
-								if (attr == element)
+								if (attr == element) {
 									es.addClass("selected");
+									if (firstElementInSpell)
+										es.addClass("primary");
+									break;
+								} else
+									firstElementInSpell = false;
+							
 							
 							es.click ( toggleElementAttribute );
 							
@@ -202,7 +300,7 @@
 						return spell_menu;
 					}
 				}
-				
+							
 				function getStatusEffect(target, effect) {
 					var type = effect.split(".")[0];
 					var name = effect.split(".")[1];
@@ -212,8 +310,12 @@
 							case "stun":
 							case "enfeeble":
 							case "curse":
-								if (target.status[type][name][e].effect > effect)
+								if (target.status[type][name][e].effect > effectiveness)
 									effectiveness = target.status[type][name][e].effect;
+								break;
+							case "dot":
+								if (target.status[type][name][e].duration % target.status[type][name][e].interval == 0)
+									effectiveness += target.status[type][name][e].effect;
 								break;
 							default: 
 								effectiveness += target.status[type][name][e].effect;
@@ -228,15 +330,12 @@
 				const TARGETS = { PLAYER : game.player, ENEMY : game.enemy };
 				
 				function cleanseEffects(target, effectTargets) {
-					if (effectTargets == EFFECTS.POS || effectTargets == EFFECTS.ALL) {
-						// TODO: Cleanse Positive Effects
-					}
-					if (effectTargets == EFFECTS.NEG || effectTargets == EFFECTS.ALL) {
-						console.log("Cleansing Negatives");
-						for (var effectType in target.status.negative) {
+					if (effectTargets == EFFECTS.POS || effectTargets == EFFECTS.ALL)
+						for (var effectType in target.status.positive)
+							target.status.positive[effectType] = {};
+					if (effectTargets == EFFECTS.NEG || effectTargets == EFFECTS.ALL)
+						for (var effectType in target.status.negative)
 							target.status.negative[effectType] = {};
-						}
-					}
 				}
 				
 				/*
@@ -249,8 +348,9 @@
 					var mechanics = game.mechanics; // game scopes
 					
 					mechanics.tick++; // keeps track of current tick
+					enemyUpdate();
 					
-					if (enemy.hp.current <= 0) { // if the enemy has less than 0 health
+					/*if (enemy.hp.current <= 0) { // if the enemy has less than 0 health
 						enemy.hp.current = 0; // sets enemy's health to 0 (this is to prevent negative numbers from occurring on the UI)
 						mechanics.respawn_delay++; // increases the respawn delay of the enemy
 						if (mechanics.respawn_delay >= mechanics.enemy_respawn_ticks) { // if the enemy can respawn
@@ -270,7 +370,7 @@
 						} else { // if the player is not fighting then make the enemy attack immediately
 							enemy.attack.counter += enemy.attack.speed; // this is to prevent attack exploits
 						}
-					}
+					}*/
 					
 					if (player.mana.current > player.mana.max) // resets player's mana to max if it's greater than max mana
 						player.mana.current = player.mana.max;
@@ -291,10 +391,15 @@
 					}
 					
 					if (game.player.currentAction == RESEARCHING) { // if the player is researching
-						game.research[game.player.currentResearch].Progress += player.research.progress * player.research.progressMultiplier; // adds progress to the research
+						player.research.timer++;
+						if (player.research.timer >= player.research.speed && progressResearch(game.player.currentResearch)) {
+							game.research[game.player.currentResearch].Progress += player.research.progress * player.research.progressMultiplier; // adds progress to the research
+							player.research.timer = 0;
+							game.mechanics.refresh_delay = -1; // forces a ui update this tick
+						}
 						if (game.research[game.player.currentResearch].Progress >= game.research[game.player.currentResearch].Time) { // if the progress exceeds to time
 							game.research[game.player.currentResearch].Progress = onResearch(game.player.currentResearch) ? 0 : game.research[game.player.currentResearch].Time; // if the player doesn't break the research safetys, reset the progress, otherwise set progress to time
-							game.player.currentAction = IDLE; // set player's action to idle
+							//game.player.currentAction = IDLE; // set player's action to idle
 							game.mechanics.refresh_delay = -1; // forces a ui update this tick
 						}
 					}
@@ -303,6 +408,7 @@
 						if (player.construction.delay >= player.construction.speed) {
 							game.construct[game.player.currentConstruction].Progress += player.construction.progress * player.construction.progressMultiplier; // adds progress to construction
 							player.construction.delay = 0;
+							game.mechanics.refresh_delay = -1; // forces a ui update this tick
 						}
 						if (game.player.currentConstruction && game.construct[game.player.currentConstruction].Progress >= game.construct[game.player.currentConstruction].Time) { // if progress exceeds time
 							onConstruct (game.player.currentConstruction); // construct the object
@@ -314,60 +420,19 @@
 					} else {
 						player.construction.delay = 0; // reset construction counter to prevent construction abuse
 					}
-					if (game.mechanics.refresh_delay % 4 == 0 || game.mechanics.refresh_delay == -1) { // if ui can update
+						
+					if (game.mechanics.refresh_delay === -1) { // if ui can update
 						if (game.player.activeTab == RESEARCHING) { // if current tab is research
-							$("#menu_options").html( getActiveTabUI(game.research) ); // load research ui
-							/*() => { backup function
-								var research = game.research;
-								var toAdd = "";
-								for (var r in research) {
-									var hasReqs = true;
-									for (var reqs in research[r].requirements) {
-										if (!research[r].requirements[reqs]()) {
-											hasReqs = false;
-											break;
-										}
-									}
-									if (hasReqs && !(research[r].count >= research[r].max)) {
-										toAdd += '<div id="' + r.replace(/ /g, "_") + '">' + r + ' ' + research[r].count + ' ' + Math.ceil(research[r].researchProgress) + '/' + Math.ceil(research[r].researchTime) + '</div>';
-									}
-								}
-								return toAdd;
-							});*/
-							$("#menu_options div").click( function(e) {
-								game.player.currentResearch = e.currentTarget.id.replace(/_/g, " ");
-								game.player.currentAction = RESEARCHING;
-							});
+							for (var r in game.research) {
+								$("#" + r.replace(/ /g, "_") + " .top_right").html(Math.floor(game.research[r].progressCost[0][0]) + " mana");
+								$("#" + r.replace(/ /g, "_") + " .bottom_left").html("Level: " + game.research[r].count + (game.research[r].max != undefined ? "/" + game.research[r].max : "") + " - Progress: " + Math.round(game.research[r].Progress / game.research[r].Time * 100) + "%");
+							}
 						} else if (game.player.activeTab == CONSTRUCTING) {
-							$("#menu_options").html( getActiveTabUI(game.construct) );
-							/*() => { backup function
-								var construct = game.construct;
-								var toAdd = "";
-								for (var c in construct) {
-									var hasReqs = true;
-									for (var reqs in construct[c].requirements) {
-										if (!construct[c].requirements[reqs]()) {
-											hasReqs = false;
-											break;
-										}
-									}
-									if (hasReqs && !(construct[c].count >= construct[c].max)) {
-										toAdd += '<div id="' + c.replace(/ /g, "_") + '">' + c + ' ' + construct[c].count + ' ' + construct[c].constructionProgress + '/' + Math.ceil(construct[c].constructionTime) + '</div>';
-									}
-								}
-								return toAdd;
-							});*/
-							$("#menu_options div").click( function(e) {
-								var con = e.currentTarget.id.replace(/_/g, " ");
-								if (!game.player.currentConstruction && startConstruction(con)) {
-									game.player.currentConstruction = con;
-									game.player.currentAction = CONSTRUCTING;
-								} else if (game.player.currentConstruction) {
-									game.player.currentAction = CONSTRUCTING;
-								}
-							});
+							for (var c in game.construct) {
+								$("#" + c.replace(/ /g, "_") + " .top_right").html(Math.floor(game.construct[c].constructionCosts[0](game.construct[c].scopes())[1]) + " maximum mana");
+								$("#" + c.replace(/ /g, "_") + " .bottom_left").html("Count: " + game.construct[c].count + (game.construct[c].max != undefined ? "/" + game.construct[c].max : "") + " - Progress: " + Math.round(game.construct[c].Progress / game.construct[c].Time * 100) + "%");
+							}
 						} else if (game.player.activeTab == SPELL) {
-							$("#menu_options").html( getActiveTabUI(SPELL) );
 						}
 						$(".slot .spellInfo").html( (e) => { // updates spell slot info
 							var spellSlot = game.player.spells[e];
@@ -384,10 +449,10 @@
 					
 					
 					
-					$("#enemyHealth_info").html(Math.ceil(enemy.hp.current) + "/" + enemy.hp.max);
-					$("#enemyHealth").css("width", (enemy.hp.current / enemy.hp.max) * 100 + "%");
-					$("#playerHealth_info").html(Math.floor(player.hp.current) + "/" + player.hp.max);
-					$("#playerHealth").css("width", (player.hp.current / player.hp.max) * 100 + "%");
+					$("#enemyHealth_info").html(Math.ceil(enemy.health.current) + "/" + enemy.health.max);
+					$("#enemyHealth").css("width", (enemy.health.current / enemy.health.max) * 100 + "%");
+					$("#playerHealth_info").html(Math.floor(player.health.current) + "/" + player.health.max);
+					$("#playerHealth").css("width", (player.health.current / player.health.max) * 100 + "%");
 					$("#playerMana_info").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent)) + ")" );
 					$("#playerMana").css("width", (player.mana.current / player.mana.max) * 100 + "%");
 				
@@ -395,9 +460,30 @@
 				}
 				$(".btn").click( function (e) {
 					switch(e.currentTarget.id) {
-						case "CONSTRUCTING": game.player.activeTab = CONSTRUCTING; break;
-						case "SPELL": game.player.activeTab = SPELL; break;
-						default: game.player.activeTab = RESEARCHING;
+						case "CONSTRUCTING": 
+							game.player.activeTab = CONSTRUCTING; 
+							$("#menu_options").html( getActiveTabUI(game.construct) );
+							$(".menu_option").click( function(e) {
+								var con = e.currentTarget.id.replace(/_/g, " ");
+								if (!game.player.currentConstruction && startConstruction(con)) {
+									game.player.currentConstruction = con;
+									game.player.currentAction = CONSTRUCTING;
+								} else if (game.player.currentConstruction) {
+									game.player.currentAction = CONSTRUCTING;
+								}
+							});
+							break;
+						case "SPELL": 
+							game.player.activeTab = SPELL; 
+							$("#menu_options").html( getActiveTabUI(SPELL) );
+							break;
+						default: 
+							game.player.activeTab = RESEARCHING;
+							$("#menu_options").html( getActiveTabUI(game.research) ); // load research ui
+							$(".menu_option").click( function(e) {
+								game.player.currentResearch = e.currentTarget.id.replace(/_/g, " ");
+								game.player.currentAction = RESEARCHING;
+							});
 					}
 				});
 				
@@ -408,14 +494,20 @@
 					var magics = game.player.magics;
 					var spells = game.player.spells;
 					if (magics[element].researched) {
-						$(this).toggleClass("selected");
 						if (!spells[selectedSpell].attributes.includes(element))
 							spells[selectedSpell].attributes.push(element)
 						else
 							spells[selectedSpell].attributes.splice(spells[selectedSpell].attributes.indexOf(element), 1);
 					}
+					$("#menu_options").html( getActiveTabUI(SPELL) );
 				};
 				
+				
+				$("#menu_options").html( getActiveTabUI(game.research) );
+				$(".menu_option").click( function(e) {
+					game.player.currentResearch = e.currentTarget.id.replace(/_/g, " ");
+					game.player.currentAction = RESEARCHING;
+				});
 				
 				setInterval(update, game.mechanics.tick_rate);
 			});

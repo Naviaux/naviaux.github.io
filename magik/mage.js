@@ -17,7 +17,7 @@ var game = {
 		currentResearch : "",
 		safetyNet : 20,
 		stats : {
-			hp : {
+			health : {
 				current : 100,
 				max : 100,
 			},
@@ -36,8 +36,8 @@ var game = {
 			research : {
 				progress : 1,
 				progressMultiplier : 1,
-				speed : 1, // unused
-				delay : 0, // unused
+				speed : 10,
+				timer : 0,
 			},
 			construction : {
 				progress : 1,
@@ -53,7 +53,7 @@ var game = {
 			},
 			{	/* Spell Two */
 				unlocked : false,
-				attributes : ["wind"]
+				attributes : ["arcana"]
 			},
 			{	/* Spell Three */
 				unlocked : false,
@@ -93,6 +93,24 @@ var game = {
 						["negative.slow", 5, 5]
 					]
 				}
+			},
+			fire : {
+				researched : false,
+				primary : {
+					damage : 5,
+					cost : 10,
+					secondaryAppliesToEffect : 0,
+					effects : [ // dps, tick, dur
+						["negative.dot", 5, 10, 40]
+					]
+				},
+				secondary : {
+					damage : 1.3,
+					cost : 1.7,
+					effects : [ // dps, tick, dur
+						["negative.dot", 2, 10, 40]
+					]
+				}
 			}
 		},
 		inventory : {},
@@ -101,6 +119,7 @@ var game = {
 
 game.research = {
 	"Mana Conduit" : {
+		description : "Increase the amount of mana gained when an increase occurs.",
 		count: 0,
 		Progress: 0,
 		Time: 1,
@@ -108,13 +127,18 @@ game.research = {
 			game.research["Mana Conduit"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[7, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[1, (r) => { r.scopes[1].increaseAmount += r.value } ],
 			[1.2, (r) => { r.scopes[0].effects[0][0] *= r.value } ],
-			[2.5, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.475, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.1, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		]
 	},
 	"Mana Control" : {
+		description : "Decreases the amount of mana needed for a mana increase by 3.",
 		count: 0,
 		max : 50,
 		Progress: 0,
@@ -123,46 +147,61 @@ game.research = {
 			game.research["Mana Control"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[10, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[3, (r) => { r.scopes[1].increaseRequired -= r.value } ],
-			[1.65, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.65, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.05, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 	},
 	"Mana Mastering" : {
+		description : "Decreases the amount of mana needed for a mana increase by 2.",
 		count: 0,
 		max : 100,
 		Progress: 0,
-		Time: 1,
+		Time: 300,
 		scopes : () => { return [
 			game.research["Mana Mastering"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[35, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[2, (r) => { r.scopes[1].increaseRequired -= r.value } ],
-			[4, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.725, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.33, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Mana Mastering"].count >= 40 }
 		],
 	},
 	"Mana Creation" : {
+		description : "Decreases the amount of mana needed for a mana increase by 1.",
 		count: 0,
 		max : 100,
 		Progress: 0,
-		Time: 1,
+		Time: 1200,
 		scopes : () => { return [
 			game.research["Mana Creation"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[160, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[1, (r) => { r.scopes[1].increaseRequired -= r.value } ],
-			[12, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.25, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.425, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Mana Mastering"].count >= 75 }
 		],
 	},
 	"Cyclic Breathing" : {
+		description : "Increases flat mana regeneration rate.",
 		count: 0,
 		Progress: 0,
 		Time: 1,
@@ -170,41 +209,56 @@ game.research = {
 			game.research["Cyclic Breathing"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[0, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[1, (r) => { r.scopes[1].regenFlat += r.value } ],
 			[1.15, (r) => { r.scopes[0].effects[0][0] *= r.value } ],
 			[1.66, (r) => { r.scopes[0].Time *= r.value } ],
-			[1.005, (r) => { r.scopes[0].effects[2][0] *= r.value } ]
+			[1.005, (r) => { r.scopes[0].effects[2][0] *= r.value } ],
+			[2, (r) => { r.scopes[0].progressCost[0][0] += r.value } ],
+			[1.075, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		]
 	},
 	"Meditation" : {
+		description : "Gain mana regeneration based on maximum mana.",
 		count: 0,
 		max : 200,
 		Progress: 0,
-		Time: 1,
+		Time: 120,
 		scopes : () => { return [
 			game.research["Meditation"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[125, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[0.001, (r) => { r.scopes[1].regenMax += r.value } ],
-			[2.5, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.2, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.2, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.player.stats.mana.max >= 500}
 		],
 	},
 	"Reflux" : {
+		description : "Gain mana regeneration based on current mana.",
 		count: 0,
 		Progress: 0,
-		Time: 1,
+		Time: 600,
 		scopes : () => { return [
 			game.research["Reflux"],
 			game.player.stats.mana
 		]},
+		progressCost : [
+			[400, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[0.005, (r) => { r.scopes[1].regenCurrent += r.value } ],
-			[2.5, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.85, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.66, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.player.stats.mana.max >= 10000 },
@@ -213,6 +267,7 @@ game.research = {
 		max : 10
 	},
 	"Arcana Specialization" : {
+		description : "Increase the damage Arcana does when it is the primary element.",
 		count : 0,
 		Progress: 0,
 		Time: 30,
@@ -224,6 +279,9 @@ game.research = {
 		safetys : [
 			(r) => { return r[1].primary.cost + r[0].effects[1][0] <= r[2].max } // new mana cost of arcane is less than max mana
 		],
+		progressCost : [
+			[5, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[1, (r) => { r.scopes[1].primary.damage += r.value } ], // adds arcane primary damage
 			[3, (r) => { r.scopes[1].primary.cost += r.value } ], // adds arcane primary mana cost
@@ -231,10 +289,13 @@ game.research = {
 			[1.5, (r) => { r.scopes[0].effects[1][0] *= r.value } ], // increase research mana effect
 			[1.15, (r) => { r.scopes[0].effects[2][0] /= ( r.scopes[0].effects[2][0] >= 1.05 ?  r.value :  1 ) } ], // decrease research damage increase until 1.05
 			[1.1, (r) => { r.scopes[0].effects[3][0] /= ( r.scopes[0].effects[3][0] >= 1.025 ? r.value : 1 ) } ], // increase research mana increase until 1.025
-			[1.5, (r) => { r.scopes[0].Time *= r.value } ] // increase Time
+			[1.5, (r) => { r.scopes[0].Time *= r.value } ], // increase Time
+			[3, (r) => { r.scopes[0].progressCost[0][0] += r.value } ], // increase progressCost
+			[1.185, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ], // multiply progressCost
 		],
 	},
 	"Arcana Blending" : {
+		description : "Increase the damage multiplier for Aracna when it is a secondary element.",
 		count : 0,
 		max : 10,
 		Progress : 0,
@@ -243,10 +304,14 @@ game.research = {
 			game.research["Arcana Blending"],
 			game.player.magics.arcana
 		]},
+		progressCost : [
+			[100, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[0.16, (r) => { r.scopes[1].secondary.damage += r.value } ], // increases arcane secondary damage multiplier
 			[0.01, (r) => { r.scopes[1].secondary.cost -= r.value } ], // decreases arcane secondary cost multiplier
-			[3, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.8, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.33, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Arcana Specialization"].count >= 10 },
@@ -254,6 +319,7 @@ game.research = {
 		]
 	},
 	"Wind Research" : {
+		description : "The Wind is able to push with much force, maybe controlling it will allow you to slow enemies down.",
 		count : 0,
 		max : 1,
 		Progress: 0,
@@ -262,6 +328,9 @@ game.research = {
 			game.research["Wind Research"],
 			game.player.magics.wind,
 		]},
+		progressCost : [
+			[20, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[true, (r) => { r.scopes[1].researched = r.value; } ],
 		],
@@ -270,6 +339,7 @@ game.research = {
 		]
 	},
 	"Wind Specialization" : {
+		description : "Increases the amount of damage Wind does when it is the primary element.",
 		count : 0,
 		Progress: 0,
 		Time: 90,
@@ -277,18 +347,23 @@ game.research = {
 			game.research["Wind Specialization"],
 			game.player.magics.wind
 		]},
+		progressCost : [
+			[65, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[4, (r) => { r.scopes[1].primary.damage += r.value } ],
 			[6, (r) => { r.scopes[1].primary.cost += r.value } ],
 			[1.1, (r) => { r.scopes[0].effects[0][0] *= r.value } ],
 			[1.22, (r) => { r.scopes[0].effects[1][0] *= r.value } ],
 			[1.66, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.15, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Wind Research"].count >= 1 }
 		]
 	},
 	"Wind Effect" : {
+		description : "Increases the effectiveness of the slowing capabilities of Wind as both a primary and seconday element.",
 		count : 0,
 		max : 25,
 		Progress: 0,
@@ -297,12 +372,16 @@ game.research = {
 			game.research["Wind Effect"],
 			game.player.magics.wind
 		]},
+		progressCost : [
+			[25, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[2, (r) => { r.scopes[1].primary.effects[0][1] += r.value } ],
 			[5, (r) => { r.scopes[1].primary.effects[0][2] += r.value } ],
 			[0.5, (r) => { r.scopes[1].secondary.effects[0][1] += r.value } ],
 			[1, (r) => { r.scopes[1].secondary.effects[0][2] += r.value } ],
 			[1.66, (r) => {r.scopes[0].Time *= r.value } ],
+			[1.75, (r) => {r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Wind Research"].count >= 1 },
@@ -310,6 +389,7 @@ game.research = {
 		],
 	},
 	"Wind Blending" : {
+		description : "Increases the damage of Wind as a secondary element.",
 		count : 0,
 		max : 10,
 		Progress : 0,
@@ -318,17 +398,42 @@ game.research = {
 			game.research["Wind Blending"],
 			game.player.magics.wind
 		]},
+		progressCost : [
+			[75, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[0.005, (r) => { r.scopes[1].secondary.damage += r.value } ], // increases wind secondary damage multiplier
 			[0.01, (r) => { r.scopes[1].secondary.cost -= r.value } ], // decreases wind secondary cost multiplier
-			[1.4, (r) => { r.scopes[0].Time *= r.value } ]
+			[1.4, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.66, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
 			() => { return game.research["Wind Research"].count >= 1 },
 			() => { return game.research["Wind Specialization"].count >= 10 },
 		]
 	},
+	"Fire Research" : {
+		description : "Fire can be everlasting, controlling it may allow you to set enemies ablaze.",
+		count : 0,
+		max : 1,
+		Progress : 0,
+		Time : 300,
+		scopes : () => { return [
+			game.research["Fire Research"],
+			game.player.magics.fire,
+		]},
+		progressCost : [
+			[35, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
+		effects : [
+			[true, (r) => { r.scopes[1].researched = r.value } ]
+		],
+		requirements : [
+			() => { return game.research["Arcana Specialization"].count >= 5}
+		]
+	},
 	"Memorization" : {
+		description : "Unlocks spell slot 2.",
 		count : 0,
 		max: 1,
 		Progress: 0,
@@ -337,6 +442,9 @@ game.research = {
 			game.research["Memorization"],
 			game.player.spells
 		]},
+		progressCost : [
+			[55, (c) => { return game.player.stats.mana.current >= c.value }, (c) => { game.player.stats.mana.current -= c.value } ],
+		],
 		effects : [
 			[true, (r) => { r.scopes[1][1].unlocked = r.value; }]
 		],
@@ -349,6 +457,7 @@ game.research = {
 }
 game.construct = {
 	"Librarian" : {
+		description : "A mechanical being able to retrieve various things. Greatly increases research speed over time.",
 		count : 0,
 		max : 100,
 		Time : 1,
@@ -365,6 +474,7 @@ game.construct = {
 		]
 	},
 	"Scholar" : {
+		description : "A mechanical being able to assist with writings. Increases research speed.",
 		count : 0,
 		Time : 10,
 		Progress : 0,
@@ -424,6 +534,20 @@ function startResearch (research) {
 		if (!r.researchCosts[cost](r.scopes())[2])
 }
 */
+function progressResearch (research) {
+	var r = game.research[research];
+	if (!r.progressCost)
+		return true;
+	
+	for (let cost of r.progressCost)
+		if (!cost[1]({value:cost[0]}))
+			return false;
+		
+	for (let cost of r.progressCost)
+		cost[2]({value:cost[0]})
+	return true;
+}
+
 function onResearch (research) {
 	var r = game.research[research];
 	if (r.count >= r.max)

@@ -204,7 +204,7 @@ game.research = {
 		description : "Increases flat mana regeneration rate.",
 		count: 0,
 		Progress: 0,
-		Time: 1,
+		Time: 5,
 		scopes : () => { return [
 			game.research["Cyclic Breathing"],
 			game.player.stats.mana
@@ -215,9 +215,9 @@ game.research = {
 		effects : [
 			[1, (r) => { r.scopes[1].regenFlat += r.value } ],
 			[1.15, (r) => { r.scopes[0].effects[0][0] *= r.value } ],
-			[1.66, (r) => { r.scopes[0].Time *= r.value } ],
-			[1.005, (r) => { r.scopes[0].effects[2][0] *= r.value } ],
-			[2, (r) => { r.scopes[0].progressCost[0][0] += r.value } ],
+			[1.2, (r) => { r.scopes[0].Time *= r.value } ],
+			[1.0075, (r) => { r.scopes[0].effects[2][0] *= r.value } ],
+			[1.5, (r) => { r.scopes[0].progressCost[0][0] += r.value } ],
 			[1.075, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		]
 	},

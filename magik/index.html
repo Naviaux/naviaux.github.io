@@ -41,8 +41,8 @@
 					stats : {
 						level : 0,
 						health : {
-							current : 100,
-							max : 100,
+							current : 25,
+							max : 25,
 							regen : {
 								amount : 1,
 								is : true,
@@ -60,7 +60,7 @@
 						},
 						respawn : {
 							timer : 0,
-							delay : 5,
+							delay : 25,
 							effects : {
 							 // none;
 							}
@@ -119,6 +119,7 @@
 				game.mechanics.enemy_respawn_ticks = 0;
 				game.mechanics.respawn_delay = 0;
 				game.mechanics.refresh_delay = -1;
+				game.mechanics.previous_date = Date.now();
 				
 				game.player.activeTab = RESEARCHING;
 				game.player.currentConstruction = false;
@@ -179,7 +180,7 @@
 					var primaryElement = attributes.shift();
 					if (attributes.length > 0) {
 						for (var key of attributes) {
-							if (!magics[primaryElement].primary.secondaryAppliesToEffect == undefined) {
+							if (magics[primaryElement].primary.secondaryAppliesToEffect == undefined) {
 								damage *= magics[key].secondary.damage;
 							} else {
 								effects[magics[primaryElement].primary.secondaryAppliesToEffect][1] *= magics[key].secondary.damage;
@@ -301,7 +302,7 @@
 						return spell_menu;
 					}
 				}
-							
+				
 				function getStatusEffect(target, effect) {
 					var type = effect.split(".")[0];
 					var name = effect.split(".")[1];
@@ -348,117 +349,176 @@
 					var player = game.player.stats;
 					var mechanics = game.mechanics; // game scopes
 					
-					mechanics.tick++; // keeps track of current tick
-					enemyUpdate();
+					var temp_date = Date.now();
+					var x = 0;
+					for (x = 0; x < Math.round((temp_date - mechanics.previous_date) / mechanics.tick_rate); x++) {
 					
-					/*if (enemy.hp.current <= 0) { // if the enemy has less than 0 health
-						enemy.hp.current = 0; // sets enemy's health to 0 (this is to prevent negative numbers from occurring on the UI)
-						mechanics.respawn_delay++; // increases the respawn delay of the enemy
-						if (mechanics.respawn_delay >= mechanics.enemy_respawn_ticks) { // if the enemy can respawn
-							enemy.hp.current = enemy.hp.max; // resets some values
-							cleanseEffects(TARGETS.ENEMY, EFFECTS.ALL);
-							enemy.attack.counter = 0;
-							mechanics.respawn_delay = 0;
-						}
-					} else { // if the enemy has health
-						if (!getStatusEffect(game.enemy, "negative.stun") > 0)
-							enemy.attack.counter++;  // increase enemy attack counter
-						if (game.player.currentAction == FIGHTING) { // if the player is fighting
-							if (enemy.attack.counter >= enemy.attack.speed + getStatusEffect(game.enemy, "negative.slow")) { // if the enemy's attack counter exceeds it's attack speed value
-								player.hp.current -= enemy.attack.damage ; // deal damage to player
-								enemy.attack.counter = 0; // reset enemy attack counter
-							}
-						} else { // if the player is not fighting then make the enemy attack immediately
-							enemy.attack.counter += enemy.attack.speed; // this is to prevent attack exploits
-						}
-					}*/
-					
-					if (player.mana.current > player.mana.max) // resets player's mana to max if it's greater than max mana
-						player.mana.current = player.mana.max;
-					
-					if (player.mana.increaseCounter >= player.mana.increaseRequired) { // if the player has used enough mana to cause an increase
-						player.mana.max += player.mana.increaseAmount; // increase max mana
-						player.mana.increaseCounter = 0; // reset counter
-					}
-					
-					player.mana.regenCounter++;
-					if (player.mana.regenCounter >= player.mana.regenDelay && game.player.currentAction != CONSTRUCTING) { // if the player has a mana regen tick and is not constructing
-						player.mana.current += player.mana.regenFlat; // add the flat regen amount to current mana
-						player.mana.current += player.mana.max * player.mana.regenMax; // add the max regen amount to current mana
-						player.mana.regenCounter = 0; // reset the regen counter
-						if (player.mana.current >= player.mana.max) { // keeps player's mana at or under max mana
-							player.mana.current = player.mana.max;
-						}
-					}
-					
-					if (game.player.currentAction == RESEARCHING) { // if the player is researching
-						player.research.timer++;
-						if (player.research.timer >= player.research.speed && progressResearch(game.player.currentResearch)) {
-							game.research[game.player.currentResearch].Progress += player.research.progress * player.research.progressMultiplier; // adds progress to the research
-							player.research.timer = 0;
-							game.mechanics.refresh_delay = -1; // forces a ui update this tick
-						}
-						if (game.research[game.player.currentResearch].Progress >= game.research[game.player.currentResearch].Time) { // if the progress exceeds to time
-							game.research[game.player.currentResearch].Progress = onResearch(game.player.currentResearch) ? 0 : game.research[game.player.currentResearch].Time; // if the player doesn't break the research safetys, reset the progress, otherwise set progress to time
-							//game.player.currentAction = IDLE; // set player's action to idle
-							game.mechanics.refresh_delay = -1; // forces a ui update this tick
-						}
-					}
-					if (game.player.currentAction == CONSTRUCTING) { // if the player is constructing
-						player.construction.delay++; // keeps track of construction speed
-						if (player.construction.delay >= player.construction.speed) {
-							game.construct[game.player.currentConstruction].Progress += player.construction.progress * player.construction.progressMultiplier; // adds progress to construction
-							player.construction.delay = 0;
-							game.mechanics.refresh_delay = -1; // forces a ui update this tick
-						}
-						if (game.player.currentConstruction && game.construct[game.player.currentConstruction].Progress >= game.construct[game.player.currentConstruction].Time) { // if progress exceeds time
-							onConstruct (game.player.currentConstruction); // construct the object
-							game.construct[game.player.currentConstruction].Progress = 0;
-							game.player.currentAction = IDLE;
-							game.player.currentConstruction = false;
-							game.mechanics.refresh_delay = -1; // reset stuff and force ui update
-						}
-					} else {
-						player.construction.delay = 0; // reset construction counter to prevent construction abuse
-					}
+						mechanics.tick++; // keeps track of current tick
 						
-					if (game.mechanics.refresh_delay === -1) { // if ui can update
-						if (game.player.activeTab == RESEARCHING) { // if current tab is research
-							for (var r in game.research) {
-								$("#" + r.replace(/ /g, "_") + " .top_right").html(Math.floor(game.research[r].progressCost[0][0]) + " mana");
-								$("#" + r.replace(/ /g, "_") + " .bottom_left").html("Level: " + game.research[r].count + (game.research[r].max != undefined ? "/" + game.research[r].max : "") + " - Progress: " + Math.round(game.research[r].Progress / game.research[r].Time * 100) + "%");
+						enemyUpdate();
+						
+						/*if (enemy.hp.current <= 0) { // if the enemy has less than 0 health
+							enemy.hp.current = 0; // sets enemy's health to 0 (this is to prevent negative numbers from occurring on the UI)
+							mechanics.respawn_delay++; // increases the respawn delay of the enemy
+							if (mechanics.respawn_delay >= mechanics.enemy_respawn_ticks) { // if the enemy can respawn
+								enemy.hp.current = enemy.hp.max; // resets some values
+								cleanseEffects(TARGETS.ENEMY, EFFECTS.ALL);
+								enemy.attack.counter = 0;
+								mechanics.respawn_delay = 0;
 							}
-						} else if (game.player.activeTab == CONSTRUCTING) {
-							for (var c in game.construct) {
-								$("#" + c.replace(/ /g, "_") + " .top_right").html(Math.floor(game.construct[c].constructionCosts[0](game.construct[c].scopes())[1]) + " maximum mana");
-								$("#" + c.replace(/ /g, "_") + " .bottom_left").html("Count: " + game.construct[c].count + (game.construct[c].max != undefined ? "/" + game.construct[c].max : "") + " - Progress: " + Math.round(game.construct[c].Progress / game.construct[c].Time * 100) + "%");
+						} else { // if the enemy has health
+							if (!getStatusEffect(game.enemy, "negative.stun") > 0)
+								enemy.attack.counter++;  // increase enemy attack counter
+							if (game.player.currentAction == FIGHTING) { // if the player is fighting
+								if (enemy.attack.counter >= enemy.attack.speed + getStatusEffect(game.enemy, "negative.slow")) { // if the enemy's attack counter exceeds it's attack speed value
+									player.hp.current -= enemy.attack.damage ; // deal damage to player
+									enemy.attack.counter = 0; // reset enemy attack counter
+								}
+							} else { // if the player is not fighting then make the enemy attack immediately
+								enemy.attack.counter += enemy.attack.speed; // this is to prevent attack exploits
 							}
-						} else if (game.player.activeTab == SPELL) {
+						}*/
+						
+						if (player.mana.current > player.mana.max) // resets player's mana to max if it's greater than max mana
+							player.mana.current = player.mana.max;
+						
+						if (player.mana.increaseCounter >= player.mana.increaseRequired) { // if the player has used enough mana to cause an increase
+							player.mana.max += player.mana.increaseAmount; // increase max mana
+							player.mana.increaseCounter = 0; // reset counter
 						}
-						$(".slot .spellInfo").html( (e) => { // updates spell slot info
-							var spellSlot = game.player.spells[e];
-							if (spellSlot.unlocked) {
-								var spell = calculateSpellAttributes(spellSlot.attributes, true);
-								return Math.floor(spell.damage) + " damage<br>" + Math.floor(spell.cost) + " mana";
+						
+						player.mana.regenCounter++;
+						if (player.mana.regenCounter >= player.mana.regenDelay && game.player.currentAction != CONSTRUCTING) { // if the player has a mana regen tick and is not constructing
+							player.mana.current += player.mana.regenFlat; // add the flat regen amount to current mana
+							player.mana.current += player.mana.max * player.mana.regenMax; // add the max regen amount to current mana
+							player.mana.regenCounter = 0; // reset the regen counter
+							if (player.mana.current >= player.mana.max) { // keeps player's mana at or under max mana
+								player.mana.current = player.mana.max;
 							}
-							return "None";
-						});
-						game.mechanics.refresh_delay = 1;
-					} else {
-						game.mechanics.refresh_delay++;
+						}
+						
+						if (game.player.currentAction == RESEARCHING) { // if the player is researching
+							player.research.timer++;
+							if (player.research.timer >= player.research.speed && progressResearch(game.player.currentResearch)) {
+								game.research[game.player.currentResearch].Progress += player.research.progress * player.research.progressMultiplier; // adds progress to the research
+								player.research.timer = 0;
+								game.mechanics.refresh_delay = -1; // forces a ui update this tick
+							}
+							if (game.research[game.player.currentResearch].Progress >= game.research[game.player.currentResearch].Time) { // if the progress exceeds to time
+								game.research[game.player.currentResearch].Progress = onResearch(game.player.currentResearch) ? 0 : game.research[game.player.currentResearch].Time; // if the player doesn't break the research safetys, reset the progress, otherwise set progress to time
+								//game.player.currentAction = IDLE; // set player's action to idle
+								game.mechanics.refresh_delay = -1; // forces a ui update this tick
+							}
+						}
+						if (game.player.currentAction == CONSTRUCTING) { // if the player is constructing
+							player.construction.delay++; // keeps track of construction speed
+							if (player.construction.delay >= player.construction.speed) {
+								game.construct[game.player.currentConstruction].Progress += player.construction.progress * player.construction.progressMultiplier; // adds progress to construction
+								player.construction.delay = 0;
+								game.mechanics.refresh_delay = -1; // forces a ui update this tick
+							}
+							if (game.player.currentConstruction && game.construct[game.player.currentConstruction].Progress >= game.construct[game.player.currentConstruction].Time) { // if progress exceeds time
+								onConstruct (game.player.currentConstruction); // construct the object
+								game.construct[game.player.currentConstruction].Progress = 0;
+								game.player.currentAction = IDLE;
+								game.player.currentConstruction = false;
+								game.mechanics.refresh_delay = -1; // reset stuff and force ui update
+							}
+						} else {
+							player.construction.delay = 0; // reset construction counter to prevent construction abuse
+						}
+							
+						if (game.mechanics.refresh_delay === -1) { // if ui can update
+							if (game.player.activeTab == RESEARCHING) { // if current tab is research
+								for (var r in game.research) {
+									var hasReqs = false;
+									for (var reqs in game.research[r].requirements) {
+										if (!game.research[r].requirements[reqs]()) {
+											hasReqs = false;
+											break;
+										} else {
+											hasReqs = true;
+										}
+									}
+									if (hasReqs && !$("#" + r.replace(/ /g, "_")).length > 0 && !game.research[r].count >= game.research[r].max) {
+										$("#RESEARCHING").click();
+										break;
+									} else {
+										$("#" + r.replace(/ /g, "_") + " .top_right").html(Math.floor(game.research[r].progressCost[0][0]) + " mana");
+										$("#" + r.replace(/ /g, "_") + " .bottom_left").html("Level: " + game.research[r].count + (game.research[r].max != undefined ? "/" + game.research[r].max : "") + " - Progress: " + Math.round(game.research[r].Progress / game.research[r].Time * 100) + "% (" + Math.floor(game.research[r].Progress) + "/" + Math.ceil(game.research[r].Time) + ")");
+									}
+								}
+							} else if (game.player.activeTab == CONSTRUCTING) {
+								for (var c in game.construct) {
+									var hasReqs = true;
+									for (var reqs in game.construct[c].requirements) {
+										if (!game.construct[c].requirements[reqs]()) {
+											hasReqs = false;
+											break;
+										} else {
+											hasReqs = true;
+										}
+									}
+									if (hasReqs && !$("#" + c.replace(/ /g, "_")).length > 0 && !game.construct[c].count >= game.construct[c].max) {
+										$("#CONSTRUCTING").click();
+										break;
+									} else {
+										$("#" + c.replace(/ /g, "_") + " .top_right").html(Math.floor(game.construct[c].constructionCosts[0](game.construct[c].scopes())[1]) + " maximum mana");
+										$("#" + c.replace(/ /g, "_") + " .bottom_left").html("Count: " + game.construct[c].count + (game.construct[c].max != undefined ? "/" + game.construct[c].max : "") + " - Progress: " + Math.round(game.construct[c].Progress / game.construct[c].Time * 100) + "%" + "% (" + Math.floor(game.construct[c].Progress) + "/" + Math.ceil(game.construct[c].Time) + ")");
+									}
+								}
+							} else if (game.player.activeTab == SPELL) {
+							}
+							$(".slot .spellInfo").html( (e) => { // updates spell slot info
+								var spellSlot = game.player.spells[e];
+								if (spellSlot.unlocked) {
+									var spell = calculateSpellAttributes(spellSlot.attributes, true);
+									return Math.floor(spell.damage) + " damage<br>" + Math.floor(spell.cost) + " mana";
+								}
+								return "None";
+							});
+							game.mechanics.refresh_delay = 1;
+						} else {
+							game.mechanics.refresh_delay++;
+						}
+						
+						
+						
+						
+						$("#enemyHealth_info").html(Math.ceil(enemy.health.current) + "/" + enemy.health.max);
+						for (let neg_stat in game.enemy.status.negative) {
+							if (!Object.getOwnPropertyNames(game.enemy.status.negative[neg_stat]).length > 0)
+								continue;
+							var info = STATUS_INFO[neg_stat.toUpperCase()];
+							var stat_ele = $("<span>").addClass("status").html(neg_stat.substr(0,1));
+							var tt = ""
+							for (let stats in game.enemy.status.negative[neg_stat]) {
+								var stat = game.enemy.status.negative[neg_stat][stats];
+								tt += info.NAME + " " + info.INFO.replace(/{X}/g, stat.effect).replace(/{Y}/g, stat.interval ? stat.interval : "") + "\n" + stat.duration + " ticks remaining";
+							}
+							stat_ele.attr("data-tooltip", tt);
+							stat_ele.appendTo("#enemyHealth_info");
+							//	stat.attr("data-tooltip", "Slow 5 ticks\n50 ticks remaining").appendTo("#enemyHealth_info");
+						}
+						$("#enemyHealth").css("width", (enemy.health.current / enemy.health.max) * 100 + "%");
+						$("#playerHealth_info").html(Math.floor(player.health.current) + "/" + player.health.max);
+						$("#playerHealth").css("width", (player.health.current / player.health.max) * 100 + "%");
+						$("#playerMana_info").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent)) + ")" );
+						$("#playerMana").css("width", (player.mana.current / player.mana.max) * 100 + "%");
 					}
-					
-					
-					
-					$("#enemyHealth_info").html(Math.ceil(enemy.health.current) + "/" + enemy.health.max);
-					$("#enemyHealth").css("width", (enemy.health.current / enemy.health.max) * 100 + "%");
-					$("#playerHealth_info").html(Math.floor(player.health.current) + "/" + player.health.max);
-					$("#playerHealth").css("width", (player.health.current / player.health.max) * 100 + "%");
-					$("#playerMana_info").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent)) + ")" );
-					$("#playerMana").css("width", (player.mana.current / player.mana.max) * 100 + "%");
-				
+					mechanics.previous_date = temp_date;
 						
 				}
+				
+				const STATUS_INFO = {
+					SLOW : { NAME : "slow", TYPE : "negative", INFO : "-{X} attack speed" },
+					STUN : { NAME : "stun", TYPE : "negative", INFO : "{X} ticks" },
+					ENFEEBLE : { NAME : "enfeeble", TYPE : "negative", INFO : "-{X}% damage dealt" },
+					WEAKNESS : { NAME : "weakness", TYPE : "negative", INFO : "-{X} damage dealt" },
+					CURSE : { NAME : "curse", TYPE : "negative", INFO : "+{X}% damage taken" },
+					DOT : { NAME : "dot", TYPE : "negative", INFO : "{X} damage per {Y} ticks" },
+				}
+				
 				$(".btn").click( function (e) {
 					switch(e.currentTarget.id) {
 						case "CONSTRUCTING": 
@@ -477,6 +537,9 @@
 						case "SPELL": 
 							game.player.activeTab = SPELL; 
 							$("#menu_options").html( getActiveTabUI(SPELL) );
+							break;
+						case "IDLE":
+							game.player.currentAction = IDLE;
 							break;
 						default: 
 							game.player.activeTab = RESEARCHING;
@@ -545,9 +608,14 @@
 		</div>
 		<div id = "player">
 			<div id = "menu">
-				<div id = "RESEARCHING" class="btn">Research</div>
-				<div id = "SPELL" class="btn">Spells</div>
-				<div id = "CONSTRUCTING" class="btn">Construction</div>
+				<div class="row">
+					<div id = "IDLE" class="btn">Halt</div>
+				</div>
+				<div class="row">
+					<div id = "RESEARCHING" class="btn">Research</div>
+					<div id = "SPELL" class="btn">Spells</div>
+					<div id = "CONSTRUCTING" class="btn">Construction</div>
+				</div>
 			</div>
 			<div id = "playerStats">
 				<div id = "playerHealth_info"></div>

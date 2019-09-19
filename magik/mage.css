@@ -50,6 +50,45 @@ html, body {
 	z-index: 0;
 }
 
+.status {
+	float: right;
+	position: relative;
+	right: 10vw;
+	cursor: pointer;
+}
+
+[data-tooltip]:before {
+	content: "";
+	border: 8px solid transparent;
+	border-bottom: 8px solid #4f4f4f;
+	display: none;
+	position: absolute;
+	top: calc(80% - 6px);
+	right: calc(-1.1vh / 2 + 6px / 2);
+}
+
+[data-tooltip]:after {
+	content: attr(data-tooltip);
+	position: absolute;
+	display: none;
+	top: 120%;
+	right: -10px;
+	width: auto;
+	font-size: 1.1vh;
+	font-weight: initial;
+	font-family: monospace;
+	text-transform: lowercase;
+	white-space: pre;
+	text-align: right;
+	background-color: #4f4f4f;
+	border-radius: 5px;
+	padding: 7px;
+}
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+	display: block;
+}
+
 #player {
 	width: 100%;
 	/* position: absolute; */
@@ -216,6 +255,11 @@ html, body {
 }
 .menu_option:hover .description {
 	display: block;
+}
+
+.row {
+	display: table-row;
+	width: 100%;
 }
 
 .btn {

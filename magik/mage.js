@@ -30,7 +30,7 @@ var game = {
 				regenFlat : 1,
 				regenMax : 0,
 				regenCurrent : 0,
-				regenDelay : 5, // 5 tick : 500ms
+				regenDelay : 20, // 1 tick : 100ms
 				regenCounter : 0,
 			},
 			research : {

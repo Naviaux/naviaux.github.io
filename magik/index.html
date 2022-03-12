@@ -224,7 +224,7 @@
 									level = "Count: " + tab[item].count + (tab[item].max != undefined ? "/" + tab[item].max : "");
 									manaCost = Math.floor(tab[item].constructionCosts[0](tab[item].scopes())[1]) + " maximum mana";
 								}
-								level += " - Progress: " + progress + "%";
+								level += " - Progress: " + progress + "% (" + Math.floor(tab[item].Progress) + "/" + Math.ceil(tab[item].Time) + ")";
 								var info = $("<div>");
 								info.addClass("info");
 								var topLeft = $("<span>").html(item);
@@ -267,9 +267,12 @@
 							ss.attr("id", spellSlot);
 							ss.addClass (spellSlot == selectedSpell ? "selected " : "");
 							ss.addClass( game.player.spells[spellSlot].unlocked ? "" : "locked");
-							ss.click ( (e) => {
-								if (!e.currentTarget.className.includes("locked"))
+							ss.on ('click', (e) => {
+								if (!e.currentTarget.className.includes("locked")) {
 									selectedSpell = e.currentTarget.id;
+									console.log(e);
+									$("#menu_options").html( getActiveTabUI(SPELL) );
+								}
 							});
 							ss.appendTo(spellSlot_Selection);
 						}
@@ -422,13 +425,13 @@
 								game.construct[game.player.currentConstruction].Progress = 0;
 								game.player.currentAction = IDLE;
 								game.player.currentConstruction = false;
-								game.mechanics.refresh_delay = -1; // reset stuff and force ui update
+								game.mechanics.refresh_delay = 0; // reset stuff and force ui update
 							}
 						} else {
 							player.construction.delay = 0; // reset construction counter to prevent construction abuse
 						}
 							
-						if (game.mechanics.refresh_delay === -1) { // if ui can update
+						if (game.mechanics.refresh_delay === 0 || game.mechanics.refresh_delay == 4) { // if ui can update
 							if (game.player.activeTab == RESEARCHING) { // if current tab is research
 								for (var r in game.research) {
 									var hasReqs = false;
@@ -464,7 +467,7 @@
 										break;
 									} else {
 										$("#" + c.replace(/ /g, "_") + " .top_right").html(Math.floor(game.construct[c].constructionCosts[0](game.construct[c].scopes())[1]) + " maximum mana");
-										$("#" + c.replace(/ /g, "_") + " .bottom_left").html("Count: " + game.construct[c].count + (game.construct[c].max != undefined ? "/" + game.construct[c].max : "") + " - Progress: " + Math.round(game.construct[c].Progress / game.construct[c].Time * 100) + "%" + "% (" + Math.floor(game.construct[c].Progress) + "/" + Math.ceil(game.construct[c].Time) + ")");
+										$("#" + c.replace(/ /g, "_") + " .bottom_left").html("Count: " + game.construct[c].count + (game.construct[c].max != undefined ? "/" + game.construct[c].max : "") + " - Progress: " + Math.round(game.construct[c].Progress / game.construct[c].Time * 100) + "% (" + Math.floor(game.construct[c].Progress) + "/" + Math.ceil(game.construct[c].Time) + ")");
 									}
 								}
 							} else if (game.player.activeTab == SPELL) {

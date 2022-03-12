@@ -95,7 +95,7 @@ var game = {
 				}
 			},
 			fire : {
-				researched : false,
+				researched : true,
 				primary : {
 					damage : 5,
 					cost : 10,
@@ -487,6 +487,24 @@ game.construct = {
 		],
 		effects : [
 			[1, (u) => { u.scopes[1].progress += u.value } ]
+		]
+	},
+	"Constructor" : {
+		description : "A mechanical being made for making other mechanical beings. Increases construction speed.",
+		count : 0,
+		Time : 25,
+		Progress : 0,
+		scopes : () => { return [
+			game.player.stats.mana,
+			game.construct["Scholar"],
+			game.construct["Constructor"]
+		]},
+		constructionCosts : [
+			(c) => { return [ c[0].max, 250, c[0].max >= 250 + game.player.safetyNet, (x) => { x.scopes[0].max -= x.value } ] }
+		],
+		effects : [
+			[0.95, (u) => { u.scopes[1].Time *= u.value }],
+			[0.95, (u) => { u.scopes[2].Time *= u.value }],
 		]
 	}
 }

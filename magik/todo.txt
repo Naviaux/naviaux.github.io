@@ -1,0 +1,48 @@
+IMPORTANT
+Implement idle/stop button -
+Reduce cost/time scaling of Cyclic Breathing -
+Show raw progression values along side percentage -
+Show status effects on enemy health bar - text temporarily, icons later -
+Increase enemy respawn timer -
+Decrease initial enemy health -
+
+WORK TOWARDS
+Enemies:
+	Drops, Abilities, Health Regen, Scaling
+Player:
+	Health Regen - Spells only?
+	Inventory System
+
+Elements:
+	Implement Fire Upgrades
+	Implement Stone and Water Elements
+	Implement Elemental and Animation Elements
+		Elemental Fire & Wind?
+		Animation Stone & Water?
+
+Elementals:
+	Low initial cost
+	Degens mana for upkeep - counts towards mana increase
+	Damage scales with Element upgrades
+	Does not absorb damage for the player
+	Only active in combat while player is - Subject to change?
+	
+Constructs:
+	High initial cost - Reserves flat amount of mana?
+	Must construct a body and then animate it with spells
+	Damage scales with material type
+	Absorbs damage for the player
+	Always active in combat
+	Must be rebuilt 
+
+EXPERIMENTAL
+Attempt move away from flat mana needed to increase:
+	Only percentage
+	Percentage with cap
+	Otherways?
+Spell cooldowns?
+
+APPEARANCE - Least Important
+Round to closest tenth digit rather than whole digit?
+Two or three upgrade columns on larger screens
+Increase row height on smaller/narrower screens? -

@@ -6,11 +6,13 @@
 		<link rel="stylesheet" type="text/css" href="mage.css" />
 		<meta name="viewport" content= "width=device-width, user-scalable=no">
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+		<script src="./jsonfn.min.js"></script>
 		<script src="./mage.js"></script>
 		<script>
 			var calculateSpellAttributes;
 			$(document).ready ( function() {
-			
+				
 				function addStatusEffect (spell, effect, target) {
 					var type = effect[0].split(".")[0];
 					var name = effect[0].split(".")[1];
@@ -352,8 +354,15 @@
 					var player = game.player.stats;
 					var mechanics = game.mechanics; // game scopes
 					
+					var saveSpeed = 1000 * 60 * 5; // 5 minutes in milliseconds
+					
 					var temp_date = Date.now();
 					var x = 0;
+					
+					if (temp_date - mechanics.previous_date >= saveSpeed) {
+						saveGame();
+					}
+					
 					for (x = 0; x < Math.round((temp_date - mechanics.previous_date) / mechanics.tick_rate); x++) {
 					
 						mechanics.tick++; // keeps track of current tick
@@ -394,6 +403,8 @@
 						if (player.mana.regenCounter >= player.mana.regenDelay && game.player.currentAction != CONSTRUCTING) { // if the player has a mana regen tick and is not constructing
 							player.mana.current += player.mana.regenFlat; // add the flat regen amount to current mana
 							player.mana.current += player.mana.max * player.mana.regenMax; // add the max regen amount to current mana
+							player.mana.current -= player.mana.degenAmount; // takes away mana from having degen generators
+							player.mana.increaseCounter += player.mana.passiveIncrease;
 							player.mana.regenCounter = 0; // reset the regen counter
 							if (player.mana.current >= player.mana.max) { // keeps player's mana at or under max mana
 								player.mana.current = player.mana.max;
@@ -506,8 +517,9 @@
 						$("#enemyHealth").css("width", (enemy.health.current / enemy.health.max) * 100 + "%");
 						$("#playerHealth_info").html(Math.floor(player.health.current) + "/" + player.health.max);
 						$("#playerHealth").css("width", (player.health.current / player.health.max) * 100 + "%");
-						$("#playerMana_info").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent)) + ")" );
+						$("#playerMana_info").html(Math.floor(player.mana.current) + "/" + Math.floor(player.mana.max) + " (+" + Math.floor(player.mana.regenFlat + (player.mana.max * player.mana.regenMax) + (player.mana.current * player.mana.regenCurrent) - player.mana.degenAmount) + ")" );
 						$("#playerMana").css("width", (player.mana.current / player.mana.max) * 100 + "%");
+						$("#playerIncrease").css("width", (player.mana.increaseCounter / player.mana.increaseRequired) * 100 + "%");
 					}
 					mechanics.previous_date = temp_date;
 						
@@ -544,6 +556,9 @@
 						case "IDLE":
 							game.player.currentAction = IDLE;
 							break;
+						case "SAVE":
+							saveGame();
+							break;
 						default: 
 							game.player.activeTab = RESEARCHING;
 							$("#menu_options").html( getActiveTabUI(game.research) ); // load research ui
@@ -578,6 +593,11 @@
 				
 				setInterval(update, game.mechanics.tick_rate);
 			});
+			
+			function saveGame () {
+				sessionStorage.setItem("mage_game", JSONfn.stringify(game));
+				console.log("saved?");
+			}
 		</script>
 		<style>
 			#cast {
@@ -613,6 +633,7 @@
 			<div id = "menu">
 				<div class="row">
 					<div id = "IDLE" class="btn">Halt</div>
+					<div id = "SAVE" class="btn">Save</div>
 				</div>
 				<div class="row">
 					<div id = "RESEARCHING" class="btn">Research</div>
@@ -627,6 +648,8 @@
 				<div id = "playerMana_info"></div>
 				<div id = "playerMana"></div>
 				<div id = "playerMana_max"></div>
+				<div id = "playerIncrease"></div>
+				<div id = "playerIncrease_max"></div>
 			</div>
 			<div id = "playerSpells">
 				<div class = "slot" id = "0">

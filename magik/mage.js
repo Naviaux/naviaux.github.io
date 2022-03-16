@@ -11,6 +11,8 @@ var RESEARCHING = 2;
 var CONSTRUCTING = 3;
 var SPELL = 4;
 
+var loading = 1;
+
 var game = {
 	player : {
 		currentAction : IDLE,
@@ -27,6 +29,8 @@ var game = {
 				increaseAmount : 1,
 				increaseRequired : 1000,
 				increaseCounter : 0,
+				passiveIncrease : 0,
+				degenAmount : 0,
 				regenFlat : 1,
 				regenMax : 0,
 				regenCurrent : 0,
@@ -117,6 +121,7 @@ var game = {
 	}
 }
 
+
 game.research = {
 	"Mana Conduit" : {
 		description : "Increase the amount of mana gained when an increase occurs.",
@@ -175,7 +180,7 @@ game.research = {
 			[1.33, (r) => { r.scopes[0].progressCost[0][0] *= r.value } ],
 		],
 		requirements : [
-			() => { return game.research["Mana Mastering"].count >= 40 }
+			() => { return game.research["Mana Control"].count >= 40 }
 		],
 	},
 	"Mana Creation" : {
@@ -456,11 +461,11 @@ game.research = {
 	}
 }
 game.construct = {
-	"Librarian" : {
-		description : "A mechanical being able to retrieve various things. Greatly increases research speed over time.",
+	"Arcane Librarian" : {
+		description : "A being made of pure mana, excellent at cataloging and organization. Greatly increases research speed over time.",
 		count : 0,
 		max : 100,
-		Time : 1,
+		Time : 40,
 		Progress : 0,
 		scopes : () => { return [
 			game.player.stats.mana,
@@ -470,11 +475,11 @@ game.construct = {
 			(c) => { return [ c[0].max, 1000, c[0].max >= 1000 + game.player.safetyNet, (x) => { x.scopes[0].max -= x.value} ] }
 		],
 		effects : [
-			[0.1, (u) => { u.scopes[0].progressMultiplier += u.value }]
+			[0.1, (u) => { u.scopes[1].progressMultiplier += u.value }]
 		]
 	},
-	"Scholar" : {
-		description : "A mechanical being able to assist with writings. Increases research speed.",
+	"Arcane Scholar" : {
+		description : "A being made of pure mana, used as an assistant for researching things. Increases research speed.",
 		count : 0,
 		Time : 10,
 		Progress : 0,
@@ -489,22 +494,46 @@ game.construct = {
 			[1, (u) => { u.scopes[1].progress += u.value } ]
 		]
 	},
-	"Constructor" : {
-		description : "A mechanical being made for making other mechanical beings. Increases construction speed.",
+	"Arcane Constructor" : {
+		description : "An being made of pure mana, used to shuttle materials around. Increases construction speed.",
 		count : 0,
 		Time : 25,
 		Progress : 0,
 		scopes : () => { return [
 			game.player.stats.mana,
-			game.construct["Scholar"],
-			game.construct["Constructor"]
+			game.construct["Arcane Librarian"],
+			game.construct["Arcane Scholar"],
+			game.construct["Arcane Constructor"],
+			game.construct["Arcane Generator"]
 		]},
 		constructionCosts : [
 			(c) => { return [ c[0].max, 250, c[0].max >= 250 + game.player.safetyNet, (x) => { x.scopes[0].max -= x.value } ] }
 		],
 		effects : [
 			[0.95, (u) => { u.scopes[1].Time *= u.value }],
-			[0.95, (u) => { u.scopes[2].Time *= u.value }],
+			[0.90, (u) => { u.scopes[2].Time *= u.value }],
+			[0.90, (u) => { u.scopes[3].Time *= u.value }],
+			[0.90, (u) => { u.scopes[4].Time *= u.value }],
+		]
+	},
+	"Arcane Generator" : {
+		description : "A being made of pure mana, drains mana in order to increase it. Drains mana overtime to increase maximum mana.",
+		count : 0,
+		Time : 120,
+		Progress : 0,
+		scopes : () => { return [
+			game.construct["Arcane Generator"],
+			game.player.stats.mana
+		]},
+		safetys : [
+			(c) => { return (c[1].degenAmount + c[0].effects[1][0]) < c[1].regenFlat }
+		],
+		constructionCosts : [
+			(c) => { return [ c[1].max, 25, c[1].max >= 25 + game.player.safetyNet, (x) => { x.scopes[1].max -= x.value } ] }
+		],
+		effects : [
+			[1, (u) => { u.scopes[1].passiveIncrease += u.value }],
+			[4, (u) => { u.scopes[1].degenAmount += u.value }],
 		]
 	}
 }
@@ -513,6 +542,10 @@ function startConstruction (construction) {
 	var c = game.construct[construction];
 	if (c.count >= c.max)
 		return false;
+	
+	for (var safe in c.safetys)
+		if (!c.safetys[safe](c.scopes()))
+			return false;
 	
 	for (var cost in c.constructionCosts)
 		if (!c.constructionCosts[cost](c.scopes())[2])
@@ -603,3 +636,11 @@ constructs = {
 	Mana Orb : Increases maximum stored mana
 	Processing Construct : Decreases research speed
 }*/
+
+
+if (sessionStorage.getItem("mage_game")) {
+	game = JSONfn.parse(sessionStorage.getItem("mage_game"));
+}
+
+
+loading = 0;

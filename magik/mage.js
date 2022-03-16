@@ -638,8 +638,8 @@ constructs = {
 }*/
 
 
-if (sessionStorage.getItem("mage_game")) {
-	game = JSONfn.parse(sessionStorage.getItem("mage_game"));
+if (localStorage.getItem("mage_game")) {
+	game = JSONfn.parse(localStorage.getItem("mage_game"));
 }
 
 

@@ -1,0 +1,539 @@
+<html>
+	<head>
+		<title>AzurLane Tier List Generator</title>
+		
+		<style>
+		
+			body {
+				background-color: #222;
+				color: white;
+				font-family: sans-serif;
+				user-select: none;
+			}
+			#tiers {
+				margin-bottom: 1em;
+				table-layout: fixed;
+			}
+			.tier {
+				box-sizing: border-box;
+			}
+			.tier th {
+				width: calc(16px * 3);
+			}
+			.tier td {
+				vertical-align: top;
+			}
+			
+			#options {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+			#save {
+				float: left;
+			}
+			#load {
+				float: right;
+			}
+			
+			.highlighted {
+				border: 6px solid #888833;
+				background-position: -6px -6px;
+			}
+			#ship_storage #overall th {
+				padding: 3px;
+			}
+			#ship_storage #ss_hide {
+				display: block;
+				float: right;
+				cursor: pointer;
+			}
+			table {
+				width: 100%;
+				border-spacing: 0;
+				border: 1px solid black;
+			}
+			th, td {
+				border: 1px solid black;
+				box-sizing: border-box;
+			}
+			#ship_storage td {
+				vertical-align: top;
+				align: left;
+			}
+			.ship {
+				position: relative;
+				left: 0;
+				top: 0;
+				height: calc(72px + 1em);
+				width: 72px;
+				float: left;
+				background-size: 72px;
+				vertical-align: bottom;
+				box-sizing: border-box;
+			}
+			.normal {
+				background-color: gainsboro;
+			}
+			.rare {
+				background-color: powderblue;
+			}
+			.elite {
+				background-color: plum;
+			}
+			.super {
+				background-color: palegoldenrod;
+			}
+			.ultra {
+				-moz-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: -o-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: -webkit-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+				background-color: linear-gradient(to bottom right, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
+			}
+			.retro:before {
+				display: block;
+				content: "KAI";
+				color: white;
+				font-family: sans-serif;
+				transform: rotate(45deg);
+				position: relative;
+				right: -2.5em;
+				top: 0.75em;
+				background-color: red;
+				font-size: 10px;
+				text-align: center;
+			}
+			.retro {
+				overflow: hidden;
+			}
+			
+			.ship span {
+				font-family: sans-serif;
+				font-size: 8px;
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				background-color: gray;
+				color: white;
+				display: block;
+				text-align: right;
+				padding-right: 2px;
+				box-sizing: border-box;
+				background-repeat: no-repeat;
+				background-size: auto 14px;
+				background-position-y: -2px;
+			}
+			.ar {
+				background-image: url('imgs/AR.png');
+			}
+			.bb {
+				background-image: url('imgs/BB.png');
+			}
+			.bbv {
+				background-image: url('imgs/BBV.png');
+			}
+			.ca {
+				background-image: url('imgs/CA.png');
+			}
+			.cl {
+				background-image: url('imgs/CL.png');
+			}
+			.cv {
+				background-image: url('imgs/CV.png');
+			}
+			.dd {
+				background-image: url('imgs/DD.png');
+			}
+			.ss {
+				background-image: url('imgs/SS.png');
+			}
+			
+		</style>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="ShipList.js"></script>
+		<script>
+			var finding_target = false;
+			var ship_data;
+			var ship_object;
+			
+			var timer;
+			var move_to_storage = false;
+		
+			var LANG = Object.freeze({
+				EN	:	"en",
+				CN	:	"cn",
+				JP	:	"jp"
+			});
+			
+			var ACTIVE_LANG = LANG.EN;
+		
+			$(document).ready( function() {
+			
+				$("#ss_hide").on('click', function () {
+					let t = $("#ship_storage tbody").toggle(250);
+					$(this).html($(this).html() == "SHOW" ? "HIDE" : "SHOW");
+				});
+				
+				function generalizeToLocation (hullID) {
+					switch (hullID) {
+						case ShipHulls.BB:
+						case ShipHulls.BC:
+						case ShipHulls.BM:
+						case ShipHulls.BBV:
+						case ShipHulls.CV:
+						case ShipHulls.CVL:
+						case ShipHulls.AR:
+							return "main";
+						case ShipHulls.CA:
+						case ShipHulls.CL:
+						case ShipHulls.DD:
+							return "vanguard";
+						default:
+							return "submarine";
+					}
+				}
+			
+				function generalizeType (hullID, strict) {
+					switch (hullID) {
+						case ShipHulls.BB:
+						case ShipHulls.BC:
+						case ShipHulls.BM:
+							return "bb";
+						case ShipHulls.BBV:
+							if (!strict)
+								return "bb";
+							else
+								return "bbv";
+						case ShipHulls.CV:
+						case ShipHulls.CVL:
+							return "cv";
+						case ShipHulls.CA:
+							return "ca";
+						case ShipHulls.CL:
+							return "cl";
+						case ShipHulls.DD:
+							return "dd";
+						case ShipHulls.SS:
+							return "ss";
+						case ShipHulls.AR:
+							if (strict)
+								return "ar";
+						default:
+							return "misc";
+					}
+				}
+				function rarityID (shipRarity) {
+					switch (shipRarity) {
+						case Rarity.R:
+							return "rare";
+						case Rarity.E:
+							return "elite";
+						case Rarity.SR:
+							return "super";
+						case Rarity.UR:
+							return "ultra";
+						default:
+							return "normal";
+					}
+				}
+				function isRetro (id) {
+					return id > 3000 ? "retro" : "";
+				}
+				function isPrototype (id) {
+					return id.includes("Plan") ? "prototype" : "";
+				}
+				function populateStorage() {
+					for (let ship of ships) {
+						if (ship.rarity != Rarity.UN) {
+							var type = $("#" + generalizeType(ship.hull));
+							var classes = "ship " + rarityID(ship.rarity) + " " + isRetro(ship.id) + " " + isPrototype(ship.id);
+							
+							var object = $("<div>");
+							object.attr("id", ship.id);
+							object.attr("class", classes);
+							object.css("background-image", "url('ships/" + ship.id + ".png')");
+							object.on("click", moveShip);
+							object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
+							
+							type.append(object);
+							
+							//type.html(type.html() + '<div id="' + ship.id + '" class = "' + classes + '" style = "background-image: url(\'ships/' + ship.id + '.png\')"><span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span></div>');
+						}
+					}
+				}
+				function populateShip(sid, tier, toLoc) {
+					var ship = ships[findShip(sid)];
+					if (ship.rarity != Rarity.UN) {
+						var type = $("#" + tier + " #" + (toLoc ? generalizeToLocation(ship.hull) : generalizeType(ship.hull)));
+						var classes = "ship " + rarityID(ship.rarity) + " " + isRetro(ship.id) + " " + isPrototype(ship.id);
+						
+						var object = $("<div>");
+						object.attr("id", ship.id);
+						object.attr("class", classes);
+						object.css("background-image", "url('ships/" + ship.id + ".png')");
+						object.on("click", moveShip);
+						object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
+						
+						type.append(object);
+						
+						//type.html(type.html() + '<div id="' + ship.id + '" class = "' + classes + '" style = "background-image: url(\'ships/' + ship.id + '.png\')"><span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span></div>');
+					}
+				}
+				//populateStorage();
+				
+				$(".tier").on("mouseenter", function (e) {
+					if (finding_target) {
+						let t = $(this);
+						t.find("th").addClass("highlighted");
+						t.find("#" + generalizeToLocation(ship_data.hull)).addClass("highlighted");
+					}
+				});
+				$(".tier").on("click", function (e) {
+					if (finding_target && !e.target.className.includes("ship")) {
+						finding_target = false;
+						move_to_storage = false;
+						let t = $(this).find("#" + generalizeToLocation(ship_data.hull));
+						ship_object.detach().appendTo(t);
+						ship_object.removeClass("highlighted");
+						t.removeClass("highlighted");
+						$(this).find("th").removeClass("highlighted");
+						save();
+					}
+				});
+				$(".tier").on("mouseleave", function (e) {
+					if (finding_target) {
+						let t = $(this);
+						t.find("th").removeClass("highlighted");
+						t.find("#" + generalizeToLocation(ship_data.hull)).removeClass("highlighted");
+					}
+				});
+			
+				function findShip(sid) {
+					for (let x = 0; x < ships.length; x++)
+						if (sid == ships[x].id)
+							return x;
+					return -1;
+				}
+			
+				function countDown () {
+					move_to_storage = false;
+					finding_target = false;
+					let x = $('.highlighted');
+					for (let h of x)
+						$(h).removeClass("highlighted");
+				}
+				
+				moveShip = function() {
+					let shipObject = $( this );
+					let ship = findShip(shipObject[0].id);
+					if (ship != -1)
+						ship = ships[ship]
+					else
+						return false;
+					shipObject.addClass("highlighted");
+					ship_object = shipObject;
+					if(!$(shipObject[0].parentNode)[0].parentNode.className.includes("tier")) {
+						if (finding_target)
+							countDown();
+						else
+							finding_target = true;
+					} else {
+						if (move_to_storage) {
+							clearTimeout (timer);
+							finding_target = false;
+							shipObject.removeClass("highlighted");
+							shipObject.detach().appendTo($("#ship_storage").find("#" + generalizeType(ship.hull)));
+							move_to_storage = false;
+							save();
+						} else {
+							move_to_storage = true;
+							finding_target = true;
+						}
+					}
+					ship_data = ship;
+				};
+				
+				$("#a_tier").on("click", function (e) {
+					let count = $(".tier").length;
+					let clone = $(".tier#" + (count - 1)).clone(true);
+					clone[0].id = count;
+					clone.children("th")[0].innerHTML = "T" + count;
+					for (let formation of clone.children("td"))
+						formation.innerHTML = "";	
+					$("#tiers_body").append(clone);
+				});
+				$("#r_tier").on("click", function (e) {
+					let c = $(".tier").length;
+					if (c > 1) {
+						for (let ship of $('.tier#' + (c - 1) + ' .ship'))
+							$(ship).detach().appendTo($("#ship_storage").find("#" + generalizeType(ships[findShip(ship.id)].hull)));
+						$(".tier#" + (c - 1)).remove();
+					}
+				});
+				
+				/*
+					Rarity Sorting Prototype, UR, SR, E, R ,N
+					Main Fleet:
+						BB 
+						BBV
+						CV
+						AR
+						
+					Vanguard:
+						CA
+						CL
+						DD
+						
+					Submarines:
+						Rarity Sorted
+				
+				*/
+
+				
+				
+				$("#save").on("click", function() {
+					save();
+					alert("Saved to local storage.");
+				});
+				$("#copy").on("click", function() {
+					var ta = $("<textarea>", {val: save(true)});
+					$("html").append(ta);
+					ta.select();
+					document.execCommand('copy');
+					ta.remove();
+					alert("Tierlist string copied to clipboard");
+				});
+				$("#load").on("click", function() {
+					load(prompt("Enter Tierlist String", localStorage.getItem("AZTL") ? localStorage.getItem("AZTL") : ""));
+				});
+				
+				function load(load_string) {
+					if (!load_string) {
+						load_string = localStorage.getItem("AZTL");
+						if (load_string && (load_string != undefined || load_string != ""))
+							load_string = localStorage.getItem("AZTL");
+						else {
+							if (confirm("No tierlist saved. Load default?")) {
+								load_string = "3131,Plan002,064,136,212,367,357,077,145,356,142,232,Plan006,Plan005,3036,3259,257,3258,033,3155,166,343,381|251,063,353,129,3074,378,380,3222,3211,080,Plan003,3188,364,3044,Plan001,3309,329,038,3101,3019,3236,028,338,358|Plan004,354,065,368,130,224,225,228,229,3227,3226,146,230,144,3075,200,244,3125,049,262,371,115,037,330,118,335,164,3301,267,347,288,255,253,341,350|320,135,252,Collab036,3210,060,062,061,213,133,132,055,3208,3209,073,078,223,201,203,202,246,245,382,3361,111,3308,3106,3105,114,305,3104,183,032,3319,3318,256,254,297,296,3167,3092,151,340,342|352,207,248,249,149,150,336,054,376,076,377,Collab006,Collab031,3126,045,3191,3190,042,321,310,3187,031,304,241,103,165,010,233,379,011,344,339|204,206,205,Collab008,3070,242,046,047,048,3122,124,043,041,040,Collab005,Collab033,349,3239,Collab007,Collab032,359,093,370,295,170,3168,3091,3090|3053,3052,Collab004,3071,Collab002,119,198,039,Collab001,373,372,Collab003,345,237,3351,3348,325,326,3082,3083,3270,3269,3027,3026,369,333,3089,3088,163,007,176|127,058,059,3072,140,337,120,123,189,327,328,3263,375,013,3005,3006,177,178,317,316,162,161,300,299,173,306,362,331,334,3271,171,332,018,175,174,159|128,220,148,Collab034,Collab035,218,219,079,121,197,196,192,193,179,116,117,360,034,035,366,238,240,029,030,182,303,094,Collab021,Collab022,365,355,277,278,363,374,307,014,102,081,346,264,265,266,015,016,017,008,009,086,087,280,276,272,274,002,001";
+							} else {
+								populateStorage();
+								return;
+							}
+						}
+					}
+					$(".ship").remove();
+					$(".tier").not("#0").remove();
+					var tiers = load_string.split ("|");
+					for (let t = 0; t < tiers.length; t++) {
+						if (t != 0)
+							$("#a_tier").trigger("click");
+						for (let sid of tiers[t].split(","))
+							populateShip(sid, t, true);
+					}
+					var used_ships = load_string.replace(/\|/g, ",").split(",");
+					for (let ship of ships) {
+						let used = false;
+						for (let r = 0; r < used_ships.length; r++) {
+							if (ship.id == used_ships[r]) {
+								//console.log ("Used - " + ship.name + " [" + ship.id + "] : " + used_ships[r] + "[" + r + "]");
+								used = true;
+								break;
+							}
+						}
+						if (!used) {
+							populateShip(ship.id, "ship_storage", false);
+						} else {
+							//console.log ("Used - " + ship.name + " [" + ship.id + "]");
+						}
+					}
+					
+				}
+				
+				function save(returnString) {
+					var s_string = "";
+					var tiers = $(".tier");
+					for (let t of tiers) {
+						for (let ship of $(t).find(".ship")) {
+							if (s_string.length == 0 || s_string[s_string.length - 1] == "|")
+								s_string += ship.id
+							else
+								s_string += "," + ship.id
+						}
+						s_string += "|";
+					}
+					s_string = s_string.substring(0, s_string.length - 1);
+					if (returnString)
+						return s_string
+					else
+						localStorage.setItem("AZTL", s_string);
+				}
+				
+				load();
+			});
+		</script>
+	</head>
+	<body>
+		<div id = "tiers">
+			<table>
+				<thead>
+					<tr>
+						<th id = "sort"><!--sort--></th>
+						<th>Main Fleet</th>
+						<th>Vanguard</th>
+						<th>Submarine</th>
+					</tr>
+				</thead>
+				<tbody id="tiers_body">
+					<tr class = "tier" id = "0">
+						<th width='3em'>T0</th>
+						<td id = "main"></td>
+						<td id = "vanguard"></td>
+						<td id = "submarine"></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th colspan='2' id="r_tier">Remove Tier</th>
+						<th colspan='1' id="options">
+							<span id="save">Save</span>
+							<span id="copy">Copy</span>
+							<span id="load">Load</span>
+						</th>
+						<th colspan='1' id="a_tier">Add Tier</th>
+					</tr>
+				</tfoot>
+			</table>
+		
+		</div>
+		
+		
+		<div id="ship_storage">
+			<table>
+				<thead>
+					<tr id = "overall">
+						<th colspan='7'>Ship Storage<span id = "ss_hide">HIDE</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>BB, BC, BM, BBV</th>
+						<th>CV, CVL</th>
+						<th>CA</th>
+						<th>CL</th>
+						<th>DD, DE</th>
+						<th>SS</th>
+						<th>Misc</th>
+					</tr>
+					<tr>
+						<td id = "bb"></td>
+						<td id = "cv"></td>
+						<td id = "ca"></td>
+						<td id = "cl"></td>
+						<td id = "dd"></td>
+						<td id = "ss"></td>
+						<td id = "misc"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

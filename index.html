@@ -1,539 +1,400 @@
 <html>
 	<head>
-		<title>AzurLane Tier List Generator</title>
-		
-		<style>
-		
-			body {
-				background-color: #222;
-				color: white;
-				font-family: sans-serif;
-				user-select: none;
-			}
-			#tiers {
-				margin-bottom: 1em;
-				table-layout: fixed;
-			}
-			.tier {
-				box-sizing: border-box;
-			}
-			.tier th {
-				width: calc(16px * 3);
-			}
-			.tier td {
-				vertical-align: top;
-			}
-			
-			#options {
-				padding-left: 10px;
-				padding-right: 10px;
-			}
-			#save {
-				float: left;
-			}
-			#load {
-				float: right;
-			}
-			
-			.highlighted {
-				border: 6px solid #888833;
-				background-position: -6px -6px;
-			}
-			#ship_storage #overall th {
-				padding: 3px;
-			}
-			#ship_storage #ss_hide {
-				display: block;
-				float: right;
-				cursor: pointer;
-			}
-			table {
-				width: 100%;
-				border-spacing: 0;
-				border: 1px solid black;
-			}
-			th, td {
-				border: 1px solid black;
-				box-sizing: border-box;
-			}
-			#ship_storage td {
-				vertical-align: top;
-				align: left;
-			}
-			.ship {
-				position: relative;
-				left: 0;
-				top: 0;
-				height: calc(72px + 1em);
-				width: 72px;
-				float: left;
-				background-size: 72px;
-				vertical-align: bottom;
-				box-sizing: border-box;
-			}
-			.normal {
-				background-color: gainsboro;
-			}
-			.rare {
-				background-color: powderblue;
-			}
-			.elite {
-				background-color: plum;
-			}
-			.super {
-				background-color: palegoldenrod;
-			}
-			.ultra {
-				-moz-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
-				background-color: -o-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
-				background-color: -webkit-linear-gradient(top left, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
-				background-color: linear-gradient(to bottom right, #aaffaa 15%, #aaaaff, #ffaaaa 85%);
-			}
-			.retro:before {
-				display: block;
-				content: "KAI";
-				color: white;
-				font-family: sans-serif;
-				transform: rotate(45deg);
-				position: relative;
-				right: -2.5em;
-				top: 0.75em;
-				background-color: red;
-				font-size: 10px;
-				text-align: center;
-			}
-			.retro {
-				overflow: hidden;
-			}
-			
-			.ship span {
-				font-family: sans-serif;
-				font-size: 8px;
-				position: absolute;
-				bottom: 0;
-				width: 100%;
-				background-color: gray;
-				color: white;
-				display: block;
-				text-align: right;
-				padding-right: 2px;
-				box-sizing: border-box;
-				background-repeat: no-repeat;
-				background-size: auto 14px;
-				background-position-y: -2px;
-			}
-			.ar {
-				background-image: url('imgs/AR.png');
-			}
-			.bb {
-				background-image: url('imgs/BB.png');
-			}
-			.bbv {
-				background-image: url('imgs/BBV.png');
-			}
-			.ca {
-				background-image: url('imgs/CA.png');
-			}
-			.cl {
-				background-image: url('imgs/CL.png');
-			}
-			.cv {
-				background-image: url('imgs/CV.png');
-			}
-			.dd {
-				background-image: url('imgs/DD.png');
-			}
-			.ss {
-				background-image: url('imgs/SS.png');
-			}
-			
-		</style>
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="ShipList.js"></script>
+		<title>A Custom Experience</title>
 		<script>
-			var finding_target = false;
-			var ship_data;
-			var ship_object;
-			
-			var timer;
-			var move_to_storage = false;
-		
-			var LANG = Object.freeze({
-				EN	:	"en",
-				CN	:	"cn",
-				JP	:	"jp"
-			});
-			
-			var ACTIVE_LANG = LANG.EN;
-		
-			$(document).ready( function() {
-			
-				$("#ss_hide").on('click', function () {
-					let t = $("#ship_storage tbody").toggle(250);
-					$(this).html($(this).html() == "SHOW" ? "HIDE" : "SHOW");
-				});
-				
-				function generalizeToLocation (hullID) {
-					switch (hullID) {
-						case ShipHulls.BB:
-						case ShipHulls.BC:
-						case ShipHulls.BM:
-						case ShipHulls.BBV:
-						case ShipHulls.CV:
-						case ShipHulls.CVL:
-						case ShipHulls.AR:
-							return "main";
-						case ShipHulls.CA:
-						case ShipHulls.CL:
-						case ShipHulls.DD:
-							return "vanguard";
-						default:
-							return "submarine";
-					}
-				}
-			
-				function generalizeType (hullID, strict) {
-					switch (hullID) {
-						case ShipHulls.BB:
-						case ShipHulls.BC:
-						case ShipHulls.BM:
-							return "bb";
-						case ShipHulls.BBV:
-							if (!strict)
-								return "bb";
-							else
-								return "bbv";
-						case ShipHulls.CV:
-						case ShipHulls.CVL:
-							return "cv";
-						case ShipHulls.CA:
-							return "ca";
-						case ShipHulls.CL:
-							return "cl";
-						case ShipHulls.DD:
-							return "dd";
-						case ShipHulls.SS:
-							return "ss";
-						case ShipHulls.AR:
-							if (strict)
-								return "ar";
-						default:
-							return "misc";
-					}
-				}
-				function rarityID (shipRarity) {
-					switch (shipRarity) {
-						case Rarity.R:
-							return "rare";
-						case Rarity.E:
-							return "elite";
-						case Rarity.SR:
-							return "super";
-						case Rarity.UR:
-							return "ultra";
-						default:
-							return "normal";
-					}
-				}
-				function isRetro (id) {
-					return id > 3000 ? "retro" : "";
-				}
-				function isPrototype (id) {
-					return id.includes("Plan") ? "prototype" : "";
-				}
-				function populateStorage() {
-					for (let ship of ships) {
-						if (ship.rarity != Rarity.UN) {
-							var type = $("#" + generalizeType(ship.hull));
-							var classes = "ship " + rarityID(ship.rarity) + " " + isRetro(ship.id) + " " + isPrototype(ship.id);
-							
-							var object = $("<div>");
-							object.attr("id", ship.id);
-							object.attr("class", classes);
-							object.css("background-image", "url('ships/" + ship.id + ".png')");
-							object.on("click", moveShip);
-							object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
-							
-							type.append(object);
-							
-							//type.html(type.html() + '<div id="' + ship.id + '" class = "' + classes + '" style = "background-image: url(\'ships/' + ship.id + '.png\')"><span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span></div>');
-						}
-					}
-				}
-				function populateShip(sid, tier, toLoc) {
-					var ship = ships[findShip(sid)];
-					if (ship.rarity != Rarity.UN) {
-						var type = $("#" + tier + " #" + (toLoc ? generalizeToLocation(ship.hull) : generalizeType(ship.hull)));
-						var classes = "ship " + rarityID(ship.rarity) + " " + isRetro(ship.id) + " " + isPrototype(ship.id);
-						
-						var object = $("<div>");
-						object.attr("id", ship.id);
-						object.attr("class", classes);
-						object.css("background-image", "url('ships/" + ship.id + ".png')");
-						object.on("click", moveShip);
-						object.html('<span class="' + generalizeType(ship.hull, true) + '">' + ship.name[ACTIVE_LANG] + '</span>');
-						
-						type.append(object);
-						
-						//type.html(type.html() + '<div id="' + ship.id + '" class = "' + classes + '" style = "background-image: url(\'ships/' + ship.id + '.png\')"><span class="' + generalizeType(ship.hull, true) + '">' + ship.name + '</span></div>');
-					}
-				}
-				//populateStorage();
-				
-				$(".tier").on("mouseenter", function (e) {
-					if (finding_target) {
-						let t = $(this);
-						t.find("th").addClass("highlighted");
-						t.find("#" + generalizeToLocation(ship_data.hull)).addClass("highlighted");
-					}
-				});
-				$(".tier").on("click", function (e) {
-					if (finding_target && !e.target.className.includes("ship")) {
-						finding_target = false;
-						move_to_storage = false;
-						let t = $(this).find("#" + generalizeToLocation(ship_data.hull));
-						ship_object.detach().appendTo(t);
-						ship_object.removeClass("highlighted");
-						t.removeClass("highlighted");
-						$(this).find("th").removeClass("highlighted");
-						save();
-					}
-				});
-				$(".tier").on("mouseleave", function (e) {
-					if (finding_target) {
-						let t = $(this);
-						t.find("th").removeClass("highlighted");
-						t.find("#" + generalizeToLocation(ship_data.hull)).removeClass("highlighted");
-					}
-				});
-			
-				function findShip(sid) {
-					for (let x = 0; x < ships.length; x++)
-						if (sid == ships[x].id)
-							return x;
-					return -1;
-				}
-			
-				function countDown () {
-					move_to_storage = false;
-					finding_target = false;
-					let x = $('.highlighted');
-					for (let h of x)
-						$(h).removeClass("highlighted");
-				}
-				
-				moveShip = function() {
-					let shipObject = $( this );
-					let ship = findShip(shipObject[0].id);
-					if (ship != -1)
-						ship = ships[ship]
-					else
-						return false;
-					shipObject.addClass("highlighted");
-					ship_object = shipObject;
-					if(!$(shipObject[0].parentNode)[0].parentNode.className.includes("tier")) {
-						if (finding_target)
-							countDown();
-						else
-							finding_target = true;
-					} else {
-						if (move_to_storage) {
-							clearTimeout (timer);
-							finding_target = false;
-							shipObject.removeClass("highlighted");
-							shipObject.detach().appendTo($("#ship_storage").find("#" + generalizeType(ship.hull)));
-							move_to_storage = false;
-							save();
-						} else {
-							move_to_storage = true;
-							finding_target = true;
-						}
-					}
-					ship_data = ship;
-				};
-				
-				$("#a_tier").on("click", function (e) {
-					let count = $(".tier").length;
-					let clone = $(".tier#" + (count - 1)).clone(true);
-					clone[0].id = count;
-					clone.children("th")[0].innerHTML = "T" + count;
-					for (let formation of clone.children("td"))
-						formation.innerHTML = "";	
-					$("#tiers_body").append(clone);
-				});
-				$("#r_tier").on("click", function (e) {
-					let c = $(".tier").length;
-					if (c > 1) {
-						for (let ship of $('.tier#' + (c - 1) + ' .ship'))
-							$(ship).detach().appendTo($("#ship_storage").find("#" + generalizeType(ships[findShip(ship.id)].hull)));
-						$(".tier#" + (c - 1)).remove();
-					}
-				});
-				
-				/*
-					Rarity Sorting Prototype, UR, SR, E, R ,N
-					Main Fleet:
-						BB 
-						BBV
-						CV
-						AR
-						
-					Vanguard:
-						CA
-						CL
-						DD
-						
-					Submarines:
-						Rarity Sorted
-				
-				*/
 
-				
-				
-				$("#save").on("click", function() {
-					save();
-					alert("Saved to local storage.");
-				});
-				$("#copy").on("click", function() {
-					var ta = $("<textarea>", {val: save(true)});
-					$("html").append(ta);
-					ta.select();
-					document.execCommand('copy');
-					ta.remove();
-					alert("Tierlist string copied to clipboard");
-				});
-				$("#load").on("click", function() {
-					load(prompt("Enter Tierlist String", localStorage.getItem("AZTL") ? localStorage.getItem("AZTL") : ""));
-				});
-				
-				function load(load_string) {
-					if (!load_string) {
-						load_string = localStorage.getItem("AZTL");
-						if (load_string && (load_string != undefined || load_string != ""))
-							load_string = localStorage.getItem("AZTL");
-						else {
-							if (confirm("No tierlist saved. Load default?")) {
-								load_string = "3131,Plan002,064,136,212,367,357,077,145,356,142,232,Plan006,Plan005,3036,3259,257,3258,033,3155,166,343,381|251,063,353,129,3074,378,380,3222,3211,080,Plan003,3188,364,3044,Plan001,3309,329,038,3101,3019,3236,028,338,358|Plan004,354,065,368,130,224,225,228,229,3227,3226,146,230,144,3075,200,244,3125,049,262,371,115,037,330,118,335,164,3301,267,347,288,255,253,341,350|320,135,252,Collab036,3210,060,062,061,213,133,132,055,3208,3209,073,078,223,201,203,202,246,245,382,3361,111,3308,3106,3105,114,305,3104,183,032,3319,3318,256,254,297,296,3167,3092,151,340,342|352,207,248,249,149,150,336,054,376,076,377,Collab006,Collab031,3126,045,3191,3190,042,321,310,3187,031,304,241,103,165,010,233,379,011,344,339|204,206,205,Collab008,3070,242,046,047,048,3122,124,043,041,040,Collab005,Collab033,349,3239,Collab007,Collab032,359,093,370,295,170,3168,3091,3090|3053,3052,Collab004,3071,Collab002,119,198,039,Collab001,373,372,Collab003,345,237,3351,3348,325,326,3082,3083,3270,3269,3027,3026,369,333,3089,3088,163,007,176|127,058,059,3072,140,337,120,123,189,327,328,3263,375,013,3005,3006,177,178,317,316,162,161,300,299,173,306,362,331,334,3271,171,332,018,175,174,159|128,220,148,Collab034,Collab035,218,219,079,121,197,196,192,193,179,116,117,360,034,035,366,238,240,029,030,182,303,094,Collab021,Collab022,365,355,277,278,363,374,307,014,102,081,346,264,265,266,015,016,017,008,009,086,087,280,276,272,274,002,001";
-							} else {
-								populateStorage();
-								return;
-							}
+			class Color {
+				constructor(r, g, b, a) {
+					this.grey = !(r && g);
+					this.r = r;
+					this.g = g ? g : r;
+					this.b = b ? b : r;
+					this.a = a ? a : 1;
+				}
+				randVal(c, v) {
+					if (v == 0 || v == 1)
+						return c;
+					let min = c - v;
+					let max = c + v;
+					return Math.random() * (min - max) + min;
+				}
+				get (rnd) {
+					let rc = this.randVal(this.r, rnd.r);
+					let gc = this.randVal(this.g, rnd.g ? rnd.g : rnd.r);
+					let bc = this.randVal(this.b, rnd.b ? rnd.b : rnd.r);
+					if (this.grey) {
+						gc = rc;
+						bc = rc;
+					}
+					let ac = this.randVal(this.a, rnd.a ? rnd.a : 0);
+					return `rgba(${rc}, ${gc}, ${bc}, ${ac})`;
+				}
+			}
+			class Point {
+				constructor(x, y){
+					this.x = x; this.y = y;
+				}
+				get inverse() {
+					return new Point(-this.x, -this.y);
+				}
+				offset (off) {
+					return Point.offset(this, off);
+				}
+				static offset (pos, off) {
+					return new Point(pos.x - off.x, pos.y - off.y);
+				}
+				static get null () {
+					return new Point(0,0);
+				}
+			}
+			class Vector {
+				constructor(mag, ang, rect) {
+					if (rect) {
+						let x = mag;
+						let y = ang;
+						mag = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+						ang = Math.atan(y/x);
+						ang = ang > 0 ? ang : 0;
+					}
+					this.mag = mag;
+					this.ang = rect ? ang : ang * (Math.PI / 180);
+				}
+				get x() {
+					return Math.round(this.mag * Math.cos(this.ang));
+				}
+				get y() {
+					return Math.round(this.mag * Math.sin(this.ang));
+				}
+				get deg() {
+					return Math.round(this.ang * 180/Math.PI);
+				}
+				get rect() {
+					return new Point(this.x, this.y);
+				}
+				static force(pos, vec) {
+					return new Point(pos.x + vec.x, pos.y + vec.y);
+				}
+				static get null () {
+					return new Vector(0,0);
+				}
+				static FromPoints(pnt1, pnt2) {
+					return new Vector (pnt2.x - pnt1.x, pnt2.y - pnt1.y, true);
+				}
+			}
+			const RAD = 180/Math.PI;
+			const DEG = Math.PI/180;
+			class Tile {
+				#size = new Point(100, 100);
+				static Types = {
+					UNKNOWN : 0,
+					BUILDABLE : 1
+				}
+				constructor(type, pos, color) {
+					this.type = type;
+					this.position = pos;
+					this.color = color;
+				}
+				draw (ctx, off) {
+					let pos = this.position.offset(off);
+					if (pos.x <= -game.width / zoom.min || game.x >= game.width / zoom.min * 2 || game.y <= -game.height / zoom.min || game.y >= game.height / zoom.min * 2)
+						return;
+
+					ctx.fillStyle = this.color;
+
+					ctx.fillRect(pos.x, pos.y, this.#size.x, this.#size.y);
+			//		ctx.strokeRect(pos.x * Math.sin(scale), pos.y * Math.sin(scale), this.#size.x * scale, this.#size.y * scale);
+				}
+				drawHover(ctx, off) {
+					this.draw(ctx, off);
+					let pos = this.position.offset(off);
+					ctx.strokeStyle = "#FF0";
+					ctx.strokeRect(pos.x, pos.y, this.#size.x, this.#size.y)
+				}
+				drawSelected (ctx, off) {
+					let pos = this.position.offset(off);
+					ctx.strokeStyle = "#00F";
+					ctx.strokeRect(pos.x, pos.y, this.#size.x, this.#size.y);
+				}
+				checkHover (pos, off) {
+					let min = this.position.offset(off);
+					let max = min.offset(this.#size.inverse);
+					if (pos.x >= min.x && pos.x <= max.x &&
+						pos.y >= min.y && pos.y <= max.y)
+							return true;
+					return false;
+				}
+			}
+			class Entity {
+				#size = new Point(50, 50);
+				constructor(type, pos, speed, img) {
+					this.type = type;
+					this.position = pos;
+					this.speed = speed;
+					this.img = img;
+					this.drawable = true;
+				}
+				draw (ctx, off) {
+					if(!this.drawable)
+						return;
+
+					// TODO: Replace with image drawing
+					ctx.fillStyle = "#a6a4dd";
+					ctx.strokeStyle = "#000";
+					let pos = this.position.offset(off);
+					ctx.fillRect(pos.x - 25, pos.y - 25, 50, 50);
+				}
+				drawHover(ctx, off) {
+					if(!this.drawable)
+						return;
+
+					this.draw(ctx, off);
+					let pos = this.position.offset(off);
+					ctx.strokeStyle = "#FF0";
+					ctx.strokeRect(pos.x - 25, pos.y - 25, this.#size.x, this.#size.y)
+				}
+				drawSelected (ctx, off) {
+					if(!this.drawable)
+						return;
+					this.draw(ctx, off);
+					let pos = this.position.offset(off);
+					ctx.strokeStyle = "#00F";
+					ctx.strokeRect(pos.x - 25, pos.y - 25, this.#size.x, this.#size.y)
+				}
+				checkHover (pos, off) {
+					if(!this.drawable)
+						return false;
+
+					let h_size = new Point(this.#size.x / 2, this.#size.y / 2);
+					let min = this.position.offset(off).offset(h_size);
+					let max = min.offset(this.#size.inverse);
+					if (pos.x >= min.x && pos.x <= max.x &&
+						pos.y >= min.y && pos.y <= max.y)
+							return true;
+					return false;
+				}
+			}
+
+			const sky = new Color(130, 130, 230).get(new Color(0, 0, 20));
+			const stoneVariation = new Color(20);
+			const stone = new Color(120);
+			
+			const grass = new Color(60, 220, 30);
+			const grassVariation = new Color(0, 40, 0);
+
+			class Factory {
+				#objects = new Array();
+				add(object) {
+					return this.#objects.push(object) - 1;
+				}
+				remove(id) {
+					this.#objects[id] = undefined;
+				}
+				getById(id) {
+					return this.#objects[id];
+				}
+				getByType(type) {
+					let objects = new Array();
+					for (let x of this.#objects)
+						if (x.constructor.name == type || x.type == type)
+							objects.push(x)
+					return objects;
+				}
+
+				getTilesInArea(pos, radius) {
+					let tiles = this.getByType("Tile");
+					let inArea = new Array();
+					for (let x of tiles) {
+						let vec = Vector.FromPoints(pos, x.position);
+						if (vec.mag <= radius) {
+							inArea.push(x);
 						}
 					}
-					$(".ship").remove();
-					$(".tier").not("#0").remove();
-					var tiers = load_string.split ("|");
-					for (let t = 0; t < tiers.length; t++) {
-						if (t != 0)
-							$("#a_tier").trigger("click");
-						for (let sid of tiers[t].split(","))
-							populateShip(sid, t, true);
+					return inArea;
+				}
+
+				draw(ctx, off) {
+					for (let x of this.#objects)
+						x == hoveredElement ? x.drawHover(ctx, off) : x.draw(ctx, off);
+					if (selectedElement)
+						selectedElement.drawSelected(ctx, off);
+				}
+				checkHover(pos, offset) {
+					for (let x = this.#objects.length - 1; x >= 0; x--)
+						if (this.#objects[x])
+							if (this.#objects[x].checkHover(pos, offset))
+								return this.#objects[x];
+					return undefined;
+				}
+			}
+
+			class Map {
+				static Types = {
+					GLOBAL : 0,
+					CITY : 1
+				}
+				#size;
+				#center;
+				#tiles = new Array();
+				constructor (type, size, center) {
+					this.type = type;
+					this.#size = size;
+					this.#center = center ? center : new Point(Math.floor(this.#size.x / 2), Math.floor(this.#size.y / 2));
+					for (let x = 0; x < size.x; x++)
+						for (let x = 0; x < size.y; y++)
+						this.#tiles.push();
+				}
+			}
+
+			function clickHandler (event) {
+
+			}
+			var game;
+			var context;
+			var factory = new Factory();
+			var x_inputval = 0;
+			var y_inputval = 0;
+			var c_center;
+			var pid;
+			function game() {
+				game = document.getElementById("game");
+				game.width = document.body.clientWidth * 0.8;
+				context = game.getContext('2d');
+				c_center = new Point(game.width / 2, game.height / 2);
+				context.setTransform(zoom.level, 0, 0, zoom.level, c_center.x, c_center.y);
+				
+				document.getElementById("x").addEventListener("change", (e) => {
+					x_inputval = e.srcElement.value;
+				});
+				document.getElementById("y").addEventListener("change", (e) => {
+					y_inputval = e.srcElement.value;
+				});
+				
+				for (let x = -10; x < 10; x++) {
+					for (let y = -10; y < 10; y++) {
+						factory.add(new Tile(Tile.Types.UNKNOWN, new Point(x * 100, y * 100), stone.get(stoneVariation)));
 					}
-					var used_ships = load_string.replace(/\|/g, ",").split(",");
-					for (let ship of ships) {
-						let used = false;
-						for (let r = 0; r < used_ships.length; r++) {
-							if (ship.id == used_ships[r]) {
-								//console.log ("Used - " + ship.name + " [" + ship.id + "] : " + used_ships[r] + "[" + r + "]");
-								used = true;
-								break;
-							}
-						}
-						if (!used) {
-							populateShip(ship.id, "ship_storage", false);
-						} else {
-							//console.log ("Used - " + ship.name + " [" + ship.id + "]");
-						}
+				}
+				pid = factory.add(new Entity("player", new Point(50, 50), Vector.null, undefined));
+				factory.getById(pid).drawable = false;
+
+				let area = factory.getTilesInArea(factory.getById(pid).position.offset(new Point(50, 50)), 290);
+				for (let a of area) {
+					a.color = grass.get(grassVariation);
+				}
+
+				document.addEventListener("keypress", control);
+				game.addEventListener("mousemove", mouseHandler);
+				game.addEventListener("press", mouseHandler);
+				game.addEventListener("click", mouseHandler);
+				game.addEventListener("wheel", mouseHandler);
+				lastUpdate = Date.now() - 15;
+				window.requestAnimationFrame(update);
+			}
+			var zoom = {
+				level : 1,
+				adjust : 0.05,
+				min : 0.25,
+				max : 1
+			}
+			var hoveredElement;
+			var isMoving = false;
+			var selectedElement;
+			function mouseHandler(event) {
+				let playerpos = factory.getById(pid).position;
+				hoveredElement = factory.checkHover(new Point((event.offsetX - game.width / 2) / zoom.level, (event.offsetY - game.height / 2) / zoom.level), playerpos);
+				if (event.buttons == 1 && event.type == "mousemove" && (Date.now() - lastUpdate) / 60 >= 1) {
+					factory.getById(pid).position = playerpos.offset(new Point(event.movementX / zoom.level, event.movementY / zoom.level));
+					isMoving = true;
+				}
+				if (event.type == "click" && !isMoving) {
+					selectedElement = hoveredElement;
+				} else if (event.type == "click") {
+					isMoving = false;
+				}
+				if(event.type=="mousemove" && event.buttons == 0) {
+					isMoving = false;
+				}
+				if (event.type=="wheel")
+					changeZoom(Math.sign(-event.deltaY));
+			}
+			function changeZoom (sign) {
+				zoom.level += sign * zoom.adjust;
+				if (zoom.level > zoom.max)
+					zoom.level = zoom.max;
+				if (zoom.level < zoom.min)
+					zoom.level = zoom.min;
+				context.setTransform(zoom.level, 0, 0, zoom.level, c_center.x, c_center.y);
+			}
+			function control(event) {
+				let player = factory.getById(pid);
+				switch (event.key) {
+					case '+':
+					case '=':
+						zoom.level += zoom.adjust;
+						if (zoom.level > zoom.max)
+							zoom.level = zoom.max;
+						context.setTransform(zoom.level, 0, 0, zoom.level, c_center.x, c_center.y);
+					break;
+					case '-':
+						zoom.level -= zoom.adjust;
+						if (zoom.level < zoom.min)
+							zoom.level = zoom.min;
+						context.setTransform(zoom.level, 0, 0, zoom.level, c_center.x, c_center.y);
+					break;
+					case 'w':
+					case 'W':
+						player.position = Vector.force(player.position, new Vector(10, -90));
+					break;
+					case 'a':
+					case 'A':
+						player.position = Vector.force(player.position, new Vector(10, 180));
+					break;
+					case 's':
+					case 'S':
+						player.position = Vector.force(player.position, new Vector(10, 90));
+					break;
+					case 'd':
+					case 'D':
+						player.position = Vector.force(player.position, new Vector(10, 0));
+					break;
+				}
+			}
+			var lastUpdate;
+			function update(){
+				let elapsed = Date.now() - lastUpdate;
+				let phys = Math.floor(elapsed / 60);
+				let reDraw = (phys > 0);
+				while (phys > 0 && false) {
+					// physics or catchups
+					phys--;
 					}
+				if (reDraw) {
+					let player = factory.getById(pid);
+
+					context.fillStyle = sky;
+					context.fillRect(-game.width / zoom.min,-game.height / zoom.min, game.width/zoom.min * 2, game.height/zoom.min * 2);
 					
+					factory.draw(context, player.position);
+
+					context.strokeStyle = "black";
+					context.strokeRect(x_inputval - 1, y_inputval - 1, 3, 3);
 				}
-				
-				function save(returnString) {
-					var s_string = "";
-					var tiers = $(".tier");
-					for (let t of tiers) {
-						for (let ship of $(t).find(".ship")) {
-							if (s_string.length == 0 || s_string[s_string.length - 1] == "|")
-								s_string += ship.id
-							else
-								s_string += "," + ship.id
-						}
-						s_string += "|";
-					}
-					s_string = s_string.substring(0, s_string.length - 1);
-					if (returnString)
-						return s_string
-					else
-						localStorage.setItem("AZTL", s_string);
-				}
-				
-				load();
-			});
+				window.requestAnimationFrame(update);
+			}
+
+			document.addEventListener("DOMContentLoaded", game);
+
 		</script>
+		<style>
+			html {overflow: hidden;}
+			body {background-color: #444; height: 100%; display: flex; align-items: center; flex-direction: column; justify-content: center;}
+			#game{border: 1px solid white;}
+		</style>
 	</head>
 	<body>
-		<div id = "tiers">
-			<table>
-				<thead>
-					<tr>
-						<th id = "sort"><!--sort--></th>
-						<th>Main Fleet</th>
-						<th>Vanguard</th>
-						<th>Submarine</th>
-					</tr>
-				</thead>
-				<tbody id="tiers_body">
-					<tr class = "tier" id = "0">
-						<th width='3em'>T0</th>
-						<td id = "main"></td>
-						<td id = "vanguard"></td>
-						<td id = "submarine"></td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan='2' id="r_tier">Remove Tier</th>
-						<th colspan='1' id="options">
-							<span id="save">Save</span>
-							<span id="copy">Copy</span>
-							<span id="load">Load</span>
-						</th>
-						<th colspan='1' id="a_tier">Add Tier</th>
-					</tr>
-				</tfoot>
-			</table>
-		
-		</div>
-		
-		
-		<div id="ship_storage">
-			<table>
-				<thead>
-					<tr id = "overall">
-						<th colspan='7'>Ship Storage<span id = "ss_hide">HIDE</span></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th>BB, BC, BM, BBV</th>
-						<th>CV, CVL</th>
-						<th>CA</th>
-						<th>CL</th>
-						<th>DD, DE</th>
-						<th>SS</th>
-						<th>Misc</th>
-					</tr>
-					<tr>
-						<td id = "bb"></td>
-						<td id = "cv"></td>
-						<td id = "ca"></td>
-						<td id = "cl"></td>
-						<td id = "dd"></td>
-						<td id = "ss"></td>
-						<td id = "misc"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<canvas id="game" width=2000 height=1000>
+
+		</canvas><br>
+		<input type="text" id="x"><input type="text" id="y">
 	</body>
 </html>

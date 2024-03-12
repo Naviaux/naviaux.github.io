@@ -233,14 +233,13 @@
 			var prevTime = Date.now();
 			function clockCycler() {
 				let now = Date.now();
+				if (!allowClock)
+					return;
 				if (time_left <= 0)
 					endGame();
-				if (now - prevTime > 14) {
+				else if (now - prevTime > 14) {
 					time_left -= ((now - prevTime) / 1000);
 					inputDelay -= now-prevTime;
-				}
-				else if (!allowClock) {
-					return;
 				} else {
 					window.requestAnimationFrame(renderClock);
 					window.requestAnimationFrame(clockCycler);

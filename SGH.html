@@ -159,7 +159,7 @@
 						currentInput++;
 						if (currentInput >= picked_gems[currentGem][1].length){
 							currentGem++;
-							inputDelay = 250;
+							inputDelay = 150;
 							if (hasFailed) {
 								time_left += 0.25;
 							} else
@@ -238,10 +238,11 @@
 					return;
 				if (time_left <= 0)
 					endGame();
-				else if (now - prevTime > 14) {
+				else if (now - prevTime > 14 && inputDelay <= 0)
 					time_left -= ((now - prevTime) / 1000);
+				else if (inputDelay > 0)
 					inputDelay -= now-prevTime;
-				} else {
+				else {
 					window.requestAnimationFrame(renderClock);
 					window.requestAnimationFrame(clockCycler);
 					return;
@@ -266,18 +267,32 @@
 				let score2 = document.createElement("p");
 				let score3 = document.createElement("p");
 				let score4 = document.createElement("p");
-				score1.innerText = `Round Bonus:	${b1}`;
-				score2.innerText = `Time Bonus:	${b2}`;
-				score3.innerText = `Perfect:	${b3}`;
+				
+				score1.innerText = `Round Bonus:\t\t${b1}`;
+				score2.innerText = `Time Bonus:\t\t${b2}`;
+				score3.innerText = `Perfect:\t\t\t${b3}`;
 				score4.innerText = `Total score:	${total}`;
 				
-				addModal([score1, score2, score3, score4]);
+				score1.style.fontSize = ".5em";
+				score2.style.fontSize = ".5em";
+				score3.style.fontSize = ".5em";
+				
+				score1.style.whiteSpace = "pre";
+				score2.style.whiteSpace = "pre";
+				score3.style.whiteSpace = "pre";
+				
+				addModal([score1,score2,score3,score4]);
 				showModal();
 				
 				level++;
 				setTimeout(nextRound, 1500);
 			}
 			
+			function appendChildren(element, items) {
+				for (let k of items)
+					element.appendChild(k);
+			}
+				
 			function nextRound() {
 				let thisRound = `Round: ${level}`;
 				addModal([thisRound]);

@@ -53,7 +53,7 @@
 				transition: color .2s ease-in;
 				color: white;
 				font-size: 2em;
-				width: calc(100% / 14);
+				width: calc(100% / 10);
 				font-family:wingdings;
 			}
 			.succeed {
@@ -204,11 +204,13 @@
 			}
 			
 			function endGame() {
+				console.log("end");
 				allowClock = false;
-				let score = document.createElement("div");
-				score.innerHTML = `Final Score: ${score}`;
-				showModal(score);
-				setTimeout(2000, newGame);
+				let scoree = document.createElement("div");
+				scoree.innerHTML = `Final Score: ${score}`;
+				addModal([scoree]);
+				showModal();
+				setTimeout(newGame, 3500);
 			}
 			
 			function newGame() {
@@ -224,18 +226,20 @@
 				currentInput = 0;
 				let temp = document.createElement("div");
 				temp.innerHTML = `Press any stratagem input to play.`
-				showModal([temp]);
+				addModal([temp]);
+				showModal();
 			}
 			
 			var prevTime = Date.now();
 			function clockCycler() {
 				let now = Date.now();
+				if (time_left <= 0)
+					endGame();
 				if (now - prevTime > 14) {
 					time_left -= ((now - prevTime) / 1000);
 					inputDelay -= now-prevTime;
-					}
+				}
 				else if (!allowClock) {
-					console.log("clockless");
 					return;
 				} else {
 					window.requestAnimationFrame(renderClock);
@@ -243,10 +247,6 @@
 					return;
 				}
 				prevTime = now;
-				if (time_left <= 0)
-					endGame();
-				
-				console.log(time_left);
 				
 				if (allowClock) {
 					window.requestAnimationFrame(renderClock);
@@ -275,7 +275,13 @@
 				showModal();
 				
 				level++;
-				setTimeout(startLevel, 3000);
+				setTimeout(nextRound, 1500);
+			}
+			
+			function nextRound() {
+				let thisRound = `Round: ${level}`;
+				addModal([thisRound]);
+				setTimeout(startLevel, 1500);
 			}
 			
 			function addModal(items, clear = true) {

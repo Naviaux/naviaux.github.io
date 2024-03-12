@@ -307,7 +307,7 @@
 			}
 			
 			function randGems(level = 1) {
-				let toPick = 6 + level % 3;
+				let toPick = 6 + Math.floor(level / 3);
 				let gemlings = [];
 				for (let i = 0; i < toPick; i++) {
 					gemlings.push(gems[Math.floor(Math.random() * gems.length)]);

@@ -206,6 +206,7 @@
 			function endGame() {
 				console.log("end");
 				allowClock = false;
+				started = false;
 				let scoree = document.createElement("div");
 				scoree.innerHTML = `Final Score: ${score}`;
 				addModal([scoree]);

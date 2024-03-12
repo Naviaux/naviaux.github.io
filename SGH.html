@@ -208,12 +208,20 @@
 				let score = document.createElement("div");
 				score.innerHTML = `Final Score: ${score}`;
 				showModal(score);
-				setTimeout(5000, newGame);
+				setTimeout(2000, newGame);
 			}
 			
 			function newGame() {
 				allowStart = true;
 				started = false;
+				allowClock = false;
+				inputDelay = 0;
+				score = 0;
+				level = 1;
+				hasFailed = false;
+				time_left = 10;
+				currentGem = 0;
+				currentInput = 0;
 				let temp = document.createElement("div");
 				temp.innerHTML = `Press any stratagem input to play.`
 				showModal([temp]);

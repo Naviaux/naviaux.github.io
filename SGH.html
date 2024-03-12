@@ -281,6 +281,7 @@
 			
 			function startLevel(lvl = level) {
 				time_left = 10;
+				prevTime = Date.now();
 				picked_gems = randGems(lvl);
 				currentGem = 0;
 				currentInput = 0;

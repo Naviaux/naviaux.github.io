@@ -30,7 +30,6 @@
 				flex-basis:40%;
 			color: #ddd;
 			text-shadow: 17px 13px 7px black;
-			font-size: 25vh;
 			font-family: "Open Sans", sans-serif;
 			font-weight: 400;
 			font-style: normal;
@@ -38,8 +37,23 @@
 				"wdth" 100;
 				text-align:center;
 		}
+		@media screen and (orientation: portrait) {
+			div {
+				font-size: 20vw;
+			}
+			.small {
+				font-size: 15vw;
+			}
+		}
+		@media screen and (orientation: landscape) {
+			div {
+				font-size: 25vh;
+			}
+			.small {
+				font-size: 15vh;
+			}
+		}
 		.small {
-			font-size: 15vh;
 			color: #aaa;
 		}
 		.fb {
@@ -49,7 +63,7 @@
 			display: flex;
 			gap: 5vw;
 			position: relative;
-			height: 10vh;
+			top: 8vh;
 		}
 		#tick div:before {
 			content: " ";
@@ -66,9 +80,9 @@
 		}
 		#tick div:first-child::after {
 			content: " ";
-			display:inline-block;
+			display:inline-table;
 			position: relative;
-			top: -14.5vh;
+			top: -50%;
 			border-radius: 25vh;
 			width: 6vw;
 			height: 6vw;

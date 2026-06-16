@@ -1,0 +1,317 @@
+<html>
+<head>
+	<title>random frets</title>
+	<style>
+
+		body {
+			background-color: #222;
+			overflow:hidden;
+		}
+		#menu {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 21vh;
+			padding: 1vh;
+			font-size: 12pt;
+			gap: 1em;
+			display: flex;
+			flex-flow: row wrap;
+		}
+		#content{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: row;
+			flex-flow: row wrap;
+			height: 90vh;
+		}
+		div {
+				flex-basis:40%;
+			color: #ddd;
+			text-shadow: 17px 13px 7px black;
+			font-size: 25vh;
+			font-family: "Open Sans", sans-serif;
+			font-weight: 400;
+			font-style: normal;
+			font-variation-settings:
+				"wdth" 100;
+				text-align:center;
+		}
+		.small {
+			font-size: 15vh;
+			color: #aaa;
+		}
+		.fb {
+			flex-basis: 100%;
+		}
+		#tick {
+			display: flex;
+			gap: 5vw;
+			position: relative;
+			top: 8vh;
+		}
+		#tick div:before {
+			content: " ";
+			display:block;
+			border-radius: 25vh;
+			width: 8vw;
+			height: 8vw;
+			background-color: #d4732e6f;
+			box-shadow: 13px 7px 7px black;
+		}
+		.beat:before {
+			background-color: #d4732e !important;
+			box-shadow: 13px 7px 7px #532d126f !important;
+		}
+		#tick div:first-child::after {
+			content: " ";
+			display:inline-table;
+			position: relative;
+			top: -50%;
+			border-radius: 25vh;
+			width: 6vw;
+			height: 6vw;
+			border: 5px solid #fff3;
+		}
+		#beats {
+			display: flex;
+			gap: 10px;
+			flex-direction: row;
+			justify-content: center;
+		}
+		#beats div {
+			display:block;
+			height: 3vh;
+			background-color: #d4732e6f;
+		}
+		.tick {
+			background-color: #d4732e !important;
+			box-shadow: 13px 7px 7px #532d126f !important;
+		}
+
+	</style>
+	<script>
+		/*
+		TODO:
+			Dedicated start button
+			settings in hamburger menu
+			option for beats to signify first beat in bar
+			seperation of beats into bars?
+			option fret range (min and max)
+		*/
+		var fretRange = 16;
+		var modes = 5;
+		var scale = ["P"];
+		var timeToPlay = 16; // in beats (12 beats to play down & up, assuming 4/4 eigth notes)
+		var bpb = 4; // beats per bar (creates the dots)
+		var bpm = 85;
+		var uniqueBeatOne = true;
+		var doCountIn = true;
+		var uniqueCountIn = true;
+		var muteMetronome = false;
+		var showBeats = true;
+		var showTime = false;
+
+		const sndURI = "data:audio/wav;base64,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";
+		const boURI = "data:audio/wav;base64,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";
+		const cinURI = "data:audio/wav;base64,UklGRmQBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUABAAC1IbO1////L4AbPWABARULAXjVhf/wr4nfl3tumFhCJRpWVo29vMixtJWkp5J+VTotLT9ceo+Ympqep7CzqZN0V0VCTF9yf4WHi5Ofqq+pl4BoWVRaZW92eXuAiZaiqKWYhnRoY2ZrcHNzdHmCjpqgn5aJfHNvcHJzcnFxdX2IkpiYk4qBe3h3d3Z0cXBzeoOMkZKPiYSAfn18enZzcXN4f4eLjYuIhIKBgX99eXVzdHh9g4eIh4aEg4ODgn97eHZ2eX2Ag4SEhIOEhISDgH16eHh6fH+BgoKCgoOEhIOBfnx6ent9fn+AgIGBgoOEg4KAfXx8fH1+f39/gICCg4ODgoB+fX19fn5+fn5/gIGCgoKCgH9+fn5+fn5+fn9/gIGCgoGAgH9/f39/fn5+fn+AgYGBgYCAgH9/f39/fn5+fw==";
+
+		var snd;
+		var bo;
+		var cin;
+		var beat = -5;
+		
+		var hasInteracted = false;
+
+		var prevTime = 0;
+
+		var nFret = Math.floor(Math.random() * fretRange + 1);
+		var nMode = Math.floor(Math.random() * modes + 1);
+
+		var metronomeInterval;
+
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("bpm").value = bpm;
+			document.getElementById("ttp").value = timeToPlay;
+			document.getElementById("bpb").value = bpb;
+			document.getElementById("ubo").checked = uniqueBeatOne;
+			document.getElementById("cin").checked = doCountIn;
+			document.getElementById("uci").checked = uniqueCountIn;
+			document.getElementById("mute").checked = muteMetronome;
+			document.getElementById("sbeats").checked = showBeats;
+			document.getElementById("stime").checked = showTime;
+			
+			
+			snd = new Audio(sndURI);
+			bo = new Audio(boURI);
+			cin = new Audio(cinURI);
+			document.getElementById("nFret").innerHTML = nFret;
+			document.getElementById("nMode").innerHTML = nMode;
+			metronomeInterval = setInterval(doMetronome, 1000/bpm*60);
+			setInterval(checkScale, 10);
+			document.getElementById("content").addEventListener("click", (e) => {
+					hasInteracted = !hasInteracted;
+					if (!hasInteracted) {
+						createTicks();
+					}
+					if (hasInteracted) {
+						prevTime = 0 + (Date.now() - (timeToPlay - 4) * 1000/bpm*60) * doCountIn;
+					}
+			});
+			document.getElementById("bpm").addEventListener("change", (e) => {
+				beat = -1;
+				hasInteracted = false;
+				bpm = e.srcElement.value;
+				clearInterval(metronomeInterval);
+				metronomeInterval = setInterval(doMetronome, 1000/bpm*60)
+				createTicks();
+			});
+			document.getElementById("ttp").addEventListener("change", (e) => {
+				beat = -1;
+				hasInteracted = false;
+				timeToPlay = e.srcElement.value;
+				createTicks();
+			});
+			document.getElementById("bpb").addEventListener("change", (e) => {
+				beat = -1;
+				hasInteracted = false;
+				bpb = e.srcElement.value;
+				createTicks();
+			});
+			document.getElementById("ubo").addEventListener("change", (e) => {
+				beat = -1;
+				hasInteracted = false;
+				uniqueBeatOne = e.srcElement.checked;
+				createTicks();
+			});
+			document.getElementById("cin").addEventListener("change", (e) => {
+				hasInteracted = false;
+				doCountIn = e.srcElement.checked;
+				createTicks();
+			});
+			document.getElementById("uci").addEventListener("change", (e) => {
+				hasInteracted = false;
+				uniqueCountIn = !uniqueCountIn;
+				cin = new Audio (uniqueCountIn ? cinURI : sndURI)
+				createTicks();
+			});
+			document.getElementById("mute").addEventListener("change", (e) => {
+				muteMetronome = !muteMetronome;
+			});
+			document.getElementById("sbeats").addEventListener("change", (e) => {
+				hasInteracted = false;
+				showBeats = !showBeats;
+				createTicks();
+			});
+			document.getElementById("stime").addEventListener("change", (e) => {
+				hasInteracted = false;
+				showTime = !showTime;
+				createTicks();
+			});
+			createTicks();
+		});
+
+		function createTicks() {
+			document.getElementById("fret").innerHTML = "F";
+			document.getElementById("mode").innerHTML = "M";
+			beat = -1 - doCountIn * 4;
+			prevTime = 0 + (Date.now() - (timeToPlay - 4) * 1000/bpm*60) * doCountIn;
+			document.getElementById("tick").innerHTML = "";
+			document.getElementById("beats").innerHTML = "";
+			for (let i = 0; i < timeToPlay; i++) {
+				if (showTime) {
+					let bm = document.createElement("div");
+					bm.id = "m" + i;
+					bm.style.flexBasis =  (42/timeToPlay) + "%";
+					document.getElementById("beats").append(bm);
+				}
+				if (i >= bpb)
+					continue;
+				if (showBeats) {
+					let tm = document.createElement("div");
+					tm.id = i;
+					document.getElementById("tick").append(tm);
+				}
+			}
+		}
+
+		function checkScale() {
+			if (!hasInteracted)
+				return;
+			if (Date.now() - prevTime < (timeToPlay * 1000/bpm*60))
+				return;
+			prevTime = Date.now();
+			pickScale();
+		}
+
+		function pickScale() {
+			document.getElementById("fret").innerHTML = nFret;
+			document.getElementById("mode").innerHTML = nMode;
+			nFret = Math.floor(Math.random() * fretRange + 1);
+			nMode = Math.floor(Math.random() * modes + 1);
+			document.getElementById("nFret").innerHTML = nFret;
+			document.getElementById("nMode").innerHTML = nMode;
+		}
+
+		function doMetronome() {
+			if (!hasInteracted)
+				return;
+			if (!muteMetronome) {
+				if (doCountIn && beat < -1) {
+					cin.currentTime = 0;
+					cin.play();
+					beat = (beat + 1) % timeToPlay;
+					return;
+				}
+				if (boURI != "" && uniqueBeatOne && beat >= -1 && (beat + 1) % bpb == 0) {
+					bo.currentTime = 0;
+					bo.play();
+				} else {
+					snd.currentTime = 0;
+					snd.play();
+				}
+			} else if (beat < -1) {
+				beat = (beat + 1) % timeToPlay;
+				return;
+			}
+			if(beat>-1) {
+				if (showBeats)
+				document.getElementById(beat % bpb).className = "";
+			
+				if (showTime)
+				document.getElementById("m" + beat).className = "";
+			}
+			beat = (beat + 1) % timeToPlay;
+				if (showBeats)
+			document.getElementById(beat % bpb).className = "beat";
+				if (showTime)
+			document.getElementById("m" + beat).className = "tick";
+		}
+
+	</script>
+</head>
+<body>
+	<div id="menu">
+		<label for="bpm" title="Beats per minute">BPM</label><input id="bpm" type="number">
+		<label for="ttp" title="Time to play">TTP</label><input id="ttp" type="number">
+		<label for="bpb" title="Beats per measure">BPB</label><input id="bpb" type="number">
+		<label for="ubo" title="Unique beat one sound">UBO</label><input id="ubo" type="checkbox">
+		<label for="cin" title="Unique count in sound">CIN</label><input id="cin" type="checkbox">
+		<label for="uci" title="Use count in (1 bar)">UCI</label><input id="uci" type="checkbox">
+		<label for="mute" title="Mute metronome">MUTE</label><input id="mute" type="checkbox">
+		<label for="sbeats" title="Show beats">BEAT</label><input id="sbeats" type="checkbox">
+		<label for="stime" title="Show time tracking">TIME</label><input id="stime" type="checkbox">
+	</div>
+	<div id="content">
+		<div id="tick">
+		</div>
+		<div id="beats" class="fb">
+		</div>
+		<div id="fret">F</div>
+		<div id="mode">M</div>
+		<div id="nFret" class="small"></div>
+		<div id="nMode" class="small"></div>
+	</div>
+</body>
+</html>
